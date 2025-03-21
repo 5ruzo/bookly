@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className='text-center bg-white py-8'>
       <div className='flex items-center justify-center gap-1'>
-        <Copyright size={13} color='#71717A' strokeWidth={1} />
+        <Copyright size={13} color='var(--color-gray)' strokeWidth={1} />
         <span className='text-gray text-md'>
           2025 오르조. All rights reserved.
         </span>

@@ -39,7 +39,7 @@ const Header = () => {
         <div className='flex-1 md:flex-none md:w-[40%]'>
           <label className='relative'>
             <Search
-              color='#5050FF'
+              color='var(--color-primary)'
               strokeWidth={2.5}
               className='absolute top-1/2 -translate-y-1/2 left-4 md:left-6 w-4 md:w-6 '
             />

@@ -14,7 +14,7 @@ const HeaderDropdownMenu: React.FC<HeaderMenuProps> = ({ menuList }) => {
     <div className='md:min-w-28 flex justify-end'>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <AlignJustify color='#71717A' strokeWidth={2.5} />
+          <AlignJustify color='var(--color-gray)' strokeWidth={2.5} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className='bg-white border-gray mr-4'>
           {menuList.map((menu, index) => (
