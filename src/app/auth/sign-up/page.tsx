@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '@/lib/utils/schemas';
 
 const SignUp = () => {
-  const { register, handleSubmit, watch, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm({
     mode: 'onBlur',
     defaultValues: {
       email: '',
@@ -57,7 +57,10 @@ const SignUp = () => {
                       className='w-10/12 px-4 py-3 border rounded-xl var(--color-white-light) text-base'
                       autoComplete='email'
                     />
-                    <button className='border rounded-lg bg-[var(--color-gray)] w-16'>
+                    <button
+                      type='button'
+                      className='border rounded-lg bg-[var(--color-gray)] w-16'
+                    >
                       중복검사
                     </button>
                   </div>
@@ -110,7 +113,10 @@ const SignUp = () => {
                       className='w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base'
                       placeholder="'-' 없이 입력"
                     />
-                    <button className='border rounded-lg bg-[gray] w-16'>
+                    <button
+                      type='button'
+                      className='border rounded-lg bg-[gray] w-16'
+                    >
                       인증
                     </button>
                   </div>
