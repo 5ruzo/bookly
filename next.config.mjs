@@ -8,6 +8,14 @@ const nextConfig = {
         search: "",
       },
     ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'image.aladin.co.kr',
+        port: '',
+        search: '',
+      },
+    ],
   }
 };
 
