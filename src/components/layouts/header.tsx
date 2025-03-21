@@ -24,13 +24,14 @@ const Header = () => {
   return (
     <header className='flex flex-col'>
       <div className='flex bg-secondary px-6 md:px-10 items-center justify-between h-24 gap-6 md:gap-0'>
-        <h1 className='hidden md:block relative h-full aspect-[4/3]'>
-          <Link href='/'>
+        <h1 className='hidden md:block h-full aspect-[4/3]'>
+          <Link href='/' className='block relative w-full h-full'>
             <Image
               src='/images/logo.png'
               fill
               sizes='20vw'
               alt='bookly'
+              priority
               className='relative'
             />
           </Link>
