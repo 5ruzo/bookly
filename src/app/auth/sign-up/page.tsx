@@ -1,0 +1,101 @@
+"use client";
+
+import Image from "next/image";
+import React from "react";
+import signUpImage from "../../../../public/images/sign-up-image.png";
+import Link from "next/link";
+
+const SignUp = () => {
+  return (
+    <div className="flex min-h-screen">
+      <div className="flex flex-1 items-center justify-center p-6">
+        <div className="w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[#faf7f2] flex overflow-hidden">
+          {/* 이미지 영역 */}
+          <div className="w-[45%] relative flex items-center justify-center">
+            <div className="relative w-full h-full max-w-full max-h-full">
+              <Image
+                src={signUpImage}
+                alt="로그인 이미지"
+                layout="fill"
+                objectFit="contain"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* 오른쪽 폼 */}
+          <div className="p-6 w-[55%] ">
+            <div className="w-[100%] bg-white p-8 rounded-xl">
+              <h2 className="text-xl font-semibold mb-6 text-left">Sign Up</h2>
+
+              <form className="space-y-5">
+                <div>
+                  <label className="block text-base mb-2">이메일</label>
+                  <div className="flex gap-4">
+                    <input
+                      type="email"
+                      className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                    />
+                    <button className="border rounded-lg bg-[gray]">
+                      중복검사
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-base mb-2">비밀번호</label>
+                  <input
+                    type="password"
+                    className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-base mb-2">비밀번호 확인</label>
+                  <input
+                    type="password"
+                    className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-base mb-2">휴대폰 번호</label>
+                  <div className="flex gap-4">
+                    <input
+                      type="tel"
+                      className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                    />
+                    <button className="border rounded-lg bg-[gray]">
+                      중복검사
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-10/12 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition mb-2"
+                >
+                  회원가입
+                </button>
+              </form>
+
+              <div className="mt-6 text-center text-sm">
+                <p>
+                  이미 계정이 있으신가요?{" "}
+                  <Link
+                    href="/auth/sign-in"
+                    className="text-blue-600 hover:underline"
+                  >
+                    로그인
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SignUp;
