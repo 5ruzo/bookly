@@ -6,4 +6,5 @@ export type LinkItem = {
 
 export type HeaderMenuProps = {
   menuList: LinkItem[];
+  children?: React.ReactNode;
 };

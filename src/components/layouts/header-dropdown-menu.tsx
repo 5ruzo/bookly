@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { AlignJustify } from 'lucide-react';
 
-const HeaderDropdownMenu: React.FC<HeaderMenuProps> = ({ menuList }) => {
+const HeaderDropdownMenu = ({ menuList }: HeaderMenuProps) => {
   return (
     <div className='md:min-w-28 flex justify-end'>
       <DropdownMenu>
