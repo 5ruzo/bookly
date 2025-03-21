@@ -1,18 +1,20 @@
-import type { Metadata } from "next";
-import "./global-style.css";
-import localFont from "next/font/local";
-import Providers from "@/config/tq-provider";
+import type { Metadata } from 'next';
+import './global-style.css';
+import localFont from 'next/font/local';
+import Providers from '@/config/tq-provider';
+import Header from '@/components/layouts/header';
+import Footer from '@/components/layouts/footer';
 
 export const metadata: Metadata = {
-  title: "Bookly",
-  description: "Find your book!",
+  title: 'Bookly',
+  description: 'Find your book!',
 };
 
 const pretendard = localFont({
-  src: "../../public/fonts/PretendardVariable.woff2",
-  display: "swap",
-  weight: "45 920",
-  variable: "--font-pretendard",
+  src: '../../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
 });
 
 export default function RootLayout({
@@ -21,9 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko_kr">
+    <html lang='ko_kr'>
       <body className={`${pretendard.variable} font-pretendard antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
+        <Footer />
       </body>
     </html>
   );
