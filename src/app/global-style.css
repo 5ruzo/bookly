@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+html,
+body {
+  font-family: var(--font-pretendard);
+  line-height: 1.5;
+  letter-spacing: -0.003em;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: var(--color-white-light);
+}
+
+:root {
+  --text-2xl: 1.75rem; /* 28px */
+  --text-xl: 1.5rem; /* 24px */
+  --text-lg: 1.375rem; /* 22px */
+  --text-md: 0.8125rem; /* 13px */
+  --text-sm: 0.75rem; /* 12px */
+  --text-ss: 0.625rem; /* 10px */
+  --color-black: #18181b;
+  --color-gray: #71717a;
+  --color-lightgray: #d3d3d3;
+  --color-white-dark: #f8f8f8;
+  --color-white-light: #fbfbfb;
+  --color-primary: #5050ff;
+  --color-secondary: #f6f1e7;
+}
