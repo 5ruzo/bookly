@@ -12,13 +12,13 @@ const Header = () => {
 
   const navigationLinks: LinkItem[] = isAuthenticated
     ? [
-        { text: '마이페이지', href: '/myPage' },
+        { text: '마이페이지', href: '/mypage' },
         { text: '장바구니(0)', href: '/cart' },
         { text: '로그아웃', onClick: () => {} },
       ]
     : [
-        { text: '로그인', href: '/signIn' },
-        { text: '회원가입', href: '/signUp' },
+        { text: '로그인', href: '/signin' },
+        { text: '회원가입', href: '/signup' },
       ];
 
   return (
@@ -58,10 +58,10 @@ const Header = () => {
             <Link href='/'>홈</Link>
           </li>
           <li>
-            <Link href='/bookList?sort=best'>베스트</Link>
+            <Link href='/booklist/best'>베스트</Link>
           </li>
           <li>
-            <Link href='/bookList?sort=new'>신상품</Link>
+            <Link href='/booklist/new'>신상품</Link>
           </li>
         </ul>
       </div>
