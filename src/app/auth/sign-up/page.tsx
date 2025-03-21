@@ -2,23 +2,41 @@
 
 import Image from "next/image";
 import React from "react";
-import signUpImage from "../../../../public/images/sign-up-image.png";
 import Link from "next/link";
+import { FieldValues, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "@/lib/utils/schemas";
 
 const SignUp = () => {
+  const { register, handleSubmit, watch, formState } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      phone: "",
+    },
+    resolver: zodResolver(signupSchema),
+  });
+
+  const onSubmit = (value: FieldValues) => {
+    console.log(value);
+  };
+
   return (
     <div className="flex min-h-screen">
       <div className="flex flex-1 items-center justify-center p-6">
-        <div className="w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[#faf7f2] flex overflow-hidden">
+        <div className="w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[var(--color-secondary)] flex overflow-hidden">
           {/* 이미지 영역 */}
           <div className="w-[45%] relative flex items-center justify-center">
             <div className="relative w-full h-full max-w-full max-h-full">
               <Image
-                src={signUpImage}
-                alt="로그인 이미지"
-                layout="fill"
-                objectFit="contain"
+                src={"/images/sign-up-image.png"}
+                alt="회원가입 이미지"
+                fill
                 priority
+                style={{ objectFit: "contain" }}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -28,17 +46,25 @@ const SignUp = () => {
             <div className="w-[100%] bg-white p-8 rounded-xl">
               <h2 className="text-xl font-semibold mb-6 text-left">Sign Up</h2>
 
-              <form className="space-y-5">
+              <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                 <div>
                   <label className="block text-base mb-2">이메일</label>
                   <div className="flex gap-4">
                     <input
+                      {...register("email")}
                       type="email"
-                      className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                      placeholder="Email"
+                      className="w-10/12 px-4 py-3 border rounded-xl var(--color-white-light) text-base"
+                      autoComplete="email"
                     />
-                    <button className="border rounded-lg bg-[gray]">
+                    <button className="border rounded-lg bg-[var(--color-gray)]">
                       중복검사
                     </button>
+                  </div>
+                  <div className="ml-1 mt-2 text-red-500">
+                    {formState.errors.email && (
+                      <span>{formState.errors.email.message}</span>
+                    )}
                   </div>
                 </div>
 
@@ -46,32 +72,57 @@ const SignUp = () => {
                   <label className="block text-base mb-2">비밀번호</label>
                   <input
                     type="password"
-                    className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                    {...register("password")}
+                    className="w-10/12 px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base"
+                    placeholder="Password"
+                    autoComplete="new-password"
                   />
+                  <div className="ml-1 mt-2 text-red-500">
+                    {formState.errors.password && (
+                      <span>{formState.errors.password.message}</span>
+                    )}
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-base mb-2">비밀번호 확인</label>
                   <input
+                    id="confirmPassword"
                     type="password"
-                    className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                    {...register("confirmPassword")}
+                    className="w-10/12 px-4 py-3 border rounded-xl var(--color-gray) text-base"
+                    placeholder="Password"
+                    autoComplete="current-password"
                   />
+                  <div className="ml-1 mt-2 text-red-500">
+                    {formState.errors.confirmPassword && (
+                      <span>{formState.errors.confirmPassword.message}</span>
+                    )}
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-base mb-2">휴대폰 번호</label>
                   <div className="flex gap-4">
                     <input
-                      type="tel"
+                      type="text"
+                      {...register("phone")}
                       className="w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base"
+                      placeholder="'-' 없이 입력"
                     />
                     <button className="border rounded-lg bg-[gray]">
                       중복검사
                     </button>
                   </div>
+                  {formState.errors.phone && (
+                    <p className="text-red-500 ml-1 mt-2">
+                      {formState.errors.phone.message}
+                    </p>
+                  )}
                 </div>
 
                 <button
+                  disabled={!formState.isValid}
                   type="submit"
                   className="w-10/12 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition mb-2"
                 >

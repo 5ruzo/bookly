@@ -4,20 +4,37 @@ import Image from "next/image";
 import React from "react";
 import loginImage from "../../../../public/images/login-image.png";
 import Link from "next/link";
+import { FieldValues, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/lib/utils/schemas";
 
 const SignIn = () => {
+  const { register, handleSubmit, formState } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = (value: FieldValues) => {
+    console.log(value);
+  };
+
   return (
     <div className="flex min-h-screen">
       <div className="flex flex-1 items-center justify-center p-6">
-        <div className="w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[#faf7f2] flex overflow-hidden">
+        <div className="w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[var(--color-secondary)] flex overflow-hidden">
           {/* 이미지 영역 */}
           <div className="w-[45%] relative flex items-center justify-center">
             <div className="relative w-full h-full max-w-full max-h-full">
               <Image
                 src={loginImage}
                 alt="로그인 이미지"
-                layout="fill"
-                objectFit="contain"
+                fill
+                style={{ objectFit: "contain" }}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 priority
               />
             </div>
@@ -25,24 +42,45 @@ const SignIn = () => {
 
           {/* 오른쪽 폼 */}
           <div className="p-6 w-[55%] ">
-            <div className="w-[100%] h-full bg-white p-12 rounded-xl">
+            <div className="w-[100%] h-full bg-[var(--color-white-light)] p-12 rounded-xl">
               <h2 className="text-2xl font-semibold mb-6 text-left">Sign In</h2>
 
-              <form className="space-y-5 mt-16">
+              <form
+                className="space-y-5 mt-16"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <div>
-                  <label className="block text-base mb-2">이메일</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 border rounded-xl bg-gray-100 text-base"
-                  />
+                  <label className="block text-base mb-2">
+                    이메일
+                    <input
+                      type="email"
+                      {...register("email")}
+                      className="w-full px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base"
+                      autoComplete="email"
+                    />
+                  </label>
+                  <div className="ml-1 mt-2 text-red-500">
+                    {formState.errors.email && (
+                      <span>{formState.errors.email.message}</span>
+                    )}
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-base mb-2">비밀번호</label>
-                  <input
-                    type="password"
-                    className="w-full px-4 py-3 border rounded-xl bg-gray-100 text-base"
-                  />
+                  <label className="block text-base mb-2">
+                    비밀번호
+                    <input
+                      type="password"
+                      {...register("password")}
+                      className="w-full px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base"
+                      autoComplete="current-password"
+                    />
+                  </label>
+                  <div className="ml-1 mt-2 text-red-500">
+                    {formState.errors.password && (
+                      <span>{formState.errors.password.message}</span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between text-base">
@@ -59,6 +97,7 @@ const SignIn = () => {
                 </div>
 
                 <button
+                  disabled={!formState.isValid}
                   type="submit"
                   className="w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition"
                 >
@@ -67,7 +106,7 @@ const SignIn = () => {
 
                 <button
                   type="button"
-                  className="w-full py-3 bg-[#03C75A] text-white rounded-xl flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-[var(--color-black)] text-white rounded-xl flex items-center justify-center gap-2"
                 >
                   <span className="font-bold">N</span> 네이버 로그인
                 </button>
