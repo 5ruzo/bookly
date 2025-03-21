@@ -4,6 +4,6 @@ export type LinkItem = {
   onClick?: () => void;
 };
 
-export type HeaderLinksProps = {
-  links: LinkItem[];
+export type HeaderMenuProps = {
+  menuList: LinkItem[];
 };
