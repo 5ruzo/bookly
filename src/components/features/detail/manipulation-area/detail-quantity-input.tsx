@@ -3,6 +3,7 @@
 import type React from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import { QuantityInputProps } from '@/types/detail.type';
+import { formatNumber } from '@/lib/utils/detail/format-number';
 
 const minimum = 1;
 const maximum = 99;
@@ -65,7 +66,7 @@ export default function QuantityInput({
             </div>
           </div>
           <span className='text-sm text-gray'>
-            총 상품금액: {Number(price) * value}
+            총 상품금액: {formatNumber(Number(price) * value)}
           </span>
         </div>
       </div>

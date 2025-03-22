@@ -3,6 +3,7 @@ import { BookList } from '@/types/detail.type';
 import React from 'react';
 import { Rating } from '@/components/features/detail/detail-rating';
 import ManipulationArea from '@/components/features/detail/detail-manipulation-area';
+import { formatNumber } from '@/lib/utils/detail/format-number';
 
 const fetchGetDetail = async (bookId: string) => {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/books?id=eq.${bookId}`, {
@@ -36,8 +37,11 @@ export default async function page({ params }: { params: { id: string } }) {
       <div>
         <img src={data.image_url} alt={data.title} />
       </div>
-      <p>가격: {data.price}원</p>
-      <p>배송료: 3000원(제주도 6000원)</p>
+      <p>가격: {formatNumber(Number(data.price))}원</p>
+      <div>
+        <span>배송료: 3,000원</span>
+        <span className='text-md text-gray'>(제주도 6,000원)</span>
+      </div>
       <p>
         수령 예상일:
         {/* 오늘을 기준으로 3일 이후 */}
