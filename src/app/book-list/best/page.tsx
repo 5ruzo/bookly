@@ -1,7 +1,10 @@
 import BookListItem from '@/components/features/book-list/book-list-item';
+import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list';
 import { fetchGetBookListByTop50Rank } from '@/lib/api/book-list.api';
 import { Metadata } from 'next';
 import React from 'react';
+
+export const revalidate = BOOK_LIST_REVALIDATE_TIME;
 
 export const metadata: Metadata = {
   title: '베스트셀러 인기있는 책 목록 - Bookly에서 인기있는 책 찾아보기',
