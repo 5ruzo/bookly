@@ -2,12 +2,17 @@ import BookListItem from '@/components/features/book-list/book-list-item';
 import { fetchGetBookListByTop50Rank } from '@/lib/api/book-list.api';
 import React from 'react';
 
+export const metadata: Metadata = {
+  title: 'Bookly',
+  description: 'Find your book!',
+};
+
 export default async function BookListPage() {
-  const booksArray = await fetchGetBookListByTop50Rank();
+  const bookList = await fetchGetBookListByTop50Rank();
 
   return (
     <ul>
-      {booksArray.map((book) => {
+      {bookList.map((book) => {
         return (
           <BookListItem
             key={book.id}
