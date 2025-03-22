@@ -48,7 +48,7 @@ export default async function page({ params }: { params: { id: string } }) {
         <Rating rating={data.rating} />
         <span className='sr-only'>별점 {data.rating}점</span>
       </div>
-      <ManipulationArea bookId={data.title} />
+      <ManipulationArea title={data.title} price={data.price} />
       <p>장르: {data.genre}</p>
       <p>책 소개: {data.description}</p>
     </div>

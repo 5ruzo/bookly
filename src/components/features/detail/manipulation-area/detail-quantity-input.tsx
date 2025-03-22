@@ -8,7 +8,11 @@ const minimum = 1;
 const maximum = 99;
 const changeRange = 1;
 
-export default function QuantityInput({ value, onChange }: QuantityInputProps) {
+export default function QuantityInput({
+  value,
+  onChange,
+  price,
+}: QuantityInputProps) {
   const handleIncrement = () => {
     // 정해둔 최대 값보다 커지지 않음
     if (maximum !== undefined && value + changeRange > maximum) return;
@@ -60,7 +64,9 @@ export default function QuantityInput({ value, onChange }: QuantityInputProps) {
               </button>
             </div>
           </div>
-          <span className='text-sm text-gray'>현재 수량: {value}</span>
+          <span className='text-sm text-gray'>
+            총 상품금액: {Number(price) * value}
+          </span>
         </div>
       </div>
     </div>

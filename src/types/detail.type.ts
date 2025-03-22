@@ -21,8 +21,7 @@ export type RatingProps = {
 export type QuantityInputProps = {
   value: number;
   onChange: (value: number) => void;
+  price: string;
 };
 
-export type ManipulationAreaProps = {
-  bookId: string;
-};
+export type ManipulationAreaProps = Pick<Book, 'title' | 'price'>;
