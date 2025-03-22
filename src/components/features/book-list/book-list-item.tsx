@@ -29,7 +29,7 @@ export default function BookListItem({
             <dt className='sr-only'>평점</dt>
             <dd className='text-lg mt-[6px]'>
               <span className='flex'>
-                <Star className='w-[6px] h-[6px] text-yellow-400 fill-yellow-400 mt-[2px] mr-[1px]' />{' '}
+                <Star className='h-[25px] text-yellow-400 fill-yellow-400 mt-[2px] mr-[2px]' />
                 {rating}
               </span>
             </dd>
