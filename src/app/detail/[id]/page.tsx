@@ -1,6 +1,8 @@
 import { API_KEY, SUPABASE_URL } from '@/constants/detail.constans';
 import { BookList } from '@/types/detail.type';
 import React from 'react';
+import { Rating } from '@/components/features/detail/detail-rating';
+import ManipulationArea from '@/components/features/detail/detail-manipulation-area';
 
 const fetchGetDetail = async (bookId: string) => {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/books?id=eq.${bookId}`, {
@@ -20,6 +22,7 @@ const fetchGetDetail = async (bookId: string) => {
 export default async function page({ params }: { params: { id: string } }) {
   const data = await fetchGetDetail(params.id);
 
+  // 수령 예상일 계산을 위한 기본값
   const timestamp = Date.now();
   const date = new Date(timestamp);
 
@@ -37,12 +40,17 @@ export default async function page({ params }: { params: { id: string } }) {
       <p>배송료: 3000원(제주도 6000원)</p>
       <p>
         수령 예상일:
+        {/* 오늘을 기준으로 3일 이후 */}
         {new Date(date.setDate(date.getDate() + 3)).toLocaleDateString()}
       </p>
-      <p>평점: {data.rating / 2} / 5</p>
-      <p>설명: {data.description}</p>
+      <div className='flex gap-2'>
+        <p>평점:</p>
+        <Rating rating={data.rating} />
+        <span className='sr-only'>별점 {data.rating}점</span>
+      </div>
+      <ManipulationArea bookId={data.title} />
       <p>장르: {data.genre}</p>
-      <p>베스트 랭킹: {data.best_rank}</p>
+      <p>책 소개: {data.description}</p>
     </div>
   );
 }
