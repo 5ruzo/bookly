@@ -13,3 +13,16 @@ export type Book = {
 };
 
 export type BookList = Book[];
+
+export type RatingProps = {
+  rating: number;
+};
+
+export type QuantityInputProps = {
+  value: number;
+  onChange: (value: number) => void;
+};
+
+export type ManipulationAreaProps = {
+  bookId: string;
+};
