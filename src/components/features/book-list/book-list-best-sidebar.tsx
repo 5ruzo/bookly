@@ -23,7 +23,7 @@ export default function BookListBestSidebar() {
         {genreArray.map((genreItem) => {
           const bgColor = genreItem === genre && 'bg-secondary';
           return (
-            <Link href={`/book-list/${genreItem}`}>
+            <Link key={genreItem} href={`/book-list/${genreItem}`}>
               <li
                 key={genreItem}
                 className={`${bgColor} text-sm w-[162px] h-[26px] pl-[24px] flex items-center`}
