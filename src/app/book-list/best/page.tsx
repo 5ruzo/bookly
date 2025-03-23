@@ -8,12 +8,11 @@ export const revalidate = BOOK_LIST_REVALIDATE_TIME;
 
 export const metadata: Metadata = {
   title: '베스트셀러 인기있는 책 목록 - Bookly에서 인기있는 책 찾아보기',
-  description: '베스트셀러, 인기있는 책 목록을 확인하세요. 온라인 서점 Bookly.',
+  description: 'Bookly에서 베스트셀러, 인기있는 책 목록을 확인하세요.',
 
   openGraph: {
     title: 'Bookly - 베스트셀러, 인기있는 책',
-    description:
-      '베스트셀러, 인기있는 책 목록을 확인하세요. 온라인 서점 Bookly.',
+    description: 'Bookly에서 베스트셀러, 인기있는 책 목록을 확인하세요.',
     // image: '로고 넣기 ',
   },
 };
