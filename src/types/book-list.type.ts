@@ -14,5 +14,5 @@ type Book = {
 
 type BookItem = Pick<
   Book,
-  'title' | 'author' | 'rating' | 'price' | 'description' | 'image_url'
+  'id' | 'title' | 'author' | 'rating' | 'price' | 'description' | 'image_url'
 >;

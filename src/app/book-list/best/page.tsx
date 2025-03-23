@@ -26,6 +26,7 @@ export default async function BookListPage() {
         return (
           <BookListItem
             key={book.id}
+            id={book.id}
             title={book.title}
             author={book.author}
             rating={book.rating}
