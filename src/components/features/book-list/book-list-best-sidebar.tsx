@@ -20,10 +20,10 @@ export default function BookListBestSidebar() {
       <ul>
         {genreList.map((genreItem) => {
           //장르 구분자가 '/'로 들어가면 각 구분 페이지로 인식되기 때문에, 이를 '-'로 변경하여 처리
-          const formattedGenreForUrl = genreItem.replace('/', '-');
+          const formattedGenreForUrl = genreItem.replace(/\//g, '-');
 
           const bgColor =
-            genreItem === genreFromPath.replace('-', '/') && 'bg-secondary';
+            genreItem === genreFromPath.replace(/-/g, '/') && 'bg-secondary';
           return (
             <Link key={genreItem} href={`/book-list/${formattedGenreForUrl}`}>
               <li
