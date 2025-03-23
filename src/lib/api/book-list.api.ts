@@ -25,7 +25,6 @@ export const fetchGetBookListByTop50Rank = async () => {
 };
 
 export const fetchGetGenreList = async () => {
-  'use server';
   //장르데이터 가져오기
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/genres?select=genre`,
