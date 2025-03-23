@@ -1,6 +1,7 @@
 'use client';
 
-import { fetchGetGenreList } from '@/lib/api/book-list.api';
+import { DEFAULT_GENRE_LIST_ON_ERROR } from '@/constants/book-list';
+import { useGetGenreListQuery } from '@/lib/queries/use-get-genre-list-query';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -11,9 +12,24 @@ export default function BookListBestSidebar() {
 
   const [genreList, setGenreList] = useState<string[]>([]);
 
+  const { data, isPending, error } = useGetGenreListQuery();
+
   useEffect(() => {
-    fetchGetGenreList().then((genreList) => setGenreList(genreList));
-  }, []);
+    if (data) {
+      setGenreList(data);
+    }
+    if (error) {
+      //에러가 났을 때 기본 장르를 사이드바에 표시해 줌
+      console.log(error);
+      setGenreList(DEFAULT_GENRE_LIST_ON_ERROR);
+    }
+  }, [data, error]);
+
+  if (isPending) {
+    return (
+      <div className='w-[162px] h-[500px] bg-gray animate-pulse rounded'></div>
+    );
+  }
 
   return (
     <nav>
