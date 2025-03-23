@@ -15,7 +15,7 @@ export default function BookListItem({
   return (
     <li>
       <Link href={`/detail/${id}`}>
-        <div className='flex gep-[72px]'>
+        <div className='w-[918px] flex gep-[72px]'>
           <img
             src={image_url}
             alt={`${title}의 표지 이미지`}
