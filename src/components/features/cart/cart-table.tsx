@@ -14,7 +14,11 @@ const getSumPrice = (
   return formatKRW(quantity * price);
 };
 
-export default function CartTable({ bookList }: { bookList: TypeCartItem[] }) {
+export default function CartTable({
+  cartBookList,
+}: {
+  cartBookList: TypeCartItem[];
+}) {
   const columns: (ColumnDef<TypeCartItem> & { className?: string })[] = [
     {
       id: 'select',
@@ -57,7 +61,7 @@ export default function CartTable({ bookList }: { bookList: TypeCartItem[] }) {
   return (
     <DataTable
       columns={columns}
-      data={bookList}
+      data={cartBookList}
       classNames={{
         table: 'cart-table',
         bodyRow: 'cart-item',
