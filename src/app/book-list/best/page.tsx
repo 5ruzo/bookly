@@ -21,7 +21,7 @@ export default async function BookListPage() {
   const bookList = await fetchGetBookListByTop50Rank();
 
   return (
-    <ul>
+    <ul className='flex flex-col gap-[70px]'>
       {bookList.map((book) => {
         return (
           <BookListItem
