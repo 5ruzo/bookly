@@ -3,10 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import '@/styles/cart/cart.css';
 import { TypeCartItem } from '@/types/cart/cart.type';
-import CartTable from './cart-table-data';
+import CartTable from './cart-table';
 import PriceSummary from './price-summary';
-
-//@TODO: data 아래 형식의 포맷으로 바꿔 전달하기 / !!!! PR이후 바로 삭제 예정
+import EmptyCart from './empty-cart';
 
 const MOCK_DATA: TypeCartItem[] = new Array(3).fill({
   id: crypto.randomUUID(),
@@ -21,6 +20,7 @@ const MOCK_DATA: TypeCartItem[] = new Array(3).fill({
 });
 
 export default function Cart() {
+  if (MOCK_DATA.length === 0) return <EmptyCart />;
   return (
     <div className='mx-auto w-[80%] max-w-[1128px]'>
       <div className='flex items-center mb-3'>
@@ -31,7 +31,7 @@ export default function Cart() {
         <Button className='px-4 py-1 rounded-2xl'>선택 삭제</Button>
       </div>
 
-      <CartTable bookList={MOCK_DATA} />
+      <CartTable cartBookList={MOCK_DATA} />
 
       <PriceSummary />
 
