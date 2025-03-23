@@ -1,22 +1,15 @@
 'use client';
 
-import { DEFAULT_GENRE_LIST_ON_ERROR } from '@/constants/book-list';
-import { useGetGenreListQuery } from '@/lib/queries/use-get-genre-list-query';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-export default function BookListBestSidebar() {
+export default function BookListBestSidebar({
+  genreList,
+}: {
+  genreList: string[];
+}) {
   const params = useParams();
   const genreFromPath = decodeURIComponent(params.genre as string);
-
-  const { genreList, isPending } = useGetGenreListQuery();
-
-  if (isPending) {
-    return (
-      <div className='w-[162px] h-[500px] bg-gray animate-pulse rounded'></div>
-    );
-  }
 
   return (
     <nav>

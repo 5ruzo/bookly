@@ -1,3 +1,6 @@
+'use server';
+//서버엑션의 폴더 네이밍에 대한 합의가 되지 않아 월요일 스크럼때 대화 나눠보고 서버액션파일 따로 빼겠습니다.
+
 import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list';
 
 export const fetchGetBookListByTop50Rank = async () => {
@@ -25,7 +28,7 @@ export const fetchGetBookListByTop50Rank = async () => {
 };
 
 export const fetchGetGenreList = async () => {
-  //장르데이터 가져오기
+  //장르데이터 가져오기 하루마다 수파베이스에 요청
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/genres?select=genre`,
