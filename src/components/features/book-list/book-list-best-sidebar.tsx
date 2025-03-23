@@ -10,20 +10,7 @@ export default function BookListBestSidebar() {
   const params = useParams();
   const genreFromPath = decodeURIComponent(params.genre as string);
 
-  const [genreList, setGenreList] = useState<string[]>([]);
-
-  const { data, isPending, error } = useGetGenreListQuery();
-
-  useEffect(() => {
-    if (data) {
-      setGenreList(data);
-    }
-    if (error) {
-      //에러가 났을 때 기본 장르를 사이드바에 표시해 줌
-      console.log(error);
-      setGenreList(DEFAULT_GENRE_LIST_ON_ERROR);
-    }
-  }, [data, error]);
+  const { genreList, isPending } = useGetGenreListQuery();
 
   if (isPending) {
     return (

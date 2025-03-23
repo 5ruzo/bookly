@@ -26,6 +26,7 @@ export const fetchGetBookListByTop50Rank = async () => {
 
 export const fetchGetGenreList = async () => {
   //장르데이터 가져오기
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/genres?select=genre`,
     {
@@ -41,6 +42,7 @@ export const fetchGetGenreList = async () => {
     }
   );
   const data: Book[] = await res.json();
+  if ('message' in data) throw data;
 
   //장르 데이터 문자열 배열로 변환 ['만화','자기계발',...]
   const genreList = data.map((genreObj) => genreObj.genre);
