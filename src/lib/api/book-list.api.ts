@@ -23,3 +23,28 @@ export const fetchGetBookListByTop50Rank = async () => {
 
   return data;
 };
+
+export const fetchGetGenreList = async () => {
+  'use server';
+  //장르데이터 가져오기
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/genres?select=genre`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+      },
+      next: {
+        revalidate: BOOK_LIST_REVALIDATE_TIME,
+      },
+    }
+  );
+  const data: Book[] = await res.json();
+
+  //장르 데이터 문자열 배열로 변환 ['만화','자기계발',...]
+  const genreList = data.map((genreObj) => genreObj.genre);
+
+  return genreList;
+};
