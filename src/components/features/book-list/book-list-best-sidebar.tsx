@@ -8,6 +8,7 @@ export default function BookListBestSidebar({
 }: {
   genreList: string[];
 }) {
+  //book-list/best 페이지는 params.genre undefined
   const params = useParams();
   const genreFromPath = decodeURIComponent(params.genre as string);
 
@@ -21,7 +22,11 @@ export default function BookListBestSidebar({
           const bgColor =
             genreItem === genreFromPath.replace(/-/g, '/') && 'bg-secondary';
           return (
-            <Link key={genreItem} href={`/book-list/${formattedGenreForUrl}`}>
+            <Link
+              key={genreItem}
+              href={`/book-list/${formattedGenreForUrl}`}
+              replace={!!params.genre}
+            >
               <li
                 key={genreItem}
                 className={`${bgColor} text-sm w-[162px] h-[26px] pl-[24px] flex items-center`}
