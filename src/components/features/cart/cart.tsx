@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { TypeCartItem } from '@/types/cart/cart.type';
 import CartTable from './cart-table';
-import PriceSummary from './price-summary';
 import EmptyCart from './empty-cart';
+import PriceSummary from './price-summary';
+import Link from 'next/link';
 
 const MOCK_DATA: TypeCartItem[] = new Array(3).fill({
   id: crypto.randomUUID(),
@@ -34,9 +35,12 @@ export default function Cart() {
 
       <PriceSummary />
 
-      <div className='w-full text-center'>
-        <Button className='w-full sm:w-1/2 py-6 font-semibold'>주문하기</Button>
-      </div>
+      <Link
+        href='/order'
+        className='block w-full sm:w-[60%] mx-auto py-3 font-semibold bg-primary text-white-light text-center rounded-xl'
+      >
+        주문하기
+      </Link>
     </div>
   );
 }
