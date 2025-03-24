@@ -1,8 +1,4 @@
-import BookListItem from '@/components/features/book-list/book-list-item';
 import SearchResultView from '@/components/features/search/search-result-view';
-import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list';
-import { fetchGetBookListByTop50Rank } from '@/lib/api/book-list.api';
-import { Metadata } from 'next';
 import React from 'react';
 
 export async function generateMetadata({
