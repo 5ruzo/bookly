@@ -5,7 +5,7 @@ import { Minus, Plus } from 'lucide-react';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
 type TypeQuantityControlProps = {
   id: string;
-  price: number;
+  price?: number;
   quantity: number;
 };
 
@@ -22,7 +22,7 @@ export default function QuantityControl({
   } = useQuantityControl(id, quantity);
   return (
     <>
-      <span className='mb-5'>{formatNumberWithCommas(price)}원</span>
+      {price && <span className='mb-5'>{formatNumberWithCommas(price)}원</span>}
       <div className='border border-lightgray rounded'>
         <button
           className='p-3'
