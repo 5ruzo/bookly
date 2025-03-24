@@ -1,24 +1,8 @@
-import { API_KEY, SUPABASE_URL } from '@/constants/detail.constans';
-import { BookList } from '@/types/detail.type';
 import React from 'react';
 import { Rating } from '@/components/features/detail/detail-rating';
 import ManipulationArea from '@/components/features/detail/detail-manipulation-area';
 import { formatNumber } from '@/lib/utils/detail/format-number';
-
-const fetchGetDetail = async (bookId: string) => {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/books?id=eq.${bookId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-      apikey: API_KEY || '',
-    },
-  });
-
-  const data: BookList = await res.json();
-
-  return data[0];
-};
+import { fetchGetDetail } from '@/lib/api/detail.fetchGetDetail';
 
 export default async function page({ params }: { params: { id: string } }) {
   const data = await fetchGetDetail(params.id);
