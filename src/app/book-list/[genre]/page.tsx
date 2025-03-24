@@ -14,6 +14,26 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { genre: string };
+}) {
+  // URL 파라미터에서 장르 추출 및 포맷팅 복원
+  const genre = decodeURIComponent(params.genre as string).replace(/-/g, '/');
+
+  return {
+    title: `'${genre}' 장르의 인기있는 책 목록 - Bookly에서 인기있는 책 찾아보기`,
+    description: `Bookly에서 '${genre}' 장르의 인기있는 책 목록을 확인하세요.`,
+
+    openGraph: {
+      title: `Bookly - '${genre}'장르의 인기있는 책`,
+      description: `Bookly에서 '${genre}' 장르의 인기있는 책 목록을 확인하세요.`,
+      images: '/images/logo.png',
+    },
+  };
+}
+
 export default async function BookListGenrePage({
   params,
 }: {
