@@ -4,6 +4,7 @@ import type React from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import { QuantityInputProps } from '@/types/detail.type';
 import { formatNumber } from '@/lib/utils/detail/format-number';
+import { sliceNumber } from '@/lib/utils/detail.util';
 
 const minimum = 1;
 const maximum = 99;
@@ -27,31 +28,38 @@ export default function QuantityInput({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 변화 값을 state에 저장
-    const newValue = e.target.value === '' ? minimum : Number(e.target.value);
-    // 저장할 값의 유효성 검사
-    if (isNaN(newValue)) return;
-    if (maximum !== undefined && newValue < maximum) return;
-    if (minimum !== undefined && newValue > minimum) return;
-    onChange(newValue);
+    // 값이 숫자가 아니면 무시하지 않고 빈 값은 허용
+    const newValue = e.target.value === '' ? '' : Number(e.target.value);
+    if (isNaN(newValue as number)) return;
+    onChange(newValue as number);
+  };
+
+  const handleBlur = () => {
+    // 유효성 검사 후 값 조정
+    if (value < minimum) {
+      onChange(minimum);
+    } else if (value > maximum) {
+      onChange(maximum);
+    }
   };
 
   return (
     <div>
       <div className='space-y-4'>
         <div className='flex items-center gap-4'>
-          <div className='flex h-10 border border-gray rounded-md overflow-hidden'>
+          <div className='flex h-6 md:h-10 border border-gray rounded-md overflow-hidden w-full max-w-20'>
             <input
               type='text'
               value={value}
               onChange={handleChange}
-              className='w-full px-3 py-1 text-md focus:outline-none'
+              onBlur={handleBlur}
+              className='px-3 w-full py-1 text-md focus:outline-none'
             />
-            <div className='flex flex-col border-l border-gray'>
+            <div className='opacity-0 md:opacity-100 flex flex-col border-l border-gray'>
               <button
                 type='button'
                 onClick={handleIncrement}
-                className='flex items-center justify-center h-5 w-8 active:bg-gray'
+                className='flex items-center justify-center h-5 w-6 active:bg-gray'
               >
                 <ChevronUp size={14} />
               </button>
@@ -59,14 +67,14 @@ export default function QuantityInput({
               <button
                 type='button'
                 onClick={handleDecrement}
-                className='flex items-center justify-center h-5 w-8 active:bg-gray'
+                className='flex items-center justify-center h-5 w-6 active:bg-gray'
               >
                 <ChevronDown size={14} />
               </button>
             </div>
           </div>
-          <span className='text-sm text-gray'>
-            총 상품금액: {formatNumber(Number(price) * value)}
+          <span className='text-ss md:text-sm text-gray'>
+            총 금액 :{sliceNumber(formatNumber(Number(price) * value))}
           </span>
         </div>
       </div>
