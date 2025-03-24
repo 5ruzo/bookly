@@ -9,9 +9,9 @@ import { twMerge } from 'tailwind-merge';
  * @example
  * formatNumberWithCommas(1234567); // "1,234,567"
  */
-export function formatNumberWithCommas(number: number | undefined) {
+export function formatNumberWithCommas(number: number | undefined): string {
   if (!number) {
-    return 0;
+    return '0'; // 문자열 반환으로 변경
   }
   return number.toLocaleString();
 }
@@ -24,7 +24,7 @@ export function formatNumberWithCommas(number: number | undefined) {
  * @example
  * normalizedRating(8); // 4
  */
-export function normalizedRating(rating: number) {
+export function normalizedRating(rating: number): number {
   return Math.max(0, Math.min(10, rating)) / 2;
 }
 
@@ -37,6 +37,6 @@ export function normalizedRating(rating: number) {
  * @example
  * mergeClasses('bg-red-500', 'text-white', 'hover:bg-red-700');
  */
-export function mergeClasses(...inputs: ClassValue[]) {
+export function mergeClasses(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
