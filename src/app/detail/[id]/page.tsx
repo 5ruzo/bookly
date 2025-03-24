@@ -1,44 +1,52 @@
 import React from 'react';
-import { Rating } from '@/components/features/detail/detail-rating';
-import ManipulationArea from '@/components/features/detail/detail-manipulation-area';
-import { formatNumber } from '@/lib/utils/detail/format-number';
 import { fetchGetDetail } from '@/lib/api/detail.fetchGetDetail';
+import ProductInfo from '@/components/features/detail/detail-product-info';
 
 export default async function page({ params }: { params: { id: string } }) {
   const data = await fetchGetDetail(params.id);
 
-  // 수령 예상일 계산을 위한 기본값
-  const timestamp = Date.now();
-  const date = new Date(timestamp);
-
   if (!data) return <p>데이터가 없습니다.</p>;
   return (
-    <div>
-      <p>제목: {data.title}</p>
-      <p>저자: {data.author}</p>
-      <p>출판사: {data.publisher}</p>
-      <p>출판일: {data.published_date}</p>
-      <div>
-        <img src={data.image_url} alt={data.title} />
+    <div className='flex justify-center'>
+      <div className='w-4/6 md:min-w-[990px]'>
+        <div className='mb-6 '>
+          <div className='md:flex items-center gap-4'>
+            <h1 className='text-xl md:text-2xl font-bold break-keep'>
+              {data.title}
+            </h1>
+            <span className='text-sm font-normal text-gray mt-1'>
+              {data.author}
+            </span>
+          </div>
+          <div className='flex gap-4'>
+            <p className='text-md text-gray mt-2'>{data.publisher}</p>
+            <p className='text-md text-gray mt-2'>{data.published_date}</p>
+          </div>
+        </div>
+        <hr className='my-6' />
+
+        <div className='flex flex-col md:flex-row gap-4 md:gap-16 mb-12'>
+          <div className='md:w-1/2'>
+            <img
+              className='md:w-4/5 px-12'
+              src={data.image_url}
+              alt={data.title}
+            />
+          </div>
+          <ProductInfo data={data} price={data.price} />
+        </div>
+        <hr className='my-6' />
+
+        <p className='text-mld'>
+          <h2 className='text-lg py-4'>장르</h2> {data.genre}
+        </p>
+
+        <hr className='my-6' />
+        <div>
+          <h3 className='text-lg py-4'>책 소개</h3>
+          <p className='text-mld break-keep'>{data.description}</p>
+        </div>
       </div>
-      <p>가격: {formatNumber(Number(data.price))}원</p>
-      <div>
-        <span>배송료: 3,000원</span>
-        <span className='text-md text-gray'>(제주도 6,000원)</span>
-      </div>
-      <p>
-        수령 예상일:
-        {/* 오늘을 기준으로 3일 이후 */}
-        {new Date(date.setDate(date.getDate() + 3)).toLocaleDateString()}
-      </p>
-      <div className='flex gap-2'>
-        <p>평점:</p>
-        <Rating rating={data.rating} />
-        <span className='sr-only'>별점 {data.rating}점</span>
-      </div>
-      <ManipulationArea title={data.title} price={data.price} />
-      <p>장르: {data.genre}</p>
-      <p>책 소개: {data.description}</p>
     </div>
   );
 }
