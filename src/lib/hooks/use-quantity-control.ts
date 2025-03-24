@@ -1,7 +1,9 @@
 'use client';
 
+import { CONTROL_TYPE } from '@/constants/quantity-control-constant';
 import useCartStore from '@/store/cart/cart-store';
 import { useEffect, useState } from 'react';
+const { INCREASE, DECREASE } = CONTROL_TYPE;
 
 export const useQuantityControl = (id: string, storeQuantity: number) => {
   const { calcTotalPrice, updateQuantity, increaseQuantity, decreaseQuantity } =
@@ -11,9 +13,9 @@ export const useQuantityControl = (id: string, storeQuantity: number) => {
   useEffect(() => setQuantity(storeQuantity), [storeQuantity]);
 
   const handleBookQuantityByButton = (
-    handleType: 'increase' | 'decrease'
+    handleType: typeof INCREASE | typeof DECREASE
   ): void => {
-    if (handleType === 'increase') {
+    if (handleType === INCREASE) {
       increaseQuantity(id);
       calcTotalPrice();
     } else if (storeQuantity > 1) {

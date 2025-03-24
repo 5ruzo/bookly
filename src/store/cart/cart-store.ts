@@ -1,7 +1,8 @@
+import { CONTROL_TYPE } from '@/constants/quantity-control-constant';
 import { TypeCartBooks, TypeCartItem } from '@/types/cart/cart.type';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-
+const { INCREASE, DECREASE } = CONTROL_TYPE;
 type TypeCartStore = {
   cartBooks: TypeCartItem[];
   totalPrice: number;
@@ -61,11 +62,11 @@ const useCartStore = create<TypeCartStore>()(
       ...initialState,
       increaseQuantity: (id) =>
         set((state) => ({
-          cartBooks: handleQuantity(state.cartBooks, id, 'increase'),
+          cartBooks: handleQuantity(state.cartBooks, id, INCREASE),
         })),
       decreaseQuantity: (id) =>
         set((state) => ({
-          cartBooks: handleQuantity(state.cartBooks, id, 'decrease'),
+          cartBooks: handleQuantity(state.cartBooks, id, DECREASE),
         })),
       updateQuantity: (id, newQuantity) =>
         set((state) => ({
@@ -92,13 +93,13 @@ const calculateTotalPrice = (cartBooks: TypeCartItem[]): number => {
 const handleQuantity = (
   books: TypeCartItem[],
   id: TypeCartItem['id'],
-  type: 'increase' | 'decrease'
+  type: typeof INCREASE | typeof DECREASE
 ) => {
   return books.map((book) =>
     book.id === id
       ? {
           ...book,
-          quantity: type === 'increase' ? book.quantity + 1 : book.quantity - 1,
+          quantity: type === INCREASE ? book.quantity + 1 : book.quantity - 1,
         }
       : book
   );

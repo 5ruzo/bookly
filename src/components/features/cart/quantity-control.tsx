@@ -1,7 +1,8 @@
+import { CONTROL_TYPE } from '@/constants/quantity-control-constant';
 import { useQuantityControl } from '@/lib/hooks/use-quantity-control';
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
 import { Minus, Plus } from 'lucide-react';
-
+const { INCREASE, DECREASE } = CONTROL_TYPE;
 type TypeQuantityControlProps = {
   id: string;
   price: number;
@@ -25,7 +26,7 @@ export default function QuantityControl({
       <div className='border border-lightgray rounded'>
         <button
           className='p-3'
-          onClick={() => handleBookQuantityByButton('decrease')}
+          onClick={() => handleBookQuantityByButton(DECREASE)}
         >
           <Minus size={10} />
         </button>
@@ -38,7 +39,7 @@ export default function QuantityControl({
         />
         <button
           className='p-3'
-          onClick={() => handleBookQuantityByButton('increase')}
+          onClick={() => handleBookQuantityByButton(INCREASE)}
         >
           <Plus size={10} />
         </button>
