@@ -1,10 +1,11 @@
+import normalizedRating from '@/lib/utils/detail/normalized-rating';
 import { RatingProps } from '@/types/detail.type';
 import { Star } from 'lucide-react';
 
 export function Rating({ rating }: RatingProps) {
   const starSize = 25;
 
-  const normalizedRating = Math.max(0, Math.min(10, rating)) / 2;
+  const ratingScore = normalizedRating(rating);
 
   // 온전한 별 5개짜리 배열
   const stars = Array(5).fill(0);
@@ -15,7 +16,7 @@ export function Rating({ rating }: RatingProps) {
         const starValue = index + 1;
 
         // 별이 온전한지 절반짜리 별인지 비어있는지 판단하는 조건문
-        if (starValue <= normalizedRating) {
+        if (starValue <= ratingScore) {
           // 온전한 별
           return (
             <Star
@@ -24,7 +25,7 @@ export function Rating({ rating }: RatingProps) {
               className='text-yellow-400 fill-yellow-400'
             />
           );
-        } else if (starValue - 0.5 <= normalizedRating) {
+        } else if (starValue - 0.5 <= ratingScore) {
           // 절반짜리 별
           return (
             <div key={index} className='relative'>
