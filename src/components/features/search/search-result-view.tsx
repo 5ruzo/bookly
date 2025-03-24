@@ -1,8 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import BookListItem from '../book-list/book-list-item';
-import { fetchGetSearchedBookList } from '@/lib/api/search.api';
 import { useSearchParams } from 'next/navigation';
 import { useGetBooksBySearchTerm } from '@/lib/queries/use-get-books-by-search-term.query';
 import SearchLoading from '@/app/search/loading';
