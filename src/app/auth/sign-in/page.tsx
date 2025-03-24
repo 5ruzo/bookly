@@ -5,29 +5,37 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/lib/utils/auth/schemas';
-import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/useAuthStore';
+import { useRouter } from 'next/navigation';
+import { loginSchema } from '@/lib/utils/auth/schemas';
 
-const SignInPage = () => {
+const SignIn = () => {
+  // 자동 로그인 상태를 관리하는 useState
   const [rememberMe, setRememberMe] = useState(false);
-  const { user, signIn } = useAuthStore();
+
+  // 인증 스토어에서 signIn 함수, isLoading, error 상태를 가져옴
+  const { signIn, isLoading, error } = useAuthStore();
+
+  // 페이지 이동을 위한 useRouter 훅 사용
   const router = useRouter();
+
+  // react-hook-form을 설정
   const { register, handleSubmit, formState } = useForm({
-    mode: 'onBlur',
+    mode: 'onBlur', // 입력 필드에서 포커스가 벗어날 때 유효성 검사
     defaultValues: {
       email: '',
       password: '',
     },
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema), // zod 스키마로 유효성 검사 적용
   });
 
+  // 로그인 폼 제출 시 호출되는 함수
   const onSubmit = async (values: FieldValues) => {
     try {
+      // signIn 함수 실행 (이메일, 비밀번호, 자동 로그인 여부 전달)
       await signIn(values.email, values.password, rememberMe);
-      if (user !== null) {
-        router.push('/');
-      }
+      // 로그인 성공 시 홈 페이지로 이동
+      router.push('/');
     } catch (err) {
       console.error('Sign in error:', err);
     }
@@ -35,10 +43,12 @@ const SignInPage = () => {
 
   return (
     <div className='flex min-h-screen'>
+      {/* 페이지 전체를 감싸는 컨테이너 */}
       <div className='flex flex-1 items-center justify-center p-6'>
+        {/* 로그인 카드 */}
         <div className='w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[var(--color-secondary)] flex overflow-hidden'>
-          {/* 이미지 영역 */}
-          <div className='w-[50%] relative flex items-center justify-center'>
+          {/* 좌측: 이미지 영역 */}
+          <div className='w-[45%] relative flex items-center justify-center'>
             <div className='relative w-full h-full max-w-full max-h-full'>
               <Image
                 src='/images/login-image.png'
@@ -51,15 +61,25 @@ const SignInPage = () => {
             </div>
           </div>
 
-          {/* 오른쪽 폼 */}
-          <div className='p-6 w-[50%] '>
+          {/* 우측: 로그인 폼 영역 */}
+          <div className='p-6 w-[55%]'>
             <div className='w-[100%] h-full bg-[var(--color-white-light)] p-12 rounded-xl'>
+              {/* 로그인 제목 */}
               <h2 className='text-2xl font-semibold mb-6 text-left'>Sign In</h2>
 
+              {/* 에러 메시지 표시 */}
+              {error && (
+                <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>
+                  {error}
+                </div>
+              )}
+
+              {/* 로그인 입력 폼 */}
               <form
                 className='space-y-5 mt-16'
                 onSubmit={handleSubmit(onSubmit)}
               >
+                {/* 이메일 입력 필드 */}
                 <div>
                   <label className='block text-base mb-2'>
                     이메일
@@ -71,13 +91,15 @@ const SignInPage = () => {
                       placeholder='Email'
                     />
                   </label>
+                  {/* 이메일 유효성 검사 오류 메시지 */}
                   <div className='ml-1 mt-2 text-red-500'>
                     {formState.errors.email && (
-                      <span>{formState.errors.email.message}</span>
+                      <span>{formState.errors.email.message as string}</span>
                     )}
                   </div>
                 </div>
 
+                {/* 비밀번호 입력 필드 */}
                 <div>
                   <label className='block text-base mb-2'>
                     비밀번호
@@ -89,13 +111,15 @@ const SignInPage = () => {
                       placeholder='Password'
                     />
                   </label>
+                  {/* 비밀번호 유효성 검사 오류 메시지 */}
                   <div className='ml-1 mt-2 text-red-500'>
                     {formState.errors.password && (
-                      <span>{formState.errors.password.message}</span>
+                      <span>{formState.errors.password.message as string}</span>
                     )}
                   </div>
                 </div>
 
+                {/* 자동 로그인 & 비밀번호 찾기 링크 */}
                 <div className='flex items-center justify-between text-base'>
                   <div className='flex items-center gap-2'>
                     <input
@@ -107,33 +131,34 @@ const SignInPage = () => {
                     <label htmlFor='rememberMe'>자동 로그인</label>
                   </div>
                   <Link
-                    href='/forgot-password'
+                    href='forgot-password'
                     className='text-gray-500 hover:underline'
                   >
                     비밀번호 찾기
                   </Link>
                 </div>
 
+                {/* 로그인 버튼 */}
                 <button
-                  disabled={!formState.isValid}
+                  disabled={!formState.isValid || isLoading} // 유효하지 않거나 로딩 중일 때 비활성화
                   type='submit'
                   className='w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition'
                 >
-                  로그인
+                  {isLoading ? '로그인 중...' : '로그인'}
                 </button>
 
+                {/* 네이버 로그인 버튼 */}
                 <button
                   type='button'
                   className='w-full py-3 bg-[#03CF5D] text-white rounded-xl flex items-center justify-center gap-2'
                 >
+                  {/* 네이버 로고 SVG */}
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     width='32'
                     height='30'
                     fill='none'
                     viewBox='-4 -4 32 30'
-                    id='ico_logo'
-                    x='32'
                   >
                     <path
                       fillRule='evenodd'
@@ -151,15 +176,14 @@ const SignInPage = () => {
                         gradientUnits='userSpaceOnUse'
                       >
                         <stop stopColor='var(--color-white-light)' />
-                        <stop offset='0' stopColor='var(--color-white-light)' />
-                        <stop offset='1' stopColor='var(--color-white-light)' />
                       </linearGradient>
                     </defs>
-                  </svg>{' '}
+                  </svg>
                   네이버 로그인
                 </button>
               </form>
 
+              {/* 회원가입 링크 */}
               <div className='mt-6 text-center text-sm'>
                 <p>
                   계정이 없으신가요?{' '}
@@ -179,4 +203,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignIn;

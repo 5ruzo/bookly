@@ -1,0 +1,119 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { FieldValues, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import useAuthStore from '@/store/useAuthStore';
+import { forgotPasswordSchema } from '@/lib/utils/auth/schemas';
+
+const ForgotPassword = () => {
+  // zustand 스토어에서 비밀번호 재설정 함수, 로딩 상태, 에러 메시지 가져오기
+  const { resetPassword, isLoading, error } = useAuthStore();
+
+  // 비밀번호 재설정 요청 완료 여부를 확인하는 상태
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+
+  // react-hook-form 설정: 이메일 필드와 zod를 통한 유효성 검사 적용
+  const { register, handleSubmit, formState } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      email: '',
+    },
+    resolver: zodResolver(forgotPasswordSchema), // zod 스키마로 유효성 검사 적용
+  });
+
+  // 폼 제출 시 실행되는 비동기 함수
+  const onSubmit = async (values: FieldValues) => {
+    try {
+      // resetPassword 함수로 이메일 전송
+      await resetPassword(values.email);
+      // 성공 시 제출 완료 상태로 변경
+      setIsSubmitted(true);
+    } catch (err) {
+      // 에러 발생 시 콘솔에 오류 메시지 출력
+      console.error('Reset password error:', err);
+    }
+  };
+
+  return (
+    <div className='flex min-h-screen'>
+      {/* 화면 전체를 감싸는 컨테이너 */}
+      <div className='flex flex-1 items-center justify-center p-6'>
+        {/* 비밀번호 찾기 카드 */}
+        <div className='w-full max-w-md p-8 bg-white rounded-xl shadow-md'>
+          {/* 페이지 제목 */}
+          <h2 className='text-2xl font-semibold mb-6 text-center'>
+            비밀번호 찾기
+          </h2>
+
+          {/* 서버에서 받은 에러 메시지 표시 */}
+          {error && (
+            <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>
+              {error}
+            </div>
+          )}
+
+          {/* 비밀번호 재설정 링크 발송 완료 시 나타나는 메시지 */}
+          {isSubmitted ? (
+            <div className='text-center'>
+              {/* 성공 메시지 */}
+              <div className='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4'>
+                비밀번호 재설정 링크가 이메일로 전송되었습니다. 이메일을
+                확인해주세요.
+              </div>
+              {/* 로그인 페이지로 이동하는 링크 */}
+              <Link
+                href='/auth/sign-in'
+                className='text-blue-600 hover:underline'
+              >
+                로그인 페이지로 돌아가기
+              </Link>
+            </div>
+          ) : (
+            // 비밀번호 찾기 폼
+            <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+              {/* 이메일 입력 필드 */}
+              <div>
+                <label className='block text-sm font-medium mb-2'>이메일</label>
+                <input
+                  type='email'
+                  {...register('email')}
+                  className='w-full px-4 py-3 border rounded-xl bg-gray-50'
+                  placeholder='가입한 이메일을 입력하세요'
+                />
+                {/* 이메일 유효성 검사 오류 메시지 */}
+                <div className='mt-2 text-red-500'>
+                  {formState.errors.email && (
+                    <span>{formState.errors.email.message as string}</span>
+                  )}
+                </div>
+              </div>
+
+              {/* 비밀번호 재설정 링크 요청 버튼 */}
+              <button
+                type='submit'
+                disabled={!formState.isValid || isLoading}
+                className='w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition'
+              >
+                {isLoading ? '처리 중...' : '비밀번호 재설정 링크 받기'}
+              </button>
+
+              {/* 로그인 페이지로 돌아가는 링크 */}
+              <div className='text-center mt-4'>
+                <Link
+                  href='/auth/sign-in'
+                  className='text-blue-600 hover:underline'
+                >
+                  로그인 페이지로 돌아가기
+                </Link>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ForgotPassword;
