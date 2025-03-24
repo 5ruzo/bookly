@@ -10,7 +10,7 @@ export default function LikeButton() {
   return (
     <Button
       variant='outline'
-      className={`${isFavorite ? 'bg-primary text-white border-primary' : 'text-primary border-primary'} rounded-xl h-14 w-14 p-0 flex items-center justify-center`}
+      className={`${isFavorite ? 'bg-primary text-white border-primary' : 'text-primary border-primary'} rounded-xl h-12 w-12 md:h-14 md:w-14 p-0 flex items-center justify-center`}
       onClick={() => {
         setIsFavorite(!isFavorite);
         if (isFavorite) alert('찜 해제!');
