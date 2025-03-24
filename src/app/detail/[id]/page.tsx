@@ -8,7 +8,7 @@ export default async function page({ params }: { params: { id: string } }) {
   if (!data) return <p>데이터가 없습니다.</p>;
   return (
     <div className='flex justify-center'>
-      <div className='w-4/6 md:min-w-[990px]'>
+      <div className='max-w-[1000px] md:min-w-[800px]'>
         <div className='mb-6 '>
           <div className='md:flex items-center gap-4'>
             <h1 className='text-xl md:text-2xl font-bold break-keep'>
