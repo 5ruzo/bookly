@@ -6,7 +6,7 @@ type BookSummaryProps = {
 
 export default function BookSummary({ book }: BookSummaryProps) {
   return (
-    <dl className='flex items-center w-full sm:w-1/2 py-4'>
+    <dl className='flex items-center w-full py-4'>
       <dt className='sr-only'>책 이미지</dt>
       <dd className='flex-shrink-0'>
         <img
