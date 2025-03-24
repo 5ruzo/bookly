@@ -19,11 +19,8 @@ export default function Cart() {
         </label>
         <Button className='px-4 py-1 rounded-2xl'>선택 삭제</Button>
       </div>
-
       <CartTable />
-
       <PriceSummary />
-
       <Link
         href='/order'
         className='block w-full sm:w-[60%] mx-auto py-3 font-semibold bg-primary text-white-light text-center rounded-xl'

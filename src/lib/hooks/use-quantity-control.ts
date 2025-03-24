@@ -4,7 +4,8 @@ import useCartStore from '@/store/cart/cart-store';
 import { useEffect, useState } from 'react';
 
 export const useQuantityControl = (id: string, storeQuantity: number) => {
-  const { updateQuantity, increaseQuantity, decreaseQuantity } = useCartStore();
+  const { calcTotalPrice, updateQuantity, increaseQuantity, decreaseQuantity } =
+    useCartStore();
   const [quantity, setQuantity] = useState(storeQuantity);
 
   useEffect(() => setQuantity(storeQuantity), [storeQuantity]);
@@ -12,9 +13,12 @@ export const useQuantityControl = (id: string, storeQuantity: number) => {
   const handleBookQuantityByButton = (
     handleType: 'increase' | 'decrease'
   ): void => {
-    if (handleType === 'increase') increaseQuantity(id);
-    else if (storeQuantity > 1) {
+    if (handleType === 'increase') {
+      increaseQuantity(id);
+      calcTotalPrice();
+    } else if (storeQuantity > 1) {
       decreaseQuantity(id);
+      calcTotalPrice();
     }
   };
 
@@ -27,8 +31,10 @@ export const useQuantityControl = (id: string, storeQuantity: number) => {
     if (!quantity || quantity < 1) {
       setQuantity(1);
       updateQuantity(id, 1);
+      calcTotalPrice();
     } else {
       updateQuantity(id, quantity);
+      calcTotalPrice();
     }
   };
 

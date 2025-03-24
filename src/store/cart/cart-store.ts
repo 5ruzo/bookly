@@ -4,12 +4,14 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 type TypeCartStore = {
   cartBooks: TypeCartItem[];
+  totalPrice: number;
   increaseQuantity: (id: TypeCartBooks['id']) => void;
   decreaseQuantity: (id: TypeCartBooks['id']) => void;
   updateQuantity: (
     id: TypeCartBooks['id'],
     newQuantity: TypeCartBooks['quantity']
   ) => void;
+  calcTotalPrice: () => void;
 };
 
 //@TODO: store로 보낼 때 이런 형태로 보내달라고 요청하기!
@@ -50,6 +52,7 @@ const initialState = {
       price: 15000,
     },
   ],
+  totalPrice: 0,
 };
 
 const useCartStore = create<TypeCartStore>()(
@@ -70,6 +73,10 @@ const useCartStore = create<TypeCartStore>()(
             book.id === id ? { ...book, quantity: newQuantity } : book
           ),
         })),
+      calcTotalPrice: () =>
+        set((state) => ({
+          totalPrice: calculateTotalPrice(state.cartBooks),
+        })),
     }),
     {
       name: 'cartList',
@@ -77,6 +84,10 @@ const useCartStore = create<TypeCartStore>()(
     }
   )
 );
+
+const calculateTotalPrice = (cartBooks: TypeCartItem[]): number => {
+  return cartBooks.reduce((acc, book) => acc + book.price * book.quantity, 0);
+};
 
 const handleQuantity = (
   books: TypeCartItem[],
