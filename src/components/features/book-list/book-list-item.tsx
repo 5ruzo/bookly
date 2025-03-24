@@ -15,7 +15,7 @@ export default function BookListItem({
   return (
     <li>
       <Link href={`/detail/${id}`}>
-        <div className='w-[918px] flex gep-[72px]'>
+        <div className='w-[918px] flex gap-[72px]'>
           <img
             src={image_url}
             alt={`${title}의 표지 이미지`}
@@ -44,7 +44,7 @@ export default function BookListItem({
               <dd className='text-2xl mt-[60px]'>{price}원</dd>
 
               <dt className='sr-only'>책 소개</dt>
-              <dd className='text-xl text-gray mt-[20px] line-clamp-2 max-w-[566px] hover:whitespace-normal hover:bg-black hover:text-white hover:p-2 hover:absolute hover:z-10 hover:line-clamp-none'>
+              <dd className='text-xl text-gray mt-[20px] line-clamp-2 max-w-[566px]'>
                 {description}
               </dd>
             </dl>
