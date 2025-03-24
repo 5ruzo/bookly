@@ -6,8 +6,6 @@ export default async function BooKListLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const genreList = await fetchGetGenreList();
-
   return (
     <SideLayout
       SidebarContent={() => <>{/* 필터를 담당할 컴포넌트 생성해서 넣기 */}</>}

@@ -13,6 +13,7 @@ const Header = () => {
   const { signOut, isAuthenticated } = useAuthStore();
 
   const [inputTextSearchBar, setInputTextSearchBar] = useState<string>('');
+
   const router = useRouter();
 
   const navigationLinks: LinkItem[] = isAuthenticated
@@ -34,6 +35,7 @@ const Header = () => {
   const handleSearchInputSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputTextSearchBar === '') return;
+    setInputTextSearchBar('');
     router.push(`/search?query=${inputTextSearchBar}`);
   };
 
