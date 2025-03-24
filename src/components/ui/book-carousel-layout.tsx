@@ -14,11 +14,11 @@ import {
   formatNumberWithCommas,
   normalizedRating,
 } from '@/lib/utils/common.util';
-import { SlidesToOneScroll } from '@/constants/common.constant';
+import { SLIDES_TO_ONE_SCROLL } from '@/constants/common.constant';
 
 function BookCarouselLayout(props: { bookList: CardForCarousel[] }) {
   const carouselOptions = {
-    slidesToScroll: SlidesToOneScroll,
+    slidesToScroll: SLIDES_TO_ONE_SCROLL,
   };
 
   return (
