@@ -3,8 +3,8 @@
 import type React from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 import { QuantityInputProps } from '@/types/detail.type';
-import { formatNumber } from '@/lib/utils/detail/format-number';
 import { sliceNumber } from '@/lib/utils/detail.util';
+import { formatNumberWithCommas } from '@/lib/utils/common.util';
 
 const minimum = 1;
 const maximum = 99;
@@ -74,7 +74,8 @@ export default function QuantityInput({
             </div>
           </div>
           <span className='text-ss md:text-sm text-gray'>
-            총 금액 :{sliceNumber(formatNumber(Number(price) * value))}
+            총 금액 :
+            {sliceNumber(formatNumberWithCommas(Number(price) * value))}
           </span>
         </div>
       </div>

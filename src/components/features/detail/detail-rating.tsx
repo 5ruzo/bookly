@@ -1,4 +1,4 @@
-import normalizedRating from '@/lib/utils/detail/normalized-rating';
+import { normalizedRating } from '@/lib/utils/common.util';
 import { RatingProps } from '@/types/detail.type';
 import { Star } from 'lucide-react';
 

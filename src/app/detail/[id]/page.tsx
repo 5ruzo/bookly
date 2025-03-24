@@ -37,9 +37,9 @@ export default async function page({ params }: { params: { id: string } }) {
         </div>
         <hr className='my-6' />
 
-        <p className='text-mld'>
-          <h2 className='text-lg py-4'>장르</h2> {data.genre}
-        </p>
+        <div className='text-mld'>
+          <h2 className='text-lg py-4'>장르</h2> <span>{data.genre}</span>
+        </div>
 
         <hr className='my-6' />
         <div>

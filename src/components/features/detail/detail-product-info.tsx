@@ -1,10 +1,10 @@
 'use client';
-import { formatNumber } from '@/lib/utils/detail/format-number';
 import { ProductInfoProps } from '@/types/detail.type';
 import { Rating } from './detail-rating';
 import ButtonArea from './detail-button-area';
 import { useState } from 'react';
 import QuantityInput from './detail-quantity-input';
+import { formatNumberWithCommas } from '@/lib/utils/common.util';
 
 export default function ProductInfo({ data, price }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
@@ -24,7 +24,7 @@ export default function ProductInfo({ data, price }: ProductInfoProps) {
           <h2>수량</h2>
         </div>
         <div className='grid text-md md:text-lg content-around'>
-          <p>{formatNumber(Number(data.price))}원</p>
+          <p>{formatNumberWithCommas(Number(data.price))}원</p>
           <div>
             <span>3,000원</span>
             <span className='text-md text-gray'>(제주도 6,000원)</span>
