@@ -9,6 +9,7 @@ import PriceSummary from './price-summary';
 
 export default function Cart() {
   const { cartBooks } = useCartStore();
+
   if (cartBooks.length === 0) return <EmptyCart />;
   return (
     <div className='mx-auto w-[80%] max-w-[1128px]'>
