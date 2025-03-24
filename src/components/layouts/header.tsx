@@ -7,18 +7,23 @@ import { Search } from 'lucide-react';
 import { LinkItem } from '@/types/layout.type';
 import HeaderDropdownMenu from './header-dropdown-menu';
 import useAuthStore from '@/store/useAuthStore';
+import { authService } from '@/lib/api/authService';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
-  const { signOut, isAuthenticated } = useAuthStore();
+  const { isLogin, clearUser } = useAuthStore();
+  const router = useRouter();
 
-  const navigationLinks: LinkItem[] = isAuthenticated
+  const navigationLinks: LinkItem[] = isLogin
     ? [
         { text: '마이페이지', href: '/mypage' },
         { text: '장바구니(0)', href: '/cart' },
         {
           text: '로그아웃',
-          onClick: () => {
-            signOut();
+          onClick: async () => {
+            await authService.signOut();
+            clearUser();
+            router.push('/');
           },
         },
       ]

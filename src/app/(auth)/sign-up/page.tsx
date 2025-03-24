@@ -8,10 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useAuthStore from '@/store/useAuthStore';
 import { useRouter } from 'next/navigation';
 import { signupSchema } from '@/lib/utils/auth/schemas';
+import { authService } from '@/lib/api/authService';
 
 const SignUp = () => {
-  const { signUp, checkEmailExists, verifyPhone, isLoading, error } =
-    useAuthStore(); // 인증 관련 store에서 필요한 함수들 가져오기
+  const { setUser } = useAuthStore();
   const router = useRouter();
   const [emailChecked, setEmailChecked] = useState(false); // 이메일 중복 검사 여부 상태
   const [emailCheckMessage, setEmailCheckMessage] = useState<string | null>(
@@ -22,17 +22,16 @@ const SignUp = () => {
     null
   ); // 휴대폰 인증 메시지
 
-  const { register, handleSubmit, formState, getValues, setValue, trigger } =
-    useForm({
-      mode: 'onBlur', // 입력이 끝날 때마다 유효성 검사
-      defaultValues: {
-        email: '',
-        password: '',
-        confirmPassword: '',
-        phone: '',
-      },
-      resolver: zodResolver(signupSchema), // Zod로 입력 값 유효성 검사
-    });
+  const { register, handleSubmit, formState, getValues, trigger } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+      phone: '',
+    },
+    resolver: zodResolver(signupSchema), // Zod로 입력 값 유효성 검사
+  });
 
   // 이메일 중복 검사 함수
   const handleEmailCheck = async () => {
@@ -41,7 +40,7 @@ const SignUp = () => {
     const isValid = await trigger('email'); // 이메일 유효성 검사
     if (!isValid) return; // 유효하지 않으면 종료
 
-    const exists = await checkEmailExists(email); // 이메일 중복 여부 확인
+    const exists = await authService.checkEmailExists(email); // 이메일 중복 여부 확인
     if (exists) {
       setEmailChecked(false);
       setEmailCheckMessage('이미 사용 중인 이메일입니다.');
@@ -58,7 +57,7 @@ const SignUp = () => {
     const isValid = await trigger('phone'); // 전화번호 유효성 검사
     if (!isValid) return; // 유효하지 않으면 종료
 
-    const verified = await verifyPhone(phone); // 전화번호 인증 확인
+    const verified = await authService.verifyPhone(phone); // 전화번호 인증 확인
     if (verified) {
       setPhoneVerified(true);
       setPhoneVerifyMessage('인증이 완료되었습니다.');
@@ -81,10 +80,23 @@ const SignUp = () => {
     }
 
     try {
-      await signUp(values.email, values.password, values.phone); // 회원가입 요청
+      const { data, error } = await authService.signUp(
+        values.email,
+        values.password,
+        values.phone
+      ); // 회원가입 요청
+
+      if (error) {
+        console.error('회원가입 에러:', error);
+      }
+
+      if (data?.user) {
+        setUser(data.user);
+        router.push('/');
+      }
       router.push('/'); // 홈페이지로 리다이렉트
     } catch (err) {
-      console.error('Sign up error:', err); // 에러 처리
+      console.error('Sign up error:', err);
     }
   };
 
@@ -110,12 +122,6 @@ const SignUp = () => {
           <div className='p-6 w-[55%]'>
             <div className='w-[100%] bg-white p-8 rounded-xl'>
               <h2 className='text-xl font-semibold mb-6 text-left'>Sign Up</h2>
-
-              {error && (
-                <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>
-                  {error}
-                </div>
-              )}
 
               <form className='space-y-5' onSubmit={handleSubmit(onSubmit)}>
                 {/* 이메일 입력 */}
@@ -228,11 +234,11 @@ const SignUp = () => {
 
                 {/* 회원가입 버튼 */}
                 <button
-                  disabled={!formState.isValid || isLoading}
+                  disabled={!formState.isValid}
                   type='submit'
                   className='w-10/12 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition mb-2'
                 >
-                  {isLoading ? '처리 중...' : '회원가입'}
+                  회원가입
                 </button>
               </form>
 

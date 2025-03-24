@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { supabase } from '@/store/useAuthStore'; //
 import { resetPasswordSchema } from '@/lib/utils/auth/schemas';
+import { supabase } from '@/lib/api/supabaseClient';
 
 const ResetPassword = () => {
   // 로딩 상태, 에러 메시지, 제출 완료 상태를 관리하는 로컬 상태

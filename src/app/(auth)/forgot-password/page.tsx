@@ -4,13 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useAuthStore from '@/store/useAuthStore';
 import { forgotPasswordSchema } from '@/lib/utils/auth/schemas';
+import { authService } from '@/lib/api/authService';
 
 const ForgotPassword = () => {
-  // zustand 스토어에서 비밀번호 재설정 함수, 로딩 상태, 에러 메시지 가져오기
-  const { resetPassword, isLoading, error } = useAuthStore();
-
   // 비밀번호 재설정 요청 완료 여부를 확인하는 상태
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
@@ -27,7 +24,7 @@ const ForgotPassword = () => {
   const onSubmit = async (values: FieldValues) => {
     try {
       // resetPassword 함수로 이메일 전송
-      await resetPassword(values.email);
+      await authService.resetPassword(values.email);
       // 성공 시 제출 완료 상태로 변경
       setIsSubmitted(true);
     } catch (err) {
@@ -46,13 +43,6 @@ const ForgotPassword = () => {
           <h2 className='text-2xl font-semibold mb-6 text-center'>
             비밀번호 찾기
           </h2>
-
-          {/* 서버에서 받은 에러 메시지 표시 */}
-          {error && (
-            <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>
-              {error}
-            </div>
-          )}
 
           {/* 비밀번호 재설정 링크 발송 완료 시 나타나는 메시지 */}
           {isSubmitted ? (
@@ -90,10 +80,10 @@ const ForgotPassword = () => {
               {/* 비밀번호 재설정 링크 요청 버튼 */}
               <button
                 type='submit'
-                disabled={!formState.isValid || isLoading}
+                disabled={!formState.isValid}
                 className='w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition'
               >
-                {isLoading ? '처리 중...' : '비밀번호 재설정 링크 받기'}
+                비밀번호 재설정 링크 받기
               </button>
 
               {/* 로그인 페이지로 돌아가는 링크 */}

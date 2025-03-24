@@ -8,20 +8,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useAuthStore from '@/store/useAuthStore';
 import { useRouter } from 'next/navigation';
 import { loginSchema } from '@/lib/utils/auth/schemas';
+import { authService } from '@/lib/api/authService';
 
 const SignIn = () => {
+  const { setUser } = useAuthStore();
   // 자동 로그인 상태를 관리하는 useState
   const [rememberMe, setRememberMe] = useState(false);
-
-  // 인증 스토어에서 signIn 함수, isLoading, error 상태를 가져옴
-  const { signIn, isLoading, error } = useAuthStore();
 
   // 페이지 이동을 위한 useRouter 훅 사용
   const router = useRouter();
 
   // react-hook-form을 설정
   const { register, handleSubmit, formState } = useForm({
-    mode: 'onBlur', // 입력 필드에서 포커스가 벗어날 때 유효성 검사
+    mode: 'onBlur',
     defaultValues: {
       email: '',
       password: '',
@@ -32,10 +31,21 @@ const SignIn = () => {
   // 로그인 폼 제출 시 호출되는 함수
   const onSubmit = async (values: FieldValues) => {
     try {
-      // signIn 함수 실행 (이메일, 비밀번호, 자동 로그인 여부 전달)
-      await signIn(values.email, values.password, rememberMe);
-      // 로그인 성공 시 홈 페이지로 이동
-      router.push('/');
+      // signIn 함수 실행 (이메일, 비밀번호 전달)
+      const { data, error } = await authService.signIn(
+        values.email,
+        values.password
+      );
+
+      if (error) {
+        console.error('Sign in error:', error);
+        return;
+      }
+
+      if (data?.user) {
+        setUser(data.user); // user 객체만 전달
+        router.push('/');
+      }
     } catch (err) {
       console.error('Sign in error:', err);
     }
@@ -66,13 +76,6 @@ const SignIn = () => {
             <div className='w-[100%] h-full bg-[var(--color-white-light)] p-12 rounded-xl'>
               {/* 로그인 제목 */}
               <h2 className='text-2xl font-semibold mb-6 text-left'>Sign In</h2>
-
-              {/* 에러 메시지 표시 */}
-              {error && (
-                <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>
-                  {error}
-                </div>
-              )}
 
               {/* 로그인 입력 폼 */}
               <form
@@ -140,11 +143,11 @@ const SignIn = () => {
 
                 {/* 로그인 버튼 */}
                 <button
-                  disabled={!formState.isValid || isLoading} // 유효하지 않거나 로딩 중일 때 비활성화
+                  disabled={!formState.isValid} // 유효하지 않거나 로딩 중일 때 비활성화
                   type='submit'
                   className='w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition'
                 >
-                  {isLoading ? '로그인 중...' : '로그인'}
+                  로그인
                 </button>
 
                 {/* 네이버 로그인 버튼 */}
