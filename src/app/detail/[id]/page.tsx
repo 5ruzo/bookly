@@ -26,10 +26,10 @@ export default async function page({ params }: { params: { id: string } }) {
         </div>
         <hr className='my-6' />
 
-        <div className='flex flex-col md:flex-row gap-4 md:gap-16 mb-12'>
+        <div className='flex flex-col md:flex-row gap-4 md:gap-10 mb-12'>
           <div className='md:w-1/2'>
             <img
-              className='md:w-4/5 px-12'
+              className='md:full px-12'
               src={data.image_url}
               alt={data.title}
             />

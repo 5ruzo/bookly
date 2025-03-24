@@ -11,7 +11,7 @@ export default function ButtonArea({
 }: ButtonAreaProps) {
   const totalPrice = Number(price) * quantity;
   return (
-    <div className='flex flex-wrap gap-4'>
+    <div className='flex flex-wrap gap-4 place-content-between justify-center'>
       <Button
         className='bg-primary hover:bg-primary text-white rounded-xl h-12 md:h-14 px-6 w-4/10 text-md md:text-mlg font-medium'
         onClick={() => {

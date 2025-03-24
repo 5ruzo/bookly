@@ -44,40 +44,37 @@ export default function QuantityInput({
   };
 
   return (
-    <div>
-      <div className='space-y-4'>
-        <div className='flex items-center gap-4'>
-          <div className='flex h-6 md:h-10 border border-gray rounded-md overflow-hidden w-full max-w-20'>
-            <input
-              type='text'
-              value={value}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className='px-3 w-full py-1 text-md focus:outline-none'
-            />
-            <div className='opacity-0 md:opacity-100 flex flex-col border-l border-gray'>
-              <button
-                type='button'
-                onClick={handleIncrement}
-                className='flex items-center justify-center h-5 w-6 active:bg-gray'
-              >
-                <ChevronUp size={14} />
-              </button>
-              <div className='border-t border-gray'></div>
-              <button
-                type='button'
-                onClick={handleDecrement}
-                className='flex items-center justify-center h-5 w-6 active:bg-gray'
-              >
-                <ChevronDown size={14} />
-              </button>
-            </div>
+    <div className='h-1/5 content-center'>
+      <div className='flex items-center gap-4'>
+        <div className='flex h-6 md:h-10 border border-gray rounded-md overflow-hidden w-full max-w-20'>
+          <input
+            type='text'
+            value={value}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className='px-3 w-full py-1 text-md focus:outline-none'
+          />
+          <div className='opacity-0 md:opacity-100 flex flex-col border-l border-gray'>
+            <button
+              type='button'
+              onClick={handleIncrement}
+              className='flex items-center justify-center h-5 w-6 active:bg-gray'
+            >
+              <ChevronUp size={14} />
+            </button>
+            <div className='border-t border-gray'></div>
+            <button
+              type='button'
+              onClick={handleDecrement}
+              className='flex items-center justify-center h-5 w-6 active:bg-gray'
+            >
+              <ChevronDown size={14} />
+            </button>
           </div>
-          <span className='text-ss md:text-sm text-gray'>
-            총 금액 :
-            {sliceNumber(formatNumberWithCommas(Number(price) * value))}
-          </span>
         </div>
+        <span className='text-ss md:text-sm text-gray'>
+          총 금액 :{sliceNumber(formatNumberWithCommas(Number(price) * value))}
+        </span>
       </div>
     </div>
   );
