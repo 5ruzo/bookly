@@ -63,10 +63,7 @@ const ForgotPassword = () => {
                 확인해주세요.
               </div>
               {/* 로그인 페이지로 이동하는 링크 */}
-              <Link
-                href='/auth/sign-in'
-                className='text-blue-600 hover:underline'
-              >
+              <Link href='/sign-in' className='text-blue-600 hover:underline'>
                 로그인 페이지로 돌아가기
               </Link>
             </div>
@@ -101,10 +98,7 @@ const ForgotPassword = () => {
 
               {/* 로그인 페이지로 돌아가는 링크 */}
               <div className='text-center mt-4'>
-                <Link
-                  href='/auth/sign-in'
-                  className='text-blue-600 hover:underline'
-                >
+                <Link href='/sign-in' className='text-blue-600 hover:underline'>
                   로그인 페이지로 돌아가기
                 </Link>
               </div>

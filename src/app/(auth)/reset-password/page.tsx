@@ -60,7 +60,7 @@ const ResetPassword = () => {
 
       // 3초 후 로그인 페이지로 리다이렉트
       setTimeout(() => {
-        router.push('/auth/sign-in');
+        router.push('/sign-in');
       }, 3000);
     } catch (err: any) {
       setError(err.message || '비밀번호 재설정 중 오류가 발생했습니다.');
@@ -93,10 +93,7 @@ const ResetPassword = () => {
                 비밀번호가 성공적으로 재설정되었습니다. 로그인 페이지로
                 이동합니다.
               </div>
-              <Link
-                href='/auth/sign-in'
-                className='text-blue-600 hover:underline'
-              >
+              <Link href='/sign-in' className='text-blue-600 hover:underline'>
                 로그인 페이지로 이동
               </Link>
             </div>

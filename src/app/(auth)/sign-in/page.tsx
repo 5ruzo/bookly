@@ -188,7 +188,7 @@ const SignIn = () => {
                 <p>
                   계정이 없으신가요?{' '}
                   <Link
-                    href='/auth/sign-up'
+                    href='/sign-up'
                     className='text-blue-600 hover:underline'
                   >
                     회원가입
