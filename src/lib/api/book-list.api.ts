@@ -1,7 +1,7 @@
 'use server';
 //서버엑션의 폴더 네이밍에 대한 합의가 되지 않아 월요일 스크럼때 대화 나눠보고 서버액션파일 따로 빼겠습니다.
 
-import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list';
+import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list.constant';
 
 export const fetchGetBookListByTop50Rank = async () => {
   //베스트랭킹50개 책 목록을 가져옴(supabase 메서드로 리펙터링 예정)

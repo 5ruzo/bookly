@@ -1,5 +1,5 @@
 import BookListItem from '@/components/features/book-list/book-list-item';
-import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list';
+import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list.constant';
 import {
   fetchGetBookListByGenre,
   fetchGetGenreList,
