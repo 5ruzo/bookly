@@ -24,4 +24,11 @@ export type QuantityInputProps = {
   price: string;
 };
 
-export type ManipulationAreaProps = Pick<Book, 'title' | 'price'>;
+export type ButtonAreaProps = Pick<Book, 'title' | 'price'> & {
+  quantity: number;
+};
+
+export type ProductInfoProps = {
+  data: Book;
+  price: string;
+};
