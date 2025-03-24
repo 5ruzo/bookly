@@ -1,16 +1,16 @@
 'use client';
 import DataTable from '@/components/features/common/data-table';
 import { Checkbox } from '@/components/ui/checkbox';
-import { formatKRW } from '@/lib/utils/cart/formatKRW';
 import { TypeCartItem } from '@/types/cart/cart.type';
 import { ColumnDef } from '@tanstack/react-table';
 import BookSummary from './book-summary';
+import { formatNumberWithCommas } from '@/lib/utils/common.util';
 
 const getSumPrice = (
   quantity: TypeCartItem['quantity'],
   price: TypeCartItem['price']
 ) => {
-  return formatKRW(quantity * price);
+  return formatNumberWithCommas(quantity * price);
 };
 
 export default function CartTable({
@@ -38,7 +38,9 @@ export default function CartTable({
       cell: ({ row }) => {
         return (
           <>
-            <span className='mb-5'>{formatKRW(row.original.price)}원</span>
+            <span className='mb-5'>
+              {formatNumberWithCommas(row.original.price)}원
+            </span>
             <div className='flex items-center justify-center border border-lightgray rounded-md mx-1'>
               <button className='px-2 py-1 md:px-3'>-</button>
               <span className='px-2 py-1 md:px-3'>{row.original.quantity}</span>
