@@ -2,13 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { LinkItem } from '@/types/layout.type';
 import HeaderDropdownMenu from './header-dropdown-menu';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const isAuthenticated = true; // * 실제로는 인증 상태를 확인하는 로직 필요
+
+  const [inputTextSearchBar, setInputTextSearchBar] = useState<string>('');
+  const router = useRouter();
 
   const navigationLinks: LinkItem[] = isAuthenticated
     ? [
@@ -20,6 +24,12 @@ const Header = () => {
         { text: '로그인', href: '/signin' },
         { text: '회원가입', href: '/signup' },
       ];
+
+  const handleSearchInputSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (inputTextSearchBar === '') return;
+    router.push(`/search?query=${inputTextSearchBar}`);
+  };
 
   return (
     <header className='flex flex-col'>
@@ -37,18 +47,24 @@ const Header = () => {
           </Link>
         </h1>
         <div className='flex-1 md:flex-none md:w-[40%]'>
-          <label className='relative'>
-            <Search
-              color='var(--color-primary)'
-              strokeWidth={2.5}
-              className='absolute top-1/2 -translate-y-1/2 left-4 md:left-6 w-4 md:w-6 '
-            />
-            <input
-              type='text'
-              className='block h-14 rounded-2xl w-full pl-12 md:pl-16 outline-none border-1 border-lightgray'
-              placeholder='Bookly에서 가장 재밌는 책은?'
-            />
-          </label>
+          <form onSubmit={handleSearchInputSubmit}>
+            <label className='relative'>
+              <Search
+                color='var(--color-primary)'
+                strokeWidth={2.5}
+                className='absolute top-1/2 -translate-y-1/2 left-4 md:left-6 w-4 md:w-6 '
+              />
+              <input
+                type='text'
+                value={inputTextSearchBar}
+                className='block h-14 rounded-2xl w-full pl-12 md:pl-16 outline-none border-1 border-lightgray'
+                placeholder='Bookly에서 가장 재밌는 책은?'
+                onChange={(e) => {
+                  setInputTextSearchBar(e.target.value);
+                }}
+              />
+            </label>
+          </form>
         </div>
         <HeaderDropdownMenu menuList={navigationLinks} />
       </div>
