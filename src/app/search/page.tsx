@@ -1,4 +1,5 @@
 import BookListItem from '@/components/features/book-list/book-list-item';
+import SearchResultView from '@/components/features/search/search-result-view';
 import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list';
 import { fetchGetBookListByTop50Rank } from '@/lib/api/book-list.api';
 import { Metadata } from 'next';
@@ -22,24 +23,5 @@ export async function generateMetadata({
   };
 }
 export default async function BookListPage() {
-  const bookList = await fetchGetBookListByTop50Rank();
-
-  return (
-    <ul className='flex flex-col gap-[70px]'>
-      {bookList.map((book) => {
-        return (
-          <BookListItem
-            key={book.id}
-            id={book.id}
-            title={book.title}
-            author={book.author}
-            rating={book.rating}
-            price={book.price}
-            description={book.description}
-            image_url={book.image_url}
-          />
-        );
-      })}
-    </ul>
-  );
+  return <SearchResultView />;
 }
