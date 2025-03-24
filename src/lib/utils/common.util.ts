@@ -11,7 +11,7 @@ import { twMerge } from 'tailwind-merge';
  */
 export function formatNumberWithCommas(number: number | undefined): string {
   if (!number) {
-    return '0'; // 문자열 반환으로 변경
+    return '0';
   }
   return number.toLocaleString();
 }
