@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import LikeButton from './manipulation-area/detail-like-button';
+import LikeButton from './button-area/detail-like-button';
 import { ButtonAreaProps } from '@/types/detail.type';
 
 export default function ButtonArea({
