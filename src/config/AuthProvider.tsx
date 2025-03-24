@@ -20,7 +20,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // onAuthStateChange로 사용자 상태 감지
     const { data: unsubscribe } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        console.log(event);
         if (event === 'SIGNED_IN' && session) {
           setUser(session.user);
         } else if (event === 'SIGNED_OUT') {

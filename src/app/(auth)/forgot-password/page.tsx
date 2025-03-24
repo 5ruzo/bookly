@@ -24,7 +24,10 @@ const ForgotPassword = () => {
   const onSubmit = async (values: FieldValues) => {
     try {
       // resetPassword 함수로 이메일 전송
-      await authService.resetPassword(values.email);
+      const { error } = await authService.resetPassword(values.email);
+      if (error) {
+        return alert('유효한 이메일이 아닙니다.');
+      }
       // 성공 시 제출 완료 상태로 변경
       setIsSubmitted(true);
     } catch (err) {
