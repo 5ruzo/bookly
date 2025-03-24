@@ -1,0 +1,1 @@
+export const BOOK_LIST_REVALIDATE_TIME = 86400;
