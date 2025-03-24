@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Bookly - 베스트셀러, 인기있는 책',
     description: 'Bookly에서 베스트셀러, 인기있는 책 목록을 확인하세요.',
-    // image: '로고 넣기 ',
+    images: '/images/logo.png',
   },
 };
 
