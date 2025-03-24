@@ -1,19 +1,20 @@
-import React from 'react';
 import { fetchGetDetail } from '@/lib/api/detail.fetchGetDetail';
 import ProductInfo from '@/components/features/detail/detail-product-info';
+import CardSectionLayout from '@/components/ui/card-section-layout';
+import RecommendedBooksCarousel from '@/components/ui/recommened-books-carousel';
 
 export default async function page({ params }: { params: { id: string } }) {
   const data = await fetchGetDetail(params.id);
 
   if (!data) return <p>데이터가 없습니다.</p>;
   return (
-    <div className='flex justify-center'>
-      <div className='max-w-[1000px] md:min-w-[800px]'>
+    <div className='flex justify-center pt-10 md:pt-16 pb-14 md:pb-24'>
+      <div className='w-4/6 max-w-[1000px] md:min-w-[800px]'>
         <div className='mb-6 '>
           <div className='md:flex items-center gap-4'>
-            <h1 className='text-xl md:text-2xl font-bold break-keep'>
+            <h2 className='text-xl md:text-2xl font-bold break-keep'>
               {data.title}
-            </h1>
+            </h2>
             <span className='text-sm font-normal text-gray mt-1'>
               {data.author}
             </span>
@@ -36,9 +37,12 @@ export default async function page({ params }: { params: { id: string } }) {
           <ProductInfo data={data} price={data.price} />
         </div>
         <hr className='my-6' />
-
+        <CardSectionLayout title='이 주의 추천 도서' className='my-16'>
+          <RecommendedBooksCarousel />
+        </CardSectionLayout>
+        <hr className='my-6' />
         <div className='text-mld'>
-          <h2 className='text-lg py-4'>장르</h2> <span>{data.genre}</span>
+          <h3 className='text-lg py-4'>장르</h3> <span>{data.genre}</span>
         </div>
 
         <hr className='my-6' />
