@@ -1,13 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/lib/utils/schemas';
+import { loginSchema } from '@/lib/utils/auth/schemas';
+import { useRouter } from 'next/navigation';
+import useAuthStore from '@/store/useAuthStore';
 
-const SignIn = () => {
+const SignInPage = () => {
+  const [rememberMe, setRememberMe] = useState(false);
+  const { user, signIn } = useAuthStore();
+  const router = useRouter();
   const { register, handleSubmit, formState } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -17,8 +22,15 @@ const SignIn = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (value: FieldValues) => {
-    console.log(value);
+  const onSubmit = async (values: FieldValues) => {
+    try {
+      await signIn(values.email, values.password, rememberMe);
+      if (user !== null) {
+        router.push('/');
+      }
+    } catch (err) {
+      console.error('Sign in error:', err);
+    }
   };
 
   return (
@@ -26,7 +38,7 @@ const SignIn = () => {
       <div className='flex flex-1 items-center justify-center p-6'>
         <div className='w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[var(--color-secondary)] flex overflow-hidden'>
           {/* 이미지 영역 */}
-          <div className='w-[45%] relative flex items-center justify-center'>
+          <div className='w-[50%] relative flex items-center justify-center'>
             <div className='relative w-full h-full max-w-full max-h-full'>
               <Image
                 src='/images/login-image.png'
@@ -40,7 +52,7 @@ const SignIn = () => {
           </div>
 
           {/* 오른쪽 폼 */}
-          <div className='p-6 w-[55%] '>
+          <div className='p-6 w-[50%] '>
             <div className='w-[100%] h-full bg-[var(--color-white-light)] p-12 rounded-xl'>
               <h2 className='text-2xl font-semibold mb-6 text-left'>Sign In</h2>
 
@@ -56,6 +68,7 @@ const SignIn = () => {
                       {...register('email')}
                       className='w-full px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base'
                       autoComplete='email'
+                      placeholder='Email'
                     />
                   </label>
                   <div className='ml-1 mt-2 text-red-500'>
@@ -73,6 +86,7 @@ const SignIn = () => {
                       {...register('password')}
                       className='w-full px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base'
                       autoComplete='current-password'
+                      placeholder='Password'
                     />
                   </label>
                   <div className='ml-1 mt-2 text-red-500'>
@@ -84,7 +98,12 @@ const SignIn = () => {
 
                 <div className='flex items-center justify-between text-base'>
                   <div className='flex items-center gap-2'>
-                    <input type='checkbox' id='rememberMe' />
+                    <input
+                      type='checkbox'
+                      id='rememberMe'
+                      checked={rememberMe}
+                      onChange={() => setRememberMe(!rememberMe)}
+                    />
                     <label htmlFor='rememberMe'>자동 로그인</label>
                   </div>
                   <Link
@@ -117,8 +136,8 @@ const SignIn = () => {
                     x='32'
                   >
                     <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
+                      fillRule='evenodd'
+                      clipRule='evenodd'
                       d='M15.817 22L8.074 10.612V22H0V0h8.187l7.743 11.386V0H24v22h-8.183z'
                       fill='url(#afpaint0_linear_3876_26143)'
                     />
@@ -131,15 +150,9 @@ const SignIn = () => {
                         y2='34.909'
                         gradientUnits='userSpaceOnUse'
                       >
-                        <stop stop-color='var(--color-white-light)' />
-                        <stop
-                          offset='0'
-                          stop-color='var(--color-white-light)'
-                        />
-                        <stop
-                          offset='1'
-                          stop-color='var(--color-white-light)'
-                        />
+                        <stop stopColor='var(--color-white-light)' />
+                        <stop offset='0' stopColor='var(--color-white-light)' />
+                        <stop offset='1' stopColor='var(--color-white-light)' />
                       </linearGradient>
                     </defs>
                   </svg>{' '}
@@ -166,4 +179,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInPage;
