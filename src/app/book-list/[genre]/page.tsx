@@ -1,5 +1,9 @@
+import BookListItem from '@/components/features/book-list/book-list-item';
 import { BOOK_LIST_REVALIDATE_TIME } from '@/constants/book-list';
-import { fetchGetGenreList } from '@/lib/api/book-list.api';
+import {
+  fetchGetBookListByGenre,
+  fetchGetGenreList,
+} from '@/lib/api/book-list.api';
 import React from 'react';
 
 export const revalidate = BOOK_LIST_REVALIDATE_TIME;
@@ -39,11 +43,26 @@ export default async function BookListGenrePage({
 }: {
   params: { genre: string };
 }) {
-  const genreFromPath = decodeURIComponent(params.genre as string);
+  const genre = decodeURIComponent(params.genre as string).replace(/-/g, '/');
+
+  const bookList = await fetchGetBookListByGenre(genre);
 
   return (
-    <div className='w-[918px] h-[1500px] bg-gray animate-pulse rounded'>
-      <span className='text-white text-2xl'>{genreFromPath}</span>
-    </div>
+    <ul className='flex flex-col gap-[70px]'>
+      {bookList.map((book) => {
+        return (
+          <BookListItem
+            key={book.id}
+            id={book.id}
+            title={book.title}
+            author={book.author}
+            rating={book.rating}
+            price={book.price}
+            description={book.description}
+            image_url={book.image_url}
+          />
+        );
+      })}
+    </ul>
   );
 }
