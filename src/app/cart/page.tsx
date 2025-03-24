@@ -1,5 +1,4 @@
 import Cart from '@/components/features/cart/cart';
-import '@/styles/cart/cart.css';
 export default function CartPage() {
   return (
     <section className='w-full max-w-[1440px] mx-auto py-20'>

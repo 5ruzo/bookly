@@ -1,7 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import '@/styles/cart/cart.css';
 import { TypeCartItem } from '@/types/cart/cart.type';
 import CartTable from './cart-table';
 import PriceSummary from './price-summary';
