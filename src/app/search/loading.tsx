@@ -1,6 +1,18 @@
 export default function SearchLoading() {
   return (
-    //메인 컨텐츠 영역이 회색 박스로 처리
-    <div className='w-[918px] min-h-[calc(100vh-24rem)] pl-1 bg-gray animate-pulse rounded'></div>
+    <ul className='max-w-[1000px] flex gap-16 flex-col items-center md:items-start'>
+      <li>
+        <div className='w-[918px] md:h-[406px] h-[500px] pl-1 bg-lightgray animate-pulse rounded'></div>
+      </li>
+      <li>
+        <div className='w-[918px] md:h-[406px] h-[500px] pl-1 bg-lightgray animate-pulse rounded'></div>
+      </li>
+      <li>
+        <div className='w-[918px] md:h-[406px] h-[500px] pl-1 bg-lightgray animate-pulse rounded'></div>
+      </li>
+      <li>
+        <div className='w-[918px] md:h-[406px] h-[500px] pl-1 bg-lightgray animate-pulse rounded'></div>
+      </li>
+    </ul>
   );
 }
