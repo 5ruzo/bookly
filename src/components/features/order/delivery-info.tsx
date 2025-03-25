@@ -1,6 +1,10 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { TypeAddressInfo, TypeOrderForm } from '@/types/order/order.type';
+import {
+  TypeAddressInfo,
+  TypeOrderForm,
+  TypePaymentsInfo,
+} from '@/types/order/order.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -8,6 +12,9 @@ import { z } from 'zod';
 import DeliveryForm from './delivery-form';
 import OrderInfo from './order-info';
 import { TossPayments } from './toss-payments';
+import useCartStore from '@/store/cart/cart-store';
+import { truncateWithEllipsis } from '@/lib/utils/common.util';
+import { TypeCartItem } from '@/types/cart/cart.type';
 
 const defaultValues = {
   name: '',
@@ -41,9 +48,18 @@ const styles = {
   title: 'font-bold sm:text-lg mb-5',
 };
 
+const getBookSummary = (books: TypeCartItem[]) => {
+  const representativeBook = books[0].bookInfo.title;
+  return `${truncateWithEllipsis(representativeBook)} 외 ${books.length - 1}건`;
+};
 export default function DeliveryInfo() {
   const [isFormFilled, setIsFormFilled] = useState(false);
-
+  const [paymentsInfo, setPaymentsInfo] = useState<TypePaymentsInfo>({
+    name: '',
+    items: '',
+    amount: 0,
+  });
+  const { totalPrice, booksToOrder } = useCartStore();
   const { register, handleSubmit, formState, setValue, trigger } =
     useForm<TypeOrderForm>({
       mode: 'onBlur',
@@ -60,8 +76,12 @@ export default function DeliveryInfo() {
   };
 
   const onSubmit = (values: FieldValues) => {
-    // console.log(values);
-    //@TODO: 결제정보 만들기
+    setPaymentsInfo({
+      name: values.name,
+      amount: totalPrice,
+      items: getBookSummary(booksToOrder),
+    });
+
     setIsFormFilled(true);
   };
 
@@ -96,6 +116,7 @@ export default function DeliveryInfo() {
         <TossPayments
           isFormFilled={isFormFilled}
           onClose={() => setIsFormFilled(false)}
+          paymentsInfo={paymentsInfo}
         />
       )}
     </>

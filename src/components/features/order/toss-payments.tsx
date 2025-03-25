@@ -1,14 +1,20 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { useTossPayments } from '@/lib/hooks/order/toss-payments-hook';
+import { TypePaymentsInfo } from '@/types/order/order.type';
 
 type TossPaymentsProps = {
   isFormFilled: boolean;
   onClose: () => void;
+  paymentsInfo: TypePaymentsInfo;
 };
 
-export function TossPayments({ isFormFilled, onClose }: TossPaymentsProps) {
-  const { ready, requestPayment } = useTossPayments(isFormFilled, 1000);
+export function TossPayments({
+  isFormFilled,
+  onClose,
+  paymentsInfo,
+}: TossPaymentsProps) {
+  const { ready, requestPayment } = useTossPayments(isFormFilled, paymentsInfo);
 
   return (
     <>

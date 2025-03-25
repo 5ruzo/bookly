@@ -15,6 +15,12 @@ export type TypeFormField = {
 
 export type TypeAddressInfo = Pick<TypeOrderForm, 'address' | 'zoneCode'>;
 
+export type TypePaymentsInfo = {
+  name: string;
+  items: string;
+  amount: number;
+};
+
 export {};
 
 declare global {

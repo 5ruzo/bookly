@@ -51,7 +51,7 @@ export function mergeClasses(...inputs: ClassValue[]): string {
  * @param itemPrice - 상품 금액
  * @returns 상품 금액에 따른 배송비
  */
-export const getDeliveryFee = (itemPrice: number) => {
+export const getDeliveryFee = (itemPrice: number): number => {
   if (itemPrice >= MIN_FREE_DELIVERY_PRICE) return 0;
   else return DEFAULT_DELIVERY_FEE;
 };
@@ -67,4 +67,17 @@ export const getTotalPrice = (
   deliveryFee: number
 ): number => {
   return itemPrice + deliveryFee;
+};
+
+/**
+ * 문자열을 ellipsis 처리해 주는 함수
+ * @remark 꼭 필요한 경우를 제외하고는 css를 사용하는 것을 권장합니다.
+ * @param text  - ellipsis 처리할 문자열
+ * @param maxLength - 최대 노출할 문자열 수
+ * @returns ellipsis 처리된 문자열
+ * @example const test = truncateWithEllipsis('동해물과 백두산이 마르고 닳도록',4) // '동해물과...'
+ */
+export const truncateWithEllipsis = (text: string, maxLength = 5): string => {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + '...';
 };
