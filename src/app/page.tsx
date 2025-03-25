@@ -3,6 +3,7 @@ import BestSellerCarousel from '@/components/ui/best-seller-carousel';
 import RecommendedBooksCarousel from '@/components/ui/recommened-books-carousel';
 import MainCarousel from '@/components/features/home/home-main-carousel';
 import StripBannersCarousel from '@/components/features/home/home-strip-banners-carousel';
+import MainCarouselContainer from '@/components/features/home/home-main-carousel-container';
 
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
       {/* 메인 캐러셀 섹션*/}
       <section>
         <h2 className='sr-only'>주요 홍보 도서</h2>
-        <MainCarousel />
+        <MainCarouselContainer />
       </section>
       {/* 베스트 셀러 섹션 */}
       <CardSectionLayout
