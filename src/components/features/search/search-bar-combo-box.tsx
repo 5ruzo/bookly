@@ -41,12 +41,10 @@ export function SearchBarComboBox() {
       className='relative'
       tabIndex={0}
       onFocus={() => {
-        console.log('ON focus');
         setIsSuggestionsView(true);
         setInputTextSearchBar('');
       }}
       onBlur={() => {
-        console.log('ON BLur');
         setIsSuggestionsView(false);
         setInputTextSearchBar(searchTerm);
       }}
