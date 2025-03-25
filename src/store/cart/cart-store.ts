@@ -10,6 +10,7 @@ const {
   toggleCheckedBooks,
   handleQuantity,
   calculateTotalPrice,
+  deleteFromCart,
 } = CartUtils;
 
 type TypeCartStore = {
@@ -23,10 +24,10 @@ type TypeCartStore = {
     id: TypeCartItem['id'],
     newQuantity: TypeCartItem['quantity']
   ) => void;
-  calcTotalPrice: () => void;
   checkAllBooks: (newCheckedBooks: TypeCartItem['id'][]) => void;
   setCheckedBooks: (newCheckedBook: TypeCartItem['id']) => void;
   resetCheckedBooks: () => void;
+  deleteBooks: (ids: TypeCartItem['id'][]) => void;
 };
 
 //@TODO: 데이터 넘어오면 삭제 예정
@@ -79,40 +80,72 @@ const useCartStore = create<TypeCartStore>()(
     (set) => ({
       ...initialState,
       addToCart: (addedBooks) =>
-        set((state) => ({
-          cartBooks: addToCartBooks(state.cartBooks, addedBooks),
-        })),
+        set(({ cartBooks }) => {
+          const { newCartBooks, totalPrice } = addToCartBooks(
+            cartBooks,
+            addedBooks
+          );
+          return {
+            cartBooks: newCartBooks,
+            totalPrice: totalPrice,
+          };
+        }),
       increaseQuantity: (id) =>
-        set((state) => ({
-          cartBooks: handleQuantity(state.cartBooks, id, INCREASE),
-        })),
+        set((state) => {
+          const { newCartBooks, totalPrice } = handleQuantity(
+            state.cartBooks,
+            id,
+            INCREASE
+          );
+          return { cartBooks: newCartBooks, totalPrice };
+        }),
       decreaseQuantity: (id) =>
-        set((state) => ({
-          cartBooks: handleQuantity(state.cartBooks, id, DECREASE),
-        })),
+        set((state) => {
+          const { newCartBooks, totalPrice } = handleQuantity(
+            state.cartBooks,
+            id,
+            DECREASE
+          );
+          return { cartBooks: newCartBooks, totalPrice };
+        }),
       updateQuantity: (id, newQuantity) =>
-        set((state) => ({
-          cartBooks: updateQuantity(state.cartBooks, id, newQuantity),
-        })),
-      calcTotalPrice: () =>
-        set((state) => ({
-          totalPrice: calculateTotalPrice(state.cartBooks),
-        })),
+        set(({ cartBooks }) => {
+          const { newCartBooks, totalPrice } = updateQuantity(
+            cartBooks,
+            id,
+            newQuantity
+          );
+          return {
+            cartBooks: newCartBooks,
+            totalPrice,
+          };
+        }),
       checkAllBooks: (newCheckedBooks) =>
-        set((state) => ({
+        set(() => ({
           checkedBooks: newCheckedBooks,
         })),
       setCheckedBooks: (newCheckedBook) =>
-        set((state) => ({
-          checkedBooks: toggleCheckedBooks(state.checkedBooks, newCheckedBook),
+        set(({ checkedBooks }) => ({
+          checkedBooks: toggleCheckedBooks(checkedBooks, newCheckedBook),
         })),
       resetCheckedBooks: () =>
         set(() => ({
           checkedBooks: [],
         })),
+      deleteBooks: (ids) =>
+        set((state) => {
+          const { newCartBooks, totalPrice } = deleteFromCart(
+            state.cartBooks,
+            ids
+          );
+          return {
+            cartBooks: newCartBooks,
+            totalPrice,
+          };
+        }),
     }),
     {
-      name: 'cartList',
+      name: 'cart-list',
       storage: createJSONStorage(() => localStorage),
     }
   )

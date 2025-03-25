@@ -6,8 +6,7 @@ import { useEffect, useState } from 'react';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
 
 export const useQuantityControl = (id: string, storeQuantity: number) => {
-  const { calcTotalPrice, updateQuantity, increaseQuantity, decreaseQuantity } =
-    useCartStore();
+  const { updateQuantity, increaseQuantity, decreaseQuantity } = useCartStore();
   const [quantity, setQuantity] = useState(storeQuantity);
 
   useEffect(() => setQuantity(storeQuantity), [storeQuantity]);
@@ -17,10 +16,8 @@ export const useQuantityControl = (id: string, storeQuantity: number) => {
   ): void => {
     if (handleType === INCREASE) {
       increaseQuantity(id);
-      calcTotalPrice();
     } else if (storeQuantity > 1) {
       decreaseQuantity(id);
-      calcTotalPrice();
     }
   };
 
@@ -33,10 +30,8 @@ export const useQuantityControl = (id: string, storeQuantity: number) => {
     if (!quantity || quantity < 1) {
       setQuantity(1);
       updateQuantity(id, 1);
-      calcTotalPrice();
     } else {
       updateQuantity(id, quantity);
-      calcTotalPrice();
     }
   };
 

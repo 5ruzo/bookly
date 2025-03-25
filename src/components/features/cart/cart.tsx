@@ -3,28 +3,35 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import useCartStore from '@/store/cart/cart-store';
 import Link from 'next/link';
-import EmptyCart from './empty-cart';
-import PriceSummary from './price-summary';
 import { useEffect, useState } from 'react';
 import CartTable from './cart-table/cart-table';
+import EmptyCart from './empty-cart';
+import PriceSummary from './price-summary';
 
 export default function Cart() {
-  const { cartBooks, checkedBooks, checkAllBooks, resetCheckedBooks } =
-    useCartStore();
+  const {
+    cartBooks,
+    checkedBooks,
+    checkAllBooks,
+    resetCheckedBooks,
+    deleteBooks,
+  } = useCartStore();
   const [isAllChecked, setIsAllChecked] = useState(false);
 
   useEffect(() => {
     if (checkedBooks.length === cartBooks.length) setIsAllChecked(true);
     else setIsAllChecked(false);
   }, [checkedBooks]);
-  console.log('checkedList', checkedBooks);
 
   const handleCheckAll = () => {
     const checkedIds = cartBooks.map(({ id }) => id);
-
     if (!isAllChecked) {
       checkAllBooks(checkedIds);
     } else resetCheckedBooks();
+  };
+
+  const handleDelete = () => {
+    deleteBooks(checkedBooks);
   };
 
   if (cartBooks.length === 0) return <EmptyCart />;
@@ -39,7 +46,9 @@ export default function Cart() {
           />
           전체 선택/해제
         </label>
-        <Button className='px-4 py-1 rounded-2xl'>선택 삭제</Button>
+        <Button className='px-4 py-1 rounded-2xl' onClick={handleDelete}>
+          선택 삭제
+        </Button>
       </div>
       <CartTable />
       <PriceSummary />
