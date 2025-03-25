@@ -72,6 +72,9 @@ const Header = () => {
                 onClick={() => {
                   setInputTextSearchBar('');
                 }}
+                onBlur={() => {
+                  setInputTextSearchBar(searchTerm);
+                }}
                 onChange={(e) => {
                   setInputTextSearchBar(e.target.value);
                 }}
