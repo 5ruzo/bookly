@@ -31,7 +31,7 @@ const validationSchema = z.object({
     .string()
     .min(1, '상세 주소를 입력해 주세요.')
     .regex(/^[^\s]*$/, '특수문자나 공백을 제외한 문자만 허용됩니다.'),
-  zoneCode: z.string().min(1, '주소를 선택하여 넣어주세요.'),
+  zoneCode: z.string().min(1, '우편번호를 넣어주세요.'),
 });
 
 const styles = {
