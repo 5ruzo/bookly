@@ -7,14 +7,17 @@ import { Search } from 'lucide-react';
 import { LinkItem } from '@/types/layout.type';
 import HeaderDropdownMenu from './header-dropdown-menu';
 import useAuthStore from '@/store/useAuthStore';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Header = () => {
   const { signOut, isAuthenticated } = useAuthStore();
-
-  const [inputTextSearchBar, setInputTextSearchBar] = useState<string>('');
-
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const searchTerm: string = searchParams.get('query') || '';
+
+  const [inputTextSearchBar, setInputTextSearchBar] =
+    useState<string>(searchTerm);
 
   const navigationLinks: LinkItem[] = isAuthenticated
     ? [
@@ -35,7 +38,6 @@ const Header = () => {
   const handleSearchInputSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputTextSearchBar === '') return;
-    setInputTextSearchBar('');
     router.push(`/search?query=${inputTextSearchBar}`);
   };
 
@@ -67,6 +69,9 @@ const Header = () => {
                 value={inputTextSearchBar}
                 className='block h-14 rounded-2xl w-full pl-12 md:pl-16 outline-none border-1 border-lightgray'
                 placeholder='Bookly에서 가장 재밌는 책은?'
+                onClick={() => {
+                  setInputTextSearchBar('');
+                }}
                 onChange={(e) => {
                   setInputTextSearchBar(e.target.value);
                 }}
