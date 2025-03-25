@@ -6,19 +6,25 @@ import React from 'react';
 import { Search } from 'lucide-react';
 import { LinkItem } from '@/types/layout.type';
 import HeaderDropdownMenu from './header-dropdown-menu';
+import useAuthStore from '@/store/useAuthStore';
 
 const Header = () => {
-  const isAuthenticated = true; // * 실제로는 인증 상태를 확인하는 로직 필요
+  const { signOut, isAuthenticated } = useAuthStore();
 
   const navigationLinks: LinkItem[] = isAuthenticated
     ? [
         { text: '마이페이지', href: '/mypage' },
         { text: '장바구니(0)', href: '/cart' },
-        { text: '로그아웃', onClick: () => {} },
+        {
+          text: '로그아웃',
+          onClick: () => {
+            signOut();
+          },
+        },
       ]
     : [
-        { text: '로그인', href: '/signin' },
-        { text: '회원가입', href: '/signup' },
+        { text: '로그인', href: '/sign-in' },
+        { text: '회원가입', href: '/sign-up' },
       ];
 
   return (
