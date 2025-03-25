@@ -4,3 +4,7 @@ export type CarouselImages = {
   image_url: string;
   link_url: string;
 };
+
+export type MainCarouselProps = {
+  imageList: CarouselImages[] | undefined;
+};
