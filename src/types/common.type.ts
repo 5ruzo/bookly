@@ -11,7 +11,7 @@ export type CardForCarousel = {
 };
 
 export type BestSeller = CardForCarousel;
-export type RecommededBooks = CardForCarousel;
+export type RecommendedBooks = CardForCarousel;
 
 export type SectionContainerProps = {
   title: string;
