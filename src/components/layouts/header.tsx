@@ -15,7 +15,6 @@ const Header = () => {
   const searchParams = useSearchParams();
 
   const searchTerm: string = searchParams.get('query') || '';
-
   const [inputTextSearchBar, setInputTextSearchBar] =
     useState<string>(searchTerm);
 
@@ -38,9 +37,14 @@ const Header = () => {
   const handleSearchInputSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputTextSearchBar === '') return;
-    router.push(`/search?query=${inputTextSearchBar}`);
-  };
 
+    const option = searchParams.get('option');
+    if (option) {
+      router.push(`/search?query=${inputTextSearchBar}&option=${option}`);
+    } else {
+      router.push(`/search?query=${inputTextSearchBar}`);
+    }
+  };
   return (
     <header className='flex flex-col'>
       <div className='flex bg-secondary px-6 md:px-10 items-center justify-between h-24 gap-6 md:gap-0'>

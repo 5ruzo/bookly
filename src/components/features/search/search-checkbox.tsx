@@ -29,10 +29,12 @@ export function SearchCheckBox({ genreList }: { genreList: string[] }) {
     return { id: genre, label: genre };
   });
 
+  const option = searchParams.get('option');
+  const optionGenreList = option ? option.split(' ') : [];
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      items: [],
+      items: optionGenreList,
     },
   });
 
