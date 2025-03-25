@@ -1,4 +1,4 @@
-import { BestSeller, RecommededBooks } from '@/types/common.type';
+import { BestSeller, RecommendedBooks } from '@/types/common.type';
 
 /**
  * 베스트셀러 도서 목록을 가져오는 비동기 함수
@@ -32,11 +32,11 @@ export const fetchGetBooksByBestseller = async (): Promise<BestSeller[]> => {
  *
  * @type InitialData
  * @property {number} book_id - 도서 ID
- * @property {RecommededBooks} books - 추천 도서 정보
+ * @property {RecommendedBooks} books - 추천 도서 정보
  */
 type InitialData = {
   book_id: number;
-  books: RecommededBooks;
+  books: RecommendedBooks;
 };
 
 /**
@@ -45,10 +45,10 @@ type InitialData = {
  * 추천 도서 목록과 각 도서의 상세 정보(ID, 이미지 URL, 제목, 저자, 설명, 가격, 평점)를 가져옵니다.
  * 초기 응답에서 도서 정보만 필터링하여 반환합니다.
  *
- * @returns {Promise<RecommededBooks[]>} 추천 도서 목록
+ * @returns {Promise<RecommendedBooks[]>} 추천 도서 목록
  */
 export const fetchGetBooksByRecommend = async (): Promise<
-  RecommededBooks[]
+  RecommendedBooks[]
 > => {
   const queryString =
     'recommended_list?select=book_id,books(id, image_url, title, author, description, price, rating)';
@@ -66,8 +66,9 @@ export const fetchGetBooksByRecommend = async (): Promise<
   );
 
   const data: InitialData[] = await res.json();
-  const filterdData: RecommededBooks[] = data.map(
+  const filterdData: RecommendedBooks[] = data.map(
     (item: InitialData) => item.books
   );
+  console.log('filterdData =====>', filterdData);
   return filterdData;
 };

@@ -6,7 +6,7 @@ import { QUERY_KEYS } from '@/constants/common.constant';
 
 export const useGetBooksByBestsellerQuery = () => {
   return useQuery({
-    queryKey: QUERY_KEYS.RECOMMENDED_BOOKS,
+    queryKey: QUERY_KEYS.BEST_SELLER,
     queryFn: fetchGetBooksByBestseller,
   });
 };
