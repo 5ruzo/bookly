@@ -64,7 +64,6 @@ export const authService = {
   },
 
   verifyPhone: async (phone: string) => {
-    // 전화번호 확인 로직을 추가하려면 여기에 구현
     return true;
   },
 };

@@ -1,3 +1,4 @@
+import { authService } from '@/lib/api/authService';
 import { z } from 'zod';
 
 export const loginSchema = z.object({
@@ -16,8 +17,14 @@ export const signupSchema = z
   .object({
     email: z
       .string()
-      .min(1, { message: '이메일을 입력해주세요.' })
-      .email({ message: '올바른 이메일 형식이 아닙니다.' }),
+      .email('유효하지 않은 이메일 형식입니다.')
+      .refine(
+        async (email) => {
+          const exists = await authService.checkEmailExists(email);
+          return !exists;
+        },
+        { message: '이미 사용 중인 이메일입니다.' }
+      ),
     password: z
       .string()
       .min(1, { message: '비밀번호를 입력해주세요.' })
@@ -31,13 +38,21 @@ export const signupSchema = z
     confirmPassword: z
       .string()
       .min(1, { message: '비밀번호 확인을 입력해주세요.' }),
-      
+
     phone: z
       .string()
       .min(1, { message: '휴대폰 번호를 입력해주세요.' })
-      .regex(/^01[0-9]{8,9}$/, {
-        message: "올바른 휴대폰 번호 형식이 아닙니다. ('-' 없이 입력해주세요)",
-      }),
+      .regex(/^010-\d{4}-\d{4}$/, {
+        message: '올바른 형식의 휴대폰 번호를 입력해주세요. (010-1234-5678)',
+      })
+      .refine(
+        async (phone) => {
+          // Async phone verification
+          const verified = await authService.verifyPhone(phone);
+          return verified;
+        },
+        { message: '휴대폰 인증에 실패했습니다.' }
+      ),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: '비밀번호가 일치하지 않습니다.',

@@ -40,7 +40,6 @@ const SignIn = () => {
         return;
       }
 
-      // authService에서 이미 세션 처리를 했다고 가정
       if (rememberMe) {
         localStorage.setItem('rememberMe', 'true');
       } else {
@@ -79,7 +78,7 @@ const SignIn = () => {
 
           {/* 오른쪽 폼 */}
           <div className='p-6 w-[55%]'>
-            <div className='flex flex-col justify-center w-[100%] h-full bg-[var(--color-white-light)] p-8 rounded-xl'>
+            <div className='flex flex-col justify-center w-[100%] h-full bg-[var(--color-white-light)] p-12 rounded-xl'>
               <h2 className='text-2xl mb-6 text-left'>로그인</h2>
 
               {error && (
