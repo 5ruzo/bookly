@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { fetchGetRecommendedSearchKeywordList } from '@/lib/api/search.api';
 import { Search } from 'lucide-react';
+import { useGetRecommendSearches } from '@/lib/queries/use-get-recommend-searches.query';
 
 export function SearchBarComboBox() {
   const router = useRouter();
@@ -12,22 +13,10 @@ export function SearchBarComboBox() {
   const searchTerm: string = searchParams.get('query') || '';
   const [inputTextSearchBar, setInputTextSearchBar] =
     useState<string>(searchTerm);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+
   const [isSuggestionsView, setIsSuggestionsView] = useState<boolean>(false);
 
-  // 추천 검색어 로드
-  useEffect(() => {
-    const loadSuggestions = async () => {
-      try {
-        const keywordList = await fetchGetRecommendedSearchKeywordList();
-        setSuggestions(keywordList);
-      } catch (error) {
-        console.error('추천 검색어 로드 실패:', error);
-      }
-    };
-
-    loadSuggestions();
-  }, []);
+  const { data: suggestions } = useGetRecommendSearches();
 
   //추천검색어를 누르거나 폼 입력했을 때 실행
   const handleSearch = (query: string) => {
@@ -84,7 +73,7 @@ export function SearchBarComboBox() {
       {isSuggestionsView && (
         <ul className='absolute z-10 w-full bg-white border rounded mt-1 shadow-lg'>
           <li className='pt-2 pl-2 text-gray text-sm'>추천목록</li>
-          {suggestions.map((suggestion) => (
+          {suggestions?.map((suggestion) => (
             <li
               key={suggestion}
               className={'p-2 cursor-pointer'}
