@@ -9,7 +9,7 @@ export default async function MyPageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className='pt-8'>
+    <div className='w-full'>
       <SideLayout SidebarContent={() => <MyPageSideBar />}>
         <div className='flex items-end'>
           <h2 className='text-xl'>{tempUser}님,</h2>{' '}
