@@ -74,7 +74,7 @@ export function SearchCheckBox({ genreList }: { genreList: string[] }) {
                       >
                         <FormControl>
                           <Checkbox
-                            className='border-black data-[state=checked]:bg-black data-[state=checked]:text-white'
+                            className='border-lightgray data-[state=checked]:bg-gray data-[state=checked]:text-white'
                             checked={field.value?.includes(item.id)}
                             onCheckedChange={(checked) => {
                               return checked
@@ -87,7 +87,7 @@ export function SearchCheckBox({ genreList }: { genreList: string[] }) {
                             }}
                           />
                         </FormControl>
-                        <FormLabel className='font-normal'>
+                        <FormLabel className='font-normal pt-[2px]'>
                           {item.label}
                         </FormLabel>
                       </FormItem>

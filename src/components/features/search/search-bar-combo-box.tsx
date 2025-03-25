@@ -72,12 +72,12 @@ export function SearchBarComboBox() {
         </label>
       </form>
       {isSuggestionsView && (
-        <ul className='absolute w-full bg-white border rounded mt-1 shadow-lg'>
-          <li className='pt-2 pl-2 text-gray text-sm'>추천목록</li>
+        <ul className='absolute w-full bg-white border border-lightgray rounded-xl mt-1'>
+          <li className='py-3 pl-5 text-gray text-sm'>추천목록</li>
           {suggestions?.map((suggestion) => (
             <li
               key={suggestion}
-              className={'p-2 cursor-pointer'}
+              className={'pl-5 pb-3 cursor-pointer'}
               onClick={(e) => {
                 e.stopPropagation();
                 setIsSuggestionsView(false);
