@@ -6,7 +6,7 @@ import RecommendedBooksCarousel from '@/components/ui/recommened-books-carousel'
 
 export default function SearchNoSearchResult() {
   return (
-    <section className='w-[1000px] pl-1 flex flex-col justify-start items-center min-h-[calc(100vh-24rem)]'>
+    <section className='w-[1000px] min-h-[calc(100vh-24rem)] pl-1 flex flex-col justify-start items-center'>
       <h1 className='text-2xl'>검색결과가 없습니다.</h1>
       <CardSectionLayout
         title='베스트셀러'

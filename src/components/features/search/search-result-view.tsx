@@ -47,7 +47,7 @@ export default function SearchResultView() {
   }
 
   return (
-    <ul className='flex flex-col gap-[70px] min-h-[calc(100vh-24rem)]'>
+    <ul className='min-h-[calc(100vh-24rem)] flex flex-col gap-[70px]'>
       {bookList?.map((book) => {
         return (
           <BookListItem

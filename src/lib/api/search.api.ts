@@ -1,3 +1,5 @@
+import { Book } from '@/types/book-list.type';
+
 export const fetchGetSearchedBookList = async (
   queryKey: (string | object)[]
 ) => {
