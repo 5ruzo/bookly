@@ -31,3 +31,22 @@ export const fetchGetSearchedBookList = async (
 
   return data;
 };
+
+export const fetchGetRecommendedSearchKeywordList = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/recommended_searches?select=keyword`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+      },
+    }
+  );
+
+  const data: { keyword: string }[] = await res.json();
+  const recommendList: string[] = data.map((obj) => obj.keyword);
+
+  return recommendList;
+};
