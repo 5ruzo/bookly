@@ -1,3 +1,12 @@
+'use-client';
+import {
+  formatNumberWithCommas,
+  getDeliveryFee,
+  getTotalPrice,
+} from '@/lib/utils/common.util';
+import useCartStore from '@/store/cart/cart-store';
+import { Equal, Plus } from 'lucide-react';
+
 export default function PriceSummary() {
   return (
     <dl className='flex flex-col items-center mb-16 py-6 border-t-2 border-b-2 border-lightgray sm:flex-row sm:justify-evenly'>

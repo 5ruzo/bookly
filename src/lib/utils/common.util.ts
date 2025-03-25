@@ -1,3 +1,7 @@
+import {
+  DEFAULT_DELIVERY_FEE,
+  MIN_FREE_DELIVERY_PRICE,
+} from '@/constants/common.constant';
 import clsx, { ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -40,3 +44,27 @@ export function normalizedRating(rating: number): number {
 export function mergeClasses(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
+
+/**
+ * 조건에 따라 배송비를 반환하는 함수
+ * @remark 최소 금액 (현재 30,000원) 미만 3,500원을 기본 배송비로 책정
+ * @param itemPrice - 상품 금액
+ * @returns 상품 금액에 따른 배송비
+ */
+export const getDeliveryFee = (itemPrice: number) => {
+  if (itemPrice >= MIN_FREE_DELIVERY_PRICE) return 0;
+  else return DEFAULT_DELIVERY_FEE;
+};
+
+/**
+ * 상품 금액과 배송비를 합한 총 결제 금액을 반환하는 함수
+ * @param itemPrice - 상품 금액
+ * @param deliveryFee - 배송비
+ * @returns 상품 금액과 배송비를 합한 값
+ */
+export const getTotalPrice = (
+  itemPrice: number,
+  deliveryFee: number
+): number => {
+  return itemPrice + deliveryFee;
+};
