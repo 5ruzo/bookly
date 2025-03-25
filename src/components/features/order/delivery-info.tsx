@@ -1,11 +1,13 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import { TypeAddressInfo, TypeOrderForm } from '@/types/order/order.type';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import DeliveryForm from './delivery-form';
 import OrderInfo from './order-info';
-import { Button } from '@/components/ui/button';
+import { TossPayments } from './toss-payments';
 
 const defaultValues = {
   name: '',
@@ -40,16 +42,14 @@ const styles = {
 };
 
 export default function DeliveryInfo() {
+  const [isFormFilled, setIsFormFilled] = useState(false);
+
   const { register, handleSubmit, formState, setValue, trigger } =
     useForm<TypeOrderForm>({
       mode: 'onBlur',
       defaultValues: defaultValues,
       resolver: zodResolver(validationSchema),
     });
-
-  const onSubmit = (values: TypeOrderForm) => {
-    console.log('합격', values);
-  };
 
   const handleChangeAddress = (addressInfo: TypeAddressInfo) => {
     const { address, zoneCode } = addressInfo;
@@ -59,27 +59,45 @@ export default function DeliveryInfo() {
     trigger('zoneCode');
   };
 
+  const onSubmit = (values: FieldValues) => {
+    // console.log(values);
+    //@TODO: 결제정보 만들기
+    setIsFormFilled(true);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <section className={`${styles.section} mb-10`}>
-        <h3 className={styles.title}>배송 정보</h3>
-        <DeliveryForm
-          register={register}
-          formState={formState}
-          onChangeAddress={handleChangeAddress}
+    <>
+      <form
+        className={isFormFilled ? 'pointer-events-none' : ''}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <section className={`${styles.section} mb-10`}>
+          <h3 className={styles.title}>배송 정보</h3>
+          <DeliveryForm
+            register={register}
+            formState={formState}
+            onChangeAddress={handleChangeAddress}
+          />
+        </section>
+
+        <section className={styles.section}>
+          <h3 className={styles.title}>주문 정보</h3>
+          <OrderInfo />
+        </section>
+
+        <div className='w-full mt-10 py-3 rounded-lg'>
+          <Button className='w-full text-[1rem]' type='submit'>
+            결제하기
+          </Button>
+        </div>
+      </form>
+
+      {isFormFilled && (
+        <TossPayments
+          isFormFilled={isFormFilled}
+          onClose={() => setIsFormFilled(false)}
         />
-      </section>
-
-      <section className={styles.section}>
-        <h3 className={styles.title}>주문 정보</h3>
-        <OrderInfo />
-      </section>
-
-      <div className='w-full mt-10 py-3 rounded-lg'>
-        <Button type='submit' className='w-full text-[1rem]'>
-          결제
-        </Button>
-      </div>
-    </form>
+      )}
+    </>
   );
 }
