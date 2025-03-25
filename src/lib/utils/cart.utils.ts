@@ -1,5 +1,5 @@
 import { TypeCartItem } from '@/types/cart/cart.type';
-import { CONTROL_TYPE } from '@/constants/quantity-control-constant';
+import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
 
 //***** cart-store에서 사용하는 actions를 정의해둔 곳 *******//
@@ -137,6 +137,19 @@ export const deleteFromCart = (
   const totalPrice = calculateTotalPrice(newCartBooks);
   return {
     newCartBooks,
+    totalPrice,
+  };
+};
+
+export const getBooksToOrder = (
+  cartBooks: TypeCartItem[],
+  ids: TypeCartItem['id'][]
+) => {
+  const idSet = new Set(ids);
+  const booksToOrder = cartBooks.filter((book) => idSet.has(book.id));
+  const totalPrice = calculateTotalPrice(booksToOrder);
+  return {
+    booksToOrder,
     totalPrice,
   };
 };

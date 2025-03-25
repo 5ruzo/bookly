@@ -1,4 +1,10 @@
-import { Equal, Plus } from 'lucide-react';
+import {
+  formatNumberWithCommas,
+  getDeliveryFee,
+  getTotalPrice,
+} from '@/lib/utils/common.util';
+import useCartStore from '@/store/cart/cart-store';
+import { Plus } from 'lucide-react';
 
 const styles = {
   paymentsField: 'flex flex-wrap items-center mb-3 w-full',
@@ -8,11 +14,16 @@ const styles = {
 };
 
 export default function OrderInfo() {
+  const { totalPrice } = useCartStore();
+
+  const deliveryFee = getDeliveryFee(totalPrice);
+  const paymentAmount = getTotalPrice(totalPrice, deliveryFee);
+
   return (
     <dl className='w-full flex flex-col items-center'>
       <div className={styles.paymentsField}>
         <dt className={styles.title}>결제금액</dt>
-        <dd className={styles.desc}>13,000원</dd>
+        <dd className={styles.desc}>{formatNumberWithCommas(totalPrice)}</dd>
       </div>
       <span className={styles.icon}>
         <Plus className='w-full text-gray' />
@@ -20,11 +31,13 @@ export default function OrderInfo() {
 
       <div className={`${styles.paymentsField} mb-5`}>
         <dt className={styles.title}>배송비</dt>
-        <dd className={styles.desc}>3,000원</dd>
+        <dd className={styles.desc}>{formatNumberWithCommas(deliveryFee)}원</dd>
       </div>
       <div className={`${styles.paymentsField} border-t border-lightgray pt-5`}>
         <dt className={styles.title}>합계금액</dt>
-        <dd className={styles.desc}>13,000원</dd>
+        <dd className={styles.desc}>
+          {formatNumberWithCommas(paymentAmount)}원
+        </dd>
       </div>
     </dl>
   );
