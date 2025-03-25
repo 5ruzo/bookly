@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { fetchGetRecommendedSearchKeywordList } from '@/lib/api/search.api';
 import { Search } from 'lucide-react';
 import { useGetRecommendSearches } from '@/lib/queries/use-get-recommend-searches.query';
 
@@ -42,10 +41,12 @@ export function SearchBarComboBox() {
       className='relative'
       tabIndex={0}
       onFocus={() => {
+        console.log('ON focus');
         setIsSuggestionsView(true);
         setInputTextSearchBar('');
       }}
       onBlur={() => {
+        console.log('ON BLur');
         setIsSuggestionsView(false);
         setInputTextSearchBar(searchTerm);
       }}
@@ -71,13 +72,14 @@ export function SearchBarComboBox() {
         </label>
       </form>
       {isSuggestionsView && (
-        <ul className='absolute z-10 w-full bg-white border rounded mt-1 shadow-lg'>
+        <ul className='absolute w-full bg-white border rounded mt-1 shadow-lg'>
           <li className='pt-2 pl-2 text-gray text-sm'>추천목록</li>
           {suggestions?.map((suggestion) => (
             <li
               key={suggestion}
               className={'p-2 cursor-pointer'}
-              onMouseDown={(e) => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setIsSuggestionsView(false);
                 setInputTextSearchBar(suggestion);
                 handleSearch(suggestion);
