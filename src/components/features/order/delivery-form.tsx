@@ -64,6 +64,7 @@ export default function DeliveryForm({
             setValue('address', data.address);
             setValue('zoneCode', data.zonecode);
             trigger('address');
+            trigger('zoneCode');
           },
         }).open();
       } catch (error) {

@@ -6,7 +6,7 @@ export type TypeOrderForm = {
   zoneCode: string;
 };
 
-export {}; // ⬅️ 이게 중요함! 해당 파일을 모듈로 만듦
+export {};
 
 declare global {
   interface Window {
