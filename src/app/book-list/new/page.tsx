@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default async function BookListNewPage() {
   const bookList = await fetchGetBookListByLatest30();
   return (
-    <ul className='min-h-[calc(100vh-24rem)] flex flex-col gap-[70px]'>
+    <ul className='min-h-[calc(100vh-24rem)] flex flex-col gap-20'>
       {bookList.map((book) => {
         return (
           <BookListItem
