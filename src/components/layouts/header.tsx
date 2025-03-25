@@ -64,10 +64,10 @@ const Header = () => {
             <Link href='/'>홈</Link>
           </li>
           <li>
-            <Link href='/booklist/best'>베스트</Link>
+            <Link href='/book-list/best'>베스트</Link>
           </li>
           <li>
-            <Link href='/booklist/new'>신상품</Link>
+            <Link href='/book-list/new'>신상품</Link>
           </li>
         </ul>
       </div>

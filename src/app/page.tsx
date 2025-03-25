@@ -15,7 +15,7 @@ export default function Home() {
       {/* 베스트 셀러 섹션 */}
       <CardSectionLayout
         title='베스트셀러'
-        path='/booklist/best'
+        path='/book-list/best'
         className='w-[85%] mt-16 md:mt-36'
       >
         <BestSellerCarousel />
