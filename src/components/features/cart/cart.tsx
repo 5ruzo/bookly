@@ -38,8 +38,9 @@ export default function Cart() {
   return (
     <div className='mx-auto w-[80%] max-w-[1128px]'>
       <div className='flex items-center mb-3'>
-        <label className='mr-auto flex items-center'>
+        <label className='mr-auto flex items-center' htmlFor='check-all'>
           <Checkbox
+            id='check-all'
             className='mr-2'
             checked={isAllChecked}
             onCheckedChange={handleCheckAll}
