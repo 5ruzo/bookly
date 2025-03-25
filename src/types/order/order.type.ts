@@ -6,6 +6,8 @@ export type TypeOrderForm = {
   zoneCode: string;
 };
 
+export type TypeAddressInfo = Pick<TypeOrderForm, 'address' | 'zoneCode'>;
+
 export {};
 
 declare global {
