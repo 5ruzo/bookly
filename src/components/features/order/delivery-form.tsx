@@ -20,7 +20,7 @@ const styles = {
     'w-[70%] bg-secondary indent-2 py-2 rounded-xl text-[0.8rem] sm:text-[1rem]',
   button: 'rounded-xl ml-1 w-[40%]',
   error:
-    'ml-[2%] text-[0.7rem] mt-1 w-full sm:text-[0.8rem] font-semibold text-red-500 sm:ml-[21%]',
+    'ml-[2%] h-[20px] text-[0.7rem] mt-1 w-full sm:text-[0.8rem] font-semibold text-red-500 sm:ml-[21%]',
 };
 
 export default function DeliveryForm({
@@ -52,9 +52,7 @@ export default function DeliveryForm({
           placeholder='이름을 입력해 주세요.'
           {...register('name')}
         />
-        {formState.errors.name && (
-          <p className={styles.error}>{formState.errors.name.message}</p>
-        )}
+        <p className={styles.error}>{formState?.errors?.name?.message}</p>
       </div>
 
       <div className={styles.formField}>
@@ -68,15 +66,14 @@ export default function DeliveryForm({
           placeholder='숫자만 입력해 주세요.(01012345678)'
           {...register('phoneNumber')}
         />
-        {formState.errors.phoneNumber && (
-          <p className={styles.error}>{formState.errors.phoneNumber.message}</p>
-        )}
+
+        <p className={styles.error}>
+          {formState?.errors?.phoneNumber?.message}
+        </p>
       </div>
 
-      <div className='w-full'>
-        <div
-          className={`flex items-center flex-col sm:flex-row ${formState.errors.address ? 'mb-0' : 'mb-3'}`}
-        >
+      <div className='w-full mb-3'>
+        <div className={`flex items-center flex-col sm:flex-row`}>
           <label htmlFor='address' className={styles.label}>
             배송지 주소
           </label>
@@ -94,11 +91,9 @@ export default function DeliveryForm({
             </Button>
           </div>
         </div>
-        {formState.errors.address && (
-          <p className={`${styles.error} mb-3`}>
-            {formState.errors.address.message}
-          </p>
-        )}
+        <p className={`${styles.error}`}>
+          {formState?.errors?.address?.message}
+        </p>
       </div>
 
       <div className={styles.formField}>
@@ -112,11 +107,9 @@ export default function DeliveryForm({
           placeholder='상세주소를 입력해 주세요.'
           {...register('detailAddress')}
         />
-        {formState.errors.detailAddress && (
-          <p className={styles.error}>
-            {formState.errors.detailAddress.message}
-          </p>
-        )}
+        <p className={styles.error}>
+          {formState?.errors?.detailAddress?.message}
+        </p>
       </div>
       <div className={styles.formField}>
         <label htmlFor='zoneCode' className={styles.label}>
@@ -130,9 +123,7 @@ export default function DeliveryForm({
           type='text'
           {...register('zoneCode')}
         />
-        {formState.errors.zoneCode && (
-          <p className={styles.error}>{formState.errors.zoneCode.message}</p>
-        )}
+        <p className={styles.error}>{formState?.errors?.zoneCode?.message}</p>
       </div>
     </div>
   );
