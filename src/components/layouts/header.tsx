@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 const Header = () => {
   const { signOut, isAuthenticated } = useAuthStore();
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -38,6 +39,7 @@ const Header = () => {
     e.preventDefault();
     if (inputTextSearchBar === '') return;
 
+    //쿼리스트링에 옵션이 포함 되어있으면 옵션을 포함한 링크이동
     const option = searchParams.get('option');
     if (option) {
       router.push(`/search?query=${inputTextSearchBar}&option=${option}`);

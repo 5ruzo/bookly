@@ -29,6 +29,7 @@ export function SearchCheckBox({ genreList }: { genreList: string[] }) {
     return { id: genre, label: genre };
   });
 
+  //체크박스 기본값 쿼리스트링으로 구분
   const option = searchParams.get('option');
   const optionGenreList = option ? option.split(' ') : [];
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -42,6 +43,7 @@ export function SearchCheckBox({ genreList }: { genreList: string[] }) {
     const searchTerm = searchParams.get('query');
     const option = data.items.join('+');
 
+    //아무것도 체크 안되어있으면 쿼리스트링 option제외(모든 장르 검색)
     if (data.items.length === 0) router.push(`/search?query=${searchTerm}`);
     else {
       router.push(`/search?query=${searchTerm}&option=${option}`);

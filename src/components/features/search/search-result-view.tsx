@@ -15,8 +15,8 @@ export default function SearchResultView() {
   //검색값이 비어있으면 홈으로 리다이렉트
   if (!searchTerm) router.push('/');
 
+  //쿼리키로 사용되며 api검색요청 할 때 쿼리문에 사용됨
   const queryKey: (string | object)[] = [searchTerm as string];
-
   if (option) {
     const optionGenreList = option.split(' ');
     const optionObj: Record<string, string> = {};
