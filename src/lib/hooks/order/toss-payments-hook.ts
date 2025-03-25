@@ -1,4 +1,5 @@
 'use client';
+import { TypePaymentsInfo } from '@/types/order/order.type';
 import {
   ANONYMOUS,
   loadTossPayments,
@@ -8,9 +9,13 @@ import { useEffect, useState } from 'react';
 
 const CLIENT_KEY = process.env.NEXT_PUBLIC_TOSS_CLIENT_TEST_KEY as string;
 
-export const useTossPayments = (isFormFilled: boolean, amount: number) => {
+export const useTossPayments = (
+  isFormFilled: boolean,
+  paymentsInfo: TypePaymentsInfo
+) => {
   const [ready, setReady] = useState<boolean>(false);
   const [widgets, setWidgets] = useState<TossPaymentsWidgets | null>(null);
+  const { name, amount, items } = paymentsInfo;
 
   useEffect(() => {
     // Toss Payments 위젯 초기화 함수
@@ -67,9 +72,8 @@ export const useTossPayments = (isFormFilled: boolean, amount: number) => {
     try {
       await widgets.requestPayment({
         orderId: crypto.randomUUID(),
-        orderName: '토스 티셔츠 외 2건',
-        customerName: '김토스',
-        customerEmail: 'customer123@gmail.com',
+        orderName: items,
+        customerName: name,
         successUrl: `${window.location.origin}/order/success${window.location.search}`,
         failUrl: `${window.location.origin}/order/fail${window.location.search}`,
       });
