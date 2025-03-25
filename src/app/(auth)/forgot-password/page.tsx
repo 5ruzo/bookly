@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,7 +9,7 @@ import { authService } from '@/lib/api/authService';
 
 const ForgotPassword = () => {
   // 비밀번호 재설정 요청 완료 여부를 확인하는 상태
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // react-hook-form 설정: 이메일 필드와 zod를 통한 유효성 검사 적용
   const { register, handleSubmit, formState } = useForm({

@@ -13,4 +13,6 @@ export type UserState = {
   isLogin: boolean;
   setUser: (user: User) => void;
   clearUser: () => void;
+  error: string | null;
+  setError: (message: string) => void;
 };

@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/store/useAuthStore';
 import { supabase } from './supabaseClient';
 
 export const authService = {
@@ -13,20 +14,29 @@ export const authService = {
     return { data, error };
   },
 
-  signIn: async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+  signIn: async (
+    email: string,
+    password: string,
+    rememberMe: boolean = false
+  ) => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+        options: {
+          persistSession: rememberMe,
+        } as any,
+      });
 
-    if (error) throw error;
-
-    return { data, error };
+      return { data, error };
+    } catch (err) {
+      throw err;
+    }
   },
 
   signOut: async () => {
     const { error } = await supabase.auth.signOut();
-
+    localStorage.removeItem('rememberMe');
     if (error) throw error;
   },
 

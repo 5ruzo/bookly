@@ -1,19 +1,12 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { UserState } from '@/types/auth.type';
+import { boolean } from 'zod';
 
-export const useAuthStore = create<UserState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isLogin: false,
-      setUser: (user) => set({ user, isLogin: true }),
-      clearUser: () => set({ user: null, isLogin: false }),
-    }),
-    {
-      name: 'user-storage',
-    }
-  )
-);
-
-export default useAuthStore;
+export const useAuthStore = create<UserState>((set) => ({
+  user: null,
+  isLogin: false,
+  error: null,
+  setError: (message) => set({ error: message }),
+  setUser: (user) => set({ user, isLogin: true }),
+  clearUser: () => set({ user: null, isLogin: false }),
+}));

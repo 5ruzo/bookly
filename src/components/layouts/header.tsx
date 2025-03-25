@@ -6,9 +6,9 @@ import React from 'react';
 import { Search } from 'lucide-react';
 import { LinkItem } from '@/types/layout.type';
 import HeaderDropdownMenu from './header-dropdown-menu';
-import useAuthStore from '@/store/useAuthStore';
 import { authService } from '@/lib/api/authService';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const Header = () => {
   const { isLogin, clearUser } = useAuthStore();
@@ -23,6 +23,7 @@ const Header = () => {
           onClick: async () => {
             await authService.signOut();
             clearUser();
+            alert('로그아웃 성공!');
             router.push('/');
           },
         },

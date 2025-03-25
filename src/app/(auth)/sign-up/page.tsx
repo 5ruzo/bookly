@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useAuthStore from '@/store/useAuthStore';
 import { useRouter } from 'next/navigation';
 import { signupSchema } from '@/lib/utils/auth/schemas';
 import { authService } from '@/lib/api/authService';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const SignUp = () => {
   const { setUser } = useAuthStore();
@@ -88,13 +88,14 @@ const SignUp = () => {
 
       if (error) {
         console.error('회원가입 에러:', error);
+        alert('회원가입 실패!');
       }
 
       if (data?.user) {
         setUser(data.user);
+        alert('회원가입 성공!');
         router.push('/');
       }
-      router.push('/'); // 홈페이지로 리다이렉트
     } catch (err) {
       console.error('Sign up error:', err);
     }
@@ -102,7 +103,7 @@ const SignUp = () => {
 
   return (
     <div className='flex min-h-screen'>
-      <div className='flex flex-1 items-center justify-center p-6'>
+      <div className='flex flex-1 items-start justify-center p-6'>
         <div className='w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[var(--color-secondary)] flex overflow-hidden'>
           {/* 이미지 영역 */}
           <div className='w-[45%] relative flex items-center justify-center'>
@@ -120,32 +121,34 @@ const SignUp = () => {
 
           {/* 오른쪽 폼 */}
           <div className='p-6 w-[55%]'>
-            <div className='w-[100%] bg-white p-8 rounded-xl'>
-              <h2 className='text-xl font-semibold mb-6 text-left'>Sign Up</h2>
+            <div className='flex flex-col justify-center w-[100%] h-full bg-[var(--color-white-light)] p-8 rounded-xl'>
+              <h2 className='text-2xl mb-6 text-left'>회원가입</h2>
 
-              <form className='space-y-5' onSubmit={handleSubmit(onSubmit)}>
+              <form className='space-y-0' onSubmit={handleSubmit(onSubmit)}>
                 {/* 이메일 입력 */}
-                <div>
-                  <label className='block text-base mb-2'>이메일</label>
+                <div className='relative'>
+                  <label className='block text-base'>이메일</label>
                   <div className='flex gap-4'>
                     <input
                       {...register('email')}
                       type='email'
                       placeholder='Email'
-                      className='w-10/12 px-4 py-3 border rounded-xl var(--color-white-light) text-base'
+                      className='w-10/12 px-4 py-3 border rounded-xl text-base'
                       autoComplete='email'
                     />
                     <button
                       type='button'
-                      className={`border rounded-lg ${emailChecked ? 'bg-green-500 text-white' : 'bg-[var(--color-gray)]'} w-16`}
+                      className={`border rounded-lg ${emailChecked ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-white-light)]'} w-16`}
                       onClick={handleEmailCheck}
                     >
                       중복검사
                     </button>
                   </div>
-                  <div className='ml-1 mt-2 text-red-500'>
+                  <div className='block left-0 right-0 h-6 mt-1'>
                     {formState.errors.email && (
-                      <span>{formState.errors.email.message as string}</span>
+                      <span className='text-red-500'>
+                        {formState.errors.email.message as string}
+                      </span>
                     )}
                     {!formState.errors.email && emailCheckMessage && (
                       <span
@@ -160,36 +163,38 @@ const SignUp = () => {
                 </div>
 
                 {/* 비밀번호 입력 */}
-                <div>
-                  <label className='block text-base mb-2'>비밀번호</label>
+                <div className='relative'>
+                  <label className='block text-base'>비밀번호</label>
                   <input
                     type='password'
                     {...register('password')}
-                    className='w-10/12 px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base'
+                    className='w-10/12 px-4 py-3 border rounded-xl text-base'
                     placeholder='Password'
                     autoComplete='new-password'
                   />
-                  <div className='ml-1 mt-2 text-red-500'>
+                  <div className='block left-0 right-0 h-6 mt-1'>
                     {formState.errors.password && (
-                      <span>{formState.errors.password.message as string}</span>
+                      <span className='text-red-500'>
+                        {formState.errors.password.message as string}
+                      </span>
                     )}
                   </div>
                 </div>
 
                 {/* 비밀번호 확인 입력 */}
-                <div>
-                  <label className='block text-base mb-2'>비밀번호 확인</label>
+                <div className='relative'>
+                  <label className='block text-base'>비밀번호 확인</label>
                   <input
                     id='confirmPassword'
                     type='password'
                     {...register('confirmPassword')}
-                    className='w-10/12 px-4 py-3 border rounded-xl var(--color-gray) text-base'
+                    className='w-10/12 px-4 py-3 border rounded-xl text-base'
                     placeholder='Password'
                     autoComplete='current-password'
                   />
-                  <div className='ml-1 mt-2 text-red-500'>
+                  <div className='block left-0 right-0 h-6 mt-1'>
                     {formState.errors.confirmPassword && (
-                      <span>
+                      <span className='text-red-500'>
                         {formState.errors.confirmPassword.message as string}
                       </span>
                     )}
@@ -197,24 +202,24 @@ const SignUp = () => {
                 </div>
 
                 {/* 휴대폰 번호 입력 */}
-                <div>
-                  <label className='block text-base mb-2'>휴대폰 번호</label>
+                <div className='relative'>
+                  <label className='block text-base'>휴대폰 번호</label>
                   <div className='flex gap-4'>
                     <input
                       type='text'
                       {...register('phone')}
-                      className='w-10/12 px-4 py-3 border rounded-xl bg-gray-100 text-base'
+                      className='w-10/12 px-4 py-3 border rounded-xl text-base'
                       placeholder="'-' 없이 입력"
                     />
                     <button
                       type='button'
-                      className={`border rounded-lg ${phoneVerified ? 'bg-green-500 text-white' : 'bg-[gray]'} w-16`}
+                      className={`border rounded-lg ${phoneVerified ? 'bg-[var(--color-primary)] text-white' : 'bg-[var(--color-white-light)]'} w-16`}
                       onClick={handlePhoneVerify}
                     >
                       인증
                     </button>
                   </div>
-                  <div className='ml-1 mt-2'>
+                  <div className='block left-0 right-0 h-6 mt-1'>
                     {formState.errors.phone && (
                       <p className='text-red-500'>
                         {formState.errors.phone.message as string}
@@ -236,7 +241,7 @@ const SignUp = () => {
                 <button
                   disabled={!formState.isValid}
                   type='submit'
-                  className='w-10/12 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition mb-2'
+                  className='w-10/12 py-3 bg-[var(--color-primary)] text-white rounded-xl  transition mb-2'
                 >
                   회원가입
                 </button>

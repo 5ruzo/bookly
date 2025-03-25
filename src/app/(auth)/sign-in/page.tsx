@@ -5,18 +5,15 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useAuthStore from '@/store/useAuthStore';
 import { useRouter } from 'next/navigation';
 import { loginSchema } from '@/lib/utils/auth/schemas';
 import { authService } from '@/lib/api/authService';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const SignIn = () => {
-  const { setUser } = useAuthStore();
-  // 자동 로그인 상태를 관리하는 useState
-  const [rememberMe, setRememberMe] = useState(false);
-
-  // 페이지 이동을 위한 useRouter 훅 사용
+  const { setUser, setError, error } = useAuthStore();
   const router = useRouter();
+  const [rememberMe, setRememberMe] = useState(false);
 
   // react-hook-form을 설정
   const { register, handleSubmit, formState } = useForm({
@@ -24,6 +21,7 @@ const SignIn = () => {
     defaultValues: {
       email: '',
       password: '',
+      rememberMe: false,
     },
     resolver: zodResolver(loginSchema), // zod 스키마로 유효성 검사 적용
   });
@@ -31,19 +29,27 @@ const SignIn = () => {
   // 로그인 폼 제출 시 호출되는 함수
   const onSubmit = async (values: FieldValues) => {
     try {
-      // signIn 함수 실행 (이메일, 비밀번호 전달)
       const { data, error } = await authService.signIn(
         values.email,
-        values.password
+        values.password,
+        rememberMe // rememberMe 옵션 추가
       );
 
       if (error) {
-        console.error('Sign in error:', error);
+        setError(error.message);
         return;
       }
 
+      // authService에서 이미 세션 처리를 했다고 가정
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        localStorage.removeItem('rememberMe');
+      }
+
       if (data?.user) {
-        setUser(data.user); // user 객체만 전달
+        setUser(data.user);
+        alert('로그인 성공!');
         router.push('/');
       }
     } catch (err) {
@@ -54,7 +60,7 @@ const SignIn = () => {
   return (
     <div className='flex min-h-screen'>
       {/* 페이지 전체를 감싸는 컨테이너 */}
-      <div className='flex flex-1 items-center justify-center p-6'>
+      <div className='flex flex-1 items-start justify-center p-6'>
         {/* 로그인 카드 */}
         <div className='w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[var(--color-secondary)] flex overflow-hidden'>
           {/* 좌측: 이미지 영역 */}
@@ -71,25 +77,31 @@ const SignIn = () => {
             </div>
           </div>
 
-          {/* 우측: 로그인 폼 영역 */}
+          {/* 오른쪽 폼 */}
           <div className='p-6 w-[55%]'>
-            <div className='w-[100%] h-full bg-[var(--color-white-light)] p-12 rounded-xl'>
-              {/* 로그인 제목 */}
-              <h2 className='text-2xl font-semibold mb-6 text-left'>Sign In</h2>
+            <div className='flex flex-col justify-center w-[100%] h-full bg-[var(--color-white-light)] p-8 rounded-xl'>
+              <h2 className='text-2xl mb-6 text-left'>로그인</h2>
+
+              {error && (
+                <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded'>
+                  아이디 또는 비밀번호가 잘못 되었습니다.
+                  <br /> 아이디와 비밀번호를 정확히 입력해 주세요.
+                </div>
+              )}
 
               {/* 로그인 입력 폼 */}
               <form
-                className='space-y-5 mt-16'
+                className='space-y-5 mt-8'
                 onSubmit={handleSubmit(onSubmit)}
               >
                 {/* 이메일 입력 필드 */}
                 <div>
-                  <label className='block text-base mb-2'>
+                  <label className='block text-base'>
                     이메일
                     <input
                       type='email'
                       {...register('email')}
-                      className='w-full px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base'
+                      className='w-full px-4 py-3 border rounded-xl text-base mt-2'
                       autoComplete='email'
                       placeholder='Email'
                     />
@@ -109,7 +121,7 @@ const SignIn = () => {
                     <input
                       type='password'
                       {...register('password')}
-                      className='w-full px-4 py-3 border rounded-xl bg-[var(--color-white-light)] text-base'
+                      className='w-full px-4 py-3 border rounded-xl text-base mt-2'
                       autoComplete='current-password'
                       placeholder='Password'
                     />
@@ -145,7 +157,7 @@ const SignIn = () => {
                 <button
                   disabled={!formState.isValid} // 유효하지 않거나 로딩 중일 때 비활성화
                   type='submit'
-                  className='w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition'
+                  className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl hover:bg-gray-800 transition'
                 >
                   로그인
                 </button>
@@ -153,7 +165,7 @@ const SignIn = () => {
                 {/* 네이버 로그인 버튼 */}
                 <button
                   type='button'
-                  className='w-full py-3 bg-[#03CF5D] text-white rounded-xl flex items-center justify-center gap-2'
+                  className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl flex items-center justify-center gap-2'
                 >
                   {/* 네이버 로고 SVG */}
                   <svg
