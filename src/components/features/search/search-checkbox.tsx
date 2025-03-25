@@ -38,9 +38,7 @@ export function SearchCheckBox({ genreList }: { genreList: string[] }) {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     if (data.items.length === 0) return;
-
     const searchTerm = searchParams.get('query');
     const option = data.items.join('+');
 

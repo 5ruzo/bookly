@@ -3,9 +3,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchGetSearchedBookList } from '../api/search.api';
 
-export const useGetBooksBySearchTerm = (searchTerm: string) => {
+export const useGetBooksBySearchTerm = (queryKey: (string | object)[]) => {
   return useQuery({
-    queryKey: [searchTerm],
-    queryFn: () => fetchGetSearchedBookList(searchTerm),
+    queryKey,
+    queryFn: () => fetchGetSearchedBookList(queryKey),
   });
 };

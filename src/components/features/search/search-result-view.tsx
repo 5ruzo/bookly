@@ -1,20 +1,37 @@
 'use client';
 
 import BookListItem from '../book-list/book-list-item';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useGetBooksBySearchTerm } from '@/lib/queries/use-get-books-by-search-term.query';
 import SearchLoading from '@/app/search/loading';
 import SearchNoSearchResult from './search-no-search-result';
 
 export default function SearchResultView() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const searchTerm = searchParams.get('query');
+  const option = searchParams.get('option');
+
+  //검색값이 비어있으면 홈으로 리다이렉트
+  if (!searchTerm) router.push('/');
+
+  const queryKey: (string | object)[] = [searchTerm as string];
+
+  if (option) {
+    const optionGenreList = option.split(' ');
+    const optionObj: Record<string, string> = {};
+    optionGenreList.forEach((genre) => {
+      optionObj[genre] = genre;
+    });
+
+    queryKey.push(optionObj);
+  }
 
   const {
     data: bookList,
     isPending,
     error,
-  } = useGetBooksBySearchTerm(searchTerm as string);
+  } = useGetBooksBySearchTerm(queryKey as (string | object)[]);
 
   if (isPending) {
     return <SearchLoading />;
