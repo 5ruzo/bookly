@@ -1,31 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { TypeOrderForm } from '@/types/order/order.type';
-interface Window {
-  daum: {
-    Postcode: new (options: {
-      oncomplete: (data: Record<string, string>) => void;
-    }) => {
-      open: () => void;
-    };
-  };
-}
-
-import { useEffect } from 'react';
-import {
-  FieldValues,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormStateReturn,
-  UseFormTrigger,
-} from 'react-hook-form';
+import { useDeliveryFormHook } from '@/lib/hooks/order/delivery-form-hook';
+import { TypeAddressInfo, TypeOrderForm } from '@/types/order/order.type';
+import { FieldValues, FormState, UseFormRegister } from 'react-hook-form';
 
 type DeliveryFormProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
-  formState: UseFormStateReturn<T>;
-  setValue: UseFormSetValue<T>;
-  trigger: UseFormTrigger<T>;
+  formState: FormState<T>;
+  onChangeAddress: (addressInfo: TypeAddressInfo) => void;
 };
 
 const styles = {
@@ -43,35 +26,16 @@ const styles = {
 export default function DeliveryForm({
   register,
   formState,
-  setValue,
-  trigger,
+  onChangeAddress,
 }: DeliveryFormProps<TypeOrderForm>) {
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !window.daum) {
-      const script = document.createElement('script');
-      script.src =
-        'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
+  const { openAddressSearch } = useDeliveryFormHook();
 
-  const openAddressSearch = () => {
-    if (typeof window !== 'undefined' && window.daum) {
-      try {
-        new window.daum.Postcode({
-          oncomplete: (data) => {
-            setValue('address', data.address);
-            setValue('zoneCode', data.zonecode);
-            trigger('address');
-            trigger('zoneCode');
-          },
-        }).open();
-      } catch (error) {
-        alert('주소를 설정하는데 실패했습니다. 다시 시도해 주세요.');
-      }
-    } else {
-      alert('주소 검색을 실행할 수 없습니다. 다시 실행해 주세요.');
+  const getAddressInfo = async () => {
+    try {
+      const addressInfo = await openAddressSearch();
+      onChangeAddress(addressInfo);
+    } catch (error) {
+      window.alert(error);
     }
   };
 
@@ -125,7 +89,7 @@ export default function DeliveryForm({
               placeholder='주소를 검색해 주세요.'
               {...register('address')}
             />
-            <Button className={styles.button} onClick={openAddressSearch}>
+            <Button className={styles.button} onClick={getAddressInfo}>
               주소 검색
             </Button>
           </div>
@@ -160,6 +124,7 @@ export default function DeliveryForm({
         </label>
         <input
           id='zoneCode'
+          readOnly={true}
           className={styles.input}
           placeholder='주소를 선택하면 우편번호가 자동으로 들어갑니다.'
           type='text'

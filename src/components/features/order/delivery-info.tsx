@@ -1,5 +1,5 @@
 'use client';
-import { TypeOrderForm } from '@/types/order/order.type';
+import { TypeAddressInfo, TypeOrderForm } from '@/types/order/order.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -51,6 +51,14 @@ export default function DeliveryInfo() {
     console.log('합격', values);
   };
 
+  const handleChangeAddress = (addressInfo: TypeAddressInfo) => {
+    const { address, zoneCode } = addressInfo;
+    setValue('address', address);
+    setValue('zoneCode', zoneCode);
+    trigger('address');
+    trigger('zoneCode');
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <section className={`${styles.section} mb-10`}>
@@ -58,8 +66,7 @@ export default function DeliveryInfo() {
         <DeliveryForm
           register={register}
           formState={formState}
-          setValue={setValue}
-          trigger={trigger}
+          onChangeAddress={handleChangeAddress}
         />
       </section>
 
