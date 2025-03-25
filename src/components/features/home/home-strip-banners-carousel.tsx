@@ -13,10 +13,18 @@ import { STRIP_BANNER_OPTIONS } from '@/constants/home.constant';
 import { useGetImagesByStripBanners } from '@/lib/queries/use-get-images-by-strip-banners';
 import { type CarouselApi } from '@/components/ui/carousel';
 import { useEffect, useState } from 'react';
+import { CarouselImages } from '@/types/home.type';
 
 function StripBannersCarousel() {
   // 스트립 배너 캐러셀에 표시할 이미지 데이터
-  const { data: ImageList, isError, isLoading } = useGetImagesByStripBanners();
+  const { data: imageList, isError, isLoading } = useGetImagesByStripBanners();
+  const [stripBanners, setStripBanners] = useState<CarouselImages[] | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (imageList && !isError) setStripBanners(imageList);
+  }, [imageList, isError]);
 
   // 캐러셀 API 및 상태 관리를 위한 상태 변수
   const [api, setApi] = useState<CarouselApi>();
@@ -49,6 +57,8 @@ function StripBannersCarousel() {
     }
   };
 
+  if (!stripBanners || isError) return null;
+
   return (
     <div className='relative overflow-hidden'>
       <Carousel
@@ -67,8 +77,8 @@ function StripBannersCarousel() {
         ]}
       >
         <CarouselContent className='-ml-0 gap-0'>
-          {ImageList &&
-            ImageList.map((image) => (
+          {stripBanners &&
+            stripBanners.map((image) => (
               <CarouselItem className='relative pl-0' key={image.id}>
                 <Link
                   href={image.link_url}
@@ -80,25 +90,28 @@ function StripBannersCarousel() {
                     fill
                     sizes='(max-width: 768px) 768px, 100vw'
                     quality={95}
+                    placeholder='blur'
+                    blurDataURL={image.image_url}
                     style={{ objectFit: 'cover' }}
                   />
                 </Link>
               </CarouselItem>
             ))}
         </CarouselContent>
-
-        <div className='flex justify-center items-center gap-2 mt-4'>
-          {Array.from({ length: count }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleSelectSlide(index)}
-              className={`w-1 h-1 md:w-2 md:h-2 rounded-full transition-all ${
-                current === index ? 'bg-gray' : 'bg-lightgray'
-              }`}
-              aria-label={`${index + 1}번 배너 이미지로 이동하기`}
-            />
-          ))}
-        </div>
+        {api && (
+          <div className='flex justify-center items-center gap-2 mt-4'>
+            {Array.from({ length: count }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleSelectSlide(index)}
+                className={`w-1 h-1 md:w-2 md:h-2 rounded-full transition-all ${
+                  current === index ? 'bg-gray' : 'bg-lightgray'
+                }`}
+                aria-label={`${index + 1}번 배너 이미지로 이동하기`}
+              />
+            ))}
+          </div>
+        )}
       </Carousel>
     </div>
   );
