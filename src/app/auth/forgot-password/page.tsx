@@ -56,7 +56,10 @@ const ForgotPassword = () => {
                 확인해주세요.
               </div>
               {/* 로그인 페이지로 이동하는 링크 */}
-              <Link href='/sign-in' className='text-blue-600 hover:underline'>
+              <Link
+                href='/auth/sign-in'
+                className='text-blue-600 hover:underline'
+              >
                 로그인 페이지로 돌아가기
               </Link>
             </div>
@@ -86,14 +89,17 @@ const ForgotPassword = () => {
               <button
                 type='submit'
                 disabled={!formState.isValid}
-                className='w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition'
+                className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl hover:bg-gray-800 transition'
               >
                 비밀번호 재설정 링크 받기
               </button>
 
               {/* 로그인 페이지로 돌아가는 링크 */}
               <div className='text-center mt-4'>
-                <Link href='/sign-in' className='text-blue-600 hover:underline'>
+                <Link
+                  href='/auth/sign-in'
+                  className='text-blue-600 hover:underline'
+                >
                   로그인 페이지로 돌아가기
                 </Link>
               </div>

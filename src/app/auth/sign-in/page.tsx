@@ -13,7 +13,6 @@ import { useAuthStore } from '@/store/useAuthStore';
 const SignIn = () => {
   const { setUser, setError, error } = useAuthStore();
   const router = useRouter();
-  const [rememberMe, setRememberMe] = useState(false);
 
   // react-hook-form을 설정
   const { register, handleSubmit, formState } = useForm({
@@ -26,24 +25,28 @@ const SignIn = () => {
     resolver: zodResolver(loginSchema), // zod 스키마로 유효성 검사 적용
   });
 
+  const handleKakaoLogin = async () => {
+    try {
+      // 카카오 로그인 메서드 호출
+      await authService.signInWithKakao();
+    } catch (err) {
+      // 오류 핸들링
+      console.error('카카오 로그인 실패:', err);
+      alert('로그인에 실패했습니다.');
+    }
+  };
+
   // 로그인 폼 제출 시 호출되는 함수
   const onSubmit = async (values: FieldValues) => {
     try {
       const { data, error } = await authService.signIn(
         values.email,
-        values.password,
-        rememberMe // rememberMe 옵션 추가
+        values.password
       );
 
       if (error) {
         setError(error);
         return;
-      }
-
-      if (rememberMe) {
-        localStorage.setItem('rememberMe', 'true');
-      } else {
-        localStorage.removeItem('rememberMe');
       }
 
       if (data?.user) {
@@ -52,7 +55,11 @@ const SignIn = () => {
         router.push('/');
       }
     } catch (err) {
-      console.error('Sign in error:', err);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     }
   };
 
@@ -90,7 +97,7 @@ const SignIn = () => {
 
               {/* 로그인 입력 폼 */}
               <form
-                className='space-y-5 mt-8'
+                className='space-y-3 mt-8'
                 onSubmit={handleSubmit(onSubmit)}
               >
                 {/* 이메일 입력 필드 */}
@@ -104,13 +111,15 @@ const SignIn = () => {
                       autoComplete='email'
                       placeholder='Email'
                     />
+                    {/* 이메일 유효성 검사 오류 메시지 */}
+                    <div className='block left-0 right-0 h-6 mt-1'>
+                      {formState.errors.email && (
+                        <span className='text-red-500'>
+                          {formState.errors.email.message as string}
+                        </span>
+                      )}
+                    </div>
                   </label>
-                  {/* 이메일 유효성 검사 오류 메시지 */}
-                  <div className='ml-1 mt-2 text-red-500'>
-                    {formState.errors.email && (
-                      <span>{formState.errors.email.message as string}</span>
-                    )}
-                  </div>
                 </div>
 
                 {/* 비밀번호 입력 필드 */}
@@ -124,26 +133,19 @@ const SignIn = () => {
                       autoComplete='current-password'
                       placeholder='Password'
                     />
+                    {/* 비밀번호 유효성 검사 오류 메시지 */}
+                    <div className='block left-0 right-0 h-6 mt-1'>
+                      {formState.errors.password && (
+                        <span className='text-red-500'>
+                          {formState.errors.password.message as string}
+                        </span>
+                      )}
+                    </div>
                   </label>
-                  {/* 비밀번호 유효성 검사 오류 메시지 */}
-                  <div className='ml-1 mt-2 text-red-500'>
-                    {formState.errors.password && (
-                      <span>{formState.errors.password.message as string}</span>
-                    )}
-                  </div>
                 </div>
 
                 {/* 자동 로그인 & 비밀번호 찾기 링크 */}
-                <div className='flex items-center justify-between text-base'>
-                  <div className='flex items-center gap-2'>
-                    <input
-                      type='checkbox'
-                      id='rememberMe'
-                      checked={rememberMe}
-                      onChange={() => setRememberMe(!rememberMe)}
-                    />
-                    <label htmlFor='rememberMe'>자동 로그인</label>
-                  </div>
+                <div className='flex justify-end text-base'>
                   <Link
                     href='forgot-password'
                     className='text-gray-500 hover:underline'
@@ -165,35 +167,9 @@ const SignIn = () => {
                 <button
                   type='button'
                   className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl flex items-center justify-center gap-2'
+                  onClick={handleKakaoLogin}
                 >
-                  {/* 네이버 로고 SVG */}
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='32'
-                    height='30'
-                    fill='none'
-                    viewBox='-4 -4 32 30'
-                  >
-                    <path
-                      fillRule='evenodd'
-                      clipRule='evenodd'
-                      d='M15.817 22L8.074 10.612V22H0V0h8.187l7.743 11.386V0H24v22h-8.183z'
-                      fill='url(#afpaint0_linear_3876_26143)'
-                    />
-                    <defs>
-                      <linearGradient
-                        id='afpaint0_linear_3876_26143'
-                        x1='-12'
-                        y1='11'
-                        x2='9.917'
-                        y2='34.909'
-                        gradientUnits='userSpaceOnUse'
-                      >
-                        <stop stopColor='var(--color-white-light)' />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  네이버 로그인
+                  카카오 로그인
                 </button>
               </form>
 
@@ -202,7 +178,7 @@ const SignIn = () => {
                 <p>
                   계정이 없으신가요?{' '}
                   <Link
-                    href='/sign-up'
+                    href='/auth/sign-up'
                     className='text-blue-600 hover:underline'
                   >
                     회원가입

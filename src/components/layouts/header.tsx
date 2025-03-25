@@ -11,10 +11,10 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
 
 const Header = () => {
-  const { isLogin, clearUser } = useAuthStore();
+  const { user, clearUser } = useAuthStore();
   const router = useRouter();
 
-  const navigationLinks: LinkItem[] = isLogin
+  const navigationLinks: LinkItem[] = user
     ? [
         { text: '마이페이지', href: '/mypage' },
         { text: '장바구니(0)', href: '/cart' },
@@ -29,8 +29,8 @@ const Header = () => {
         },
       ]
     : [
-        { text: '로그인', href: '/sign-in' },
-        { text: '회원가입', href: '/sign-up' },
+        { text: '로그인', href: '/auth/sign-in' },
+        { text: '회원가입', href: '/auth/sign-up' },
       ];
 
   return (

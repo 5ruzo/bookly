@@ -1,5 +1,5 @@
-import { useAuthStore } from '@/store/useAuthStore';
 import { supabase } from './supabaseClient';
+import { redirect } from 'next/navigation';
 
 export const authService = {
   signUp: async (email: string, password: string, phone: string) => {
@@ -19,25 +19,17 @@ export const authService = {
     }
   },
 
-  signIn: async (
-    email: string,
-    password: string,
-    rememberMe: boolean = false
-  ) => {
+  signIn: async (email: string, password: string) => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: {
-          persistSession: rememberMe,
-        } as any,
       });
 
       if (error) throw error;
 
       return { data, error };
     } catch (err) {
-      console.error('Sign in error:', err);
       throw err;
     }
   },
@@ -51,6 +43,33 @@ export const authService = {
     } catch (err) {
       console.error('Sign out error:', err);
       throw err;
+    }
+  },
+
+  signInWithKakao: async () => {
+    const url = process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
+      : 'http://localhost:3000/auth/callback';
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'kakao',
+      options: {
+        redirectTo: url,
+      },
+    });
+    if (data.url) {
+      redirect(data.url);
+    }
+
+    await supabase.auth.signInWithOAuth({
+      provider: 'kakao',
+      options: {
+        redirectTo: `http://localhost:3000/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error('카카오 로그인 에러:', error);
+      throw error;
     }
   },
 

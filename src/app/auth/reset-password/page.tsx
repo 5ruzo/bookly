@@ -73,7 +73,7 @@ const ResetPassword = () => {
       setIsSubmitted(true);
 
       setTimeout(() => {
-        router.push('/sign-in');
+        router.push('/auth/sign-in');
       }, 3000);
     } catch (err: any) {
       setError(err.message || '비밀번호 재설정 중 오류가 발생했습니다.');
@@ -103,7 +103,10 @@ const ResetPassword = () => {
                 비밀번호가 성공적으로 재설정되었습니다. 로그인 페이지로
                 이동합니다.
               </div>
-              <Link href='/sign-in' className='text-blue-600 hover:underline'>
+              <Link
+                href='/auth/sign-in'
+                className='text-blue-600 hover:underline'
+              >
                 로그인 페이지로 이동
               </Link>
             </div>
@@ -152,7 +155,7 @@ const ResetPassword = () => {
               <button
                 type='submit'
                 disabled={!formState.isValid || isLoading || !!error}
-                className='w-full py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition'
+                className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl hover:bg-gray-800 transition'
               >
                 {isLoading ? '처리 중...' : '비밀번호 변경하기'}
               </button>
