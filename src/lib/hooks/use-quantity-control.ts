@@ -35,10 +35,19 @@ export const useQuantityControl = (id: string, storeQuantity: number) => {
     }
   };
 
+  const handleUpdateBookQuantityByEnter = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === 'Enter') {
+      updateBookQuantityByText();
+    }
+  };
+
   return {
     quantity,
     handleBookQuantityByButton,
     handleBookQuantityByText,
     updateBookQuantityByText,
+    handleUpdateBookQuantityByEnter,
   };
 };

@@ -19,6 +19,7 @@ export default function QuantityControl({
     handleBookQuantityByButton,
     handleBookQuantityByText,
     updateBookQuantityByText,
+    handleUpdateBookQuantityByEnter,
   } = useQuantityControl(id, quantity);
   return (
     <>
@@ -35,7 +36,8 @@ export default function QuantityControl({
           value={bookQuantity}
           onChange={handleBookQuantityByText}
           onBlur={updateBookQuantityByText}
-          className='outline-none w-[40px] text-center'
+          onKeyDown={handleUpdateBookQuantityByEnter}
+          className='outline-none w-[40px] text-center bg-white-light'
         />
         <button
           className='p-3'
