@@ -17,9 +17,8 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const FormSchema = z.object({
-  items: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: '', // 빈 문자열로 설정하여 메시지를 숨김
-  }),
+  //유효성 언제나 허용
+  items: z.array(z.string()).refine((value) => true),
 });
 
 export function SearchCheckBox({ genreList }: { genreList: string[] }) {
@@ -38,11 +37,13 @@ export function SearchCheckBox({ genreList }: { genreList: string[] }) {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    if (data.items.length === 0) return;
     const searchTerm = searchParams.get('query');
     const option = data.items.join('+');
 
-    router.push(`/search?query=${searchTerm}&option=${option}`);
+    if (data.items.length === 0) router.push(`/search?query=${searchTerm}`);
+    else {
+      router.push(`/search?query=${searchTerm}&option=${option}`);
+    }
   }
 
   return (
