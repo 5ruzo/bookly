@@ -65,13 +65,15 @@ const ForgotPassword = () => {
             <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
               {/* 이메일 입력 필드 */}
               <div>
-                <label className='block text-sm font-medium mb-2'>이메일</label>
-                <input
-                  type='email'
-                  {...register('email')}
-                  className='w-full px-4 py-3 border rounded-xl bg-gray-50'
-                  placeholder='가입한 이메일을 입력하세요'
-                />
+                <label className='block text-base font-medium mb-2'>
+                  이메일
+                  <input
+                    type='email'
+                    {...register('email')}
+                    className='w-full px-4 py-3 border rounded-xl bg-gray-50 mt-2'
+                    placeholder='가입한 이메일을 입력하세요'
+                  />
+                </label>
                 {/* 이메일 유효성 검사 오류 메시지 */}
                 <div className='mt-2 text-red-500'>
                   {formState.errors.email && (

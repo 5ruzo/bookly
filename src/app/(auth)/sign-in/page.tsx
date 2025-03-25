@@ -36,7 +36,7 @@ const SignIn = () => {
       );
 
       if (error) {
-        setError(error.message);
+        setError(error);
         return;
       }
 

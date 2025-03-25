@@ -110,17 +110,17 @@ const ResetPassword = () => {
           ) : (
             <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
               <div>
-                <label className='block text-sm font-medium mb-2'>
+                <label className='block text-base font-medium mb-2'>
                   새 비밀번호
+                  <input
+                    type='password'
+                    {...register('password')}
+                    className='w-full px-4 py-3 border rounded-xl bg-gray-50 mt-1'
+                    placeholder='새로운 비밀번호를 입력하세요'
+                    autoComplete='new-password'
+                    disabled={!!error}
+                  />
                 </label>
-                <input
-                  type='password'
-                  {...register('password')}
-                  className='w-full px-4 py-3 border rounded-xl bg-gray-50'
-                  placeholder='새로운 비밀번호를 입력하세요'
-                  autoComplete='new-password'
-                  disabled={!!error}
-                />
                 <div className='mt-2 text-red-500'>
                   {formState.errors.password && (
                     <span>{formState.errors.password.message as string}</span>
@@ -129,17 +129,17 @@ const ResetPassword = () => {
               </div>
 
               <div>
-                <label className='block text-sm font-medium mb-2'>
+                <label className='block text-base font-medium mb-2'>
                   비밀번호 확인
+                  <input
+                    type='password'
+                    {...register('confirmPassword')}
+                    className='w-full px-4 py-3 border rounded-xl bg-gray-50 mt-1'
+                    placeholder='비밀번호를 다시 입력하세요'
+                    autoComplete='new-password'
+                    disabled={!!error}
+                  />
                 </label>
-                <input
-                  type='password'
-                  {...register('confirmPassword')}
-                  className='w-full px-4 py-3 border rounded-xl bg-gray-50'
-                  placeholder='비밀번호를 다시 입력하세요'
-                  autoComplete='new-password'
-                  disabled={!!error}
-                />
                 <div className='mt-2 text-red-500'>
                   {formState.errors.confirmPassword && (
                     <span>

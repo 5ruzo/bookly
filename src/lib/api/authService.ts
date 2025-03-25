@@ -3,15 +3,20 @@ import { supabase } from './supabaseClient';
 
 export const authService = {
   signUp: async (email: string, password: string, phone: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { phone } },
-    });
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { phone } },
+      });
 
-    if (error) throw error;
+      if (error) throw error;
 
-    return { data, error };
+      return { data, error };
+    } catch (err) {
+      console.error('Sign up error:', err);
+      throw err;
+    }
   },
 
   signIn: async (
@@ -28,42 +33,66 @@ export const authService = {
         } as any,
       });
 
+      if (error) throw error;
+
       return { data, error };
     } catch (err) {
+      console.error('Sign in error:', err);
       throw err;
     }
   },
 
   signOut: async () => {
-    const { error } = await supabase.auth.signOut();
-    localStorage.removeItem('rememberMe');
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signOut();
+      localStorage.removeItem('rememberMe');
+
+      if (error) throw error;
+    } catch (err) {
+      console.error('Sign out error:', err);
+      throw err;
+    }
   },
 
   checkEmailExists: async (email: string) => {
-    const { data, error } = await supabase
-      .from('users')
-      .select('email')
-      .eq('email', email);
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('email')
+        .eq('email', email);
 
-    if (error && error.code !== 'PGRST116') {
-      throw error;
+      if (error && error.code !== 'PGRST116') {
+        throw error;
+      }
+
+      return data!.length > 0;
+    } catch (err) {
+      console.error('Check email exists error:', err);
+      throw err;
     }
-
-    return data!.length > 0;
   },
 
   resetPassword: async (email: string) => {
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
 
-    if (error) throw error;
+      if (error) throw error;
 
-    return { data, error };
+      return { data, error };
+    } catch (err) {
+      console.error('Reset password error:', err);
+      throw err;
+    }
   },
 
   verifyPhone: async (phone: string) => {
-    return true;
+    try {
+      return true;
+    } catch (err) {
+      console.error('Phone verification error:', err);
+      throw err;
+    }
   },
 };

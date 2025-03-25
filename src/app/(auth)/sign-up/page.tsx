@@ -119,15 +119,17 @@ const SignUp = () => {
 
                 {/* 비밀번호 확인 입력 */}
                 <div>
-                  <label className='block text-base'>비밀번호 확인</label>
-                  <input
-                    id='confirmPassword'
-                    type='password'
-                    {...register('confirmPassword')}
-                    className='w-full px-4 py-3 border rounded-xl text-base mt-2'
-                    placeholder='Password'
-                    autoComplete='current-password'
-                  />
+                  <label className='block text-base'>
+                    비밀번호 확인
+                    <input
+                      id='confirmPassword'
+                      type='password'
+                      {...register('confirmPassword')}
+                      className='w-full px-4 py-3 border rounded-xl text-base mt-2'
+                      placeholder='Password'
+                      autoComplete='current-password'
+                    />
+                  </label>
                   <div className='block left-0 right-0 h-6 mt-1'>
                     {formState.errors.confirmPassword && (
                       <span className='text-red-500'>
