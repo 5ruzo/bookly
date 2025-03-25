@@ -1,14 +1,25 @@
 'use client';
 
-import React from 'react';
-import BookCarouselLayout from './book-carousel-layout';
+import { useEffect, useState } from 'react';
 import { useGetBooksByRecommendQuery } from '@/lib/queries/use-get-books-by-recommend-query';
+import BookCarouselLayout from './book-carousel-layout';
+import { CardForCarousel } from '@/types/common.type';
 
 function RecommendedBooksCarousel() {
-  const { data: recommendedLst, isError } = useGetBooksByRecommendQuery();
-  if (!recommendedLst || isError) return null;
+  const [recommendedList, setBestSellerList] = useState<
+    CardForCarousel[] | null
+  >(null);
+  const { data, isError } = useGetBooksByRecommendQuery();
 
-  return <BookCarouselLayout bookList={recommendedLst} />;
+  useEffect(() => {
+    if (data && !isError) {
+      setBestSellerList(data);
+    }
+  }, [data, isError]);
+
+  if (!recommendedList || isError) return null;
+
+  return <BookCarouselLayout bookList={recommendedList} />;
 }
 
 export default RecommendedBooksCarousel;
