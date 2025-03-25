@@ -12,7 +12,7 @@ export default function SideLayout({
 }) {
   return (
     <main className='flex justify-center mt-[122px] gap-[71px]'>
-      <aside>
+      <aside className='hidden md:block h-full'>
         <div className='w-[194px] border-t border-b border-solid px-[16px] py-[20px]'>
           <SidebarContent />
         </div>
