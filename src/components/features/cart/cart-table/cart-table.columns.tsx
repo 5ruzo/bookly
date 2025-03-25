@@ -1,8 +1,8 @@
 import { TypeCartItem } from '@/types/cart/cart.type';
 import { ColumnDef } from '@tanstack/react-table';
 import BookSummary from './book-summary';
+import CartCheckBook from './cart-check-book';
 import QuantityControl from './quantity-control';
-import { Checkbox } from '@/components/ui/checkbox';
 import TotalPrice from './total-price';
 
 type TypeCartTableColumns = ColumnDef<TypeCartItem> & { className?: string };
@@ -20,7 +20,7 @@ export const cartTableColumns: TypeCartTableColumns[] = [
   {
     id: 'select',
     header: () => <span className='sr-only'>선택 여부</span>,
-    cell: () => <Checkbox />,
+    cell: ({ row }) => <CartCheckBook id={row.original.id} />,
     className: styles.checkboxField,
   },
   {

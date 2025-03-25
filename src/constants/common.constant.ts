@@ -5,3 +5,6 @@ export const QUERY_KEYS = {
   BEST_SELLER: ['BEST_SELLER'],
   RECOMMENDED_BOOKS: ['RECOMMENDED_BOOKS'],
 };
+
+// 기본 배송비
+export const DEFAULT_DELIVERY_FEE = 3500;

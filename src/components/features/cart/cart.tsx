@@ -3,19 +3,40 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import useCartStore from '@/store/cart/cart-store';
 import Link from 'next/link';
-import CartTable from './cart-table';
 import EmptyCart from './empty-cart';
 import PriceSummary from './price-summary';
+import { useEffect, useState } from 'react';
+import CartTable from './cart-table/cart-table';
 
 export default function Cart() {
-  const { cartBooks } = useCartStore();
+  const { cartBooks, checkedBooks, checkAllBooks, resetCheckedBooks } =
+    useCartStore();
+  const [isAllChecked, setIsAllChecked] = useState(false);
+
+  useEffect(() => {
+    if (checkedBooks.length === cartBooks.length) setIsAllChecked(true);
+    else setIsAllChecked(false);
+  }, [checkedBooks]);
+  console.log('checkedList', checkedBooks);
+
+  const handleCheckAll = () => {
+    const checkedIds = cartBooks.map(({ id }) => id);
+
+    if (!isAllChecked) {
+      checkAllBooks(checkedIds);
+    } else resetCheckedBooks();
+  };
 
   if (cartBooks.length === 0) return <EmptyCart />;
   return (
     <div className='mx-auto w-[80%] max-w-[1128px]'>
       <div className='flex items-center mb-3'>
         <label className='mr-auto flex items-center'>
-          <Checkbox className='mr-2' />
+          <Checkbox
+            className='mr-2'
+            checked={isAllChecked}
+            onCheckedChange={handleCheckAll}
+          />
           전체 선택/해제
         </label>
         <Button className='px-4 py-1 rounded-2xl'>선택 삭제</Button>
