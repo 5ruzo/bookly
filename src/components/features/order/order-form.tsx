@@ -64,7 +64,7 @@ export default function OrderForm() {
     amount: 0,
   });
   const { totalPrice, booksToOrder } = useCartStore();
-  const { user } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
 
   const bookInfoForOrder = booksToOrder.map((book) => ({
     bookId: book.id,
