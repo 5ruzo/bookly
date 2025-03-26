@@ -1,4 +1,5 @@
 import { CarouselImages } from '@/types/home.type';
+import browserClient from '../utils/supabase/client';
 
 /**
  * @function fetchGetImagesByMainCarousel
@@ -11,23 +12,21 @@ import { CarouselImages } from '@/types/home.type';
 export const fetchGetImagesByMainCarousel = async (): Promise<
   CarouselImages[]
 > => {
-  const queryString =
-    'main_carousel_images?is_active=eq.true&order=display_order.asc';
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${queryString}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-        Prefer: 'return=minimal',
-      },
-    }
-  );
-  const data: CarouselImages[] = await res.json();
+  const { data, error } = await browserClient
+    .from('main_carousel_images')
+    .select('*')
+    .eq('is_active', true)
+    .order('display_order', { ascending: true });
 
-  return data;
+  if (error) {
+    console.error(
+      '메인 캐러셀 이미지를 가져오는 중 오류가 발생했습니다:',
+      error
+    );
+    throw error;
+  }
+
+  return data as CarouselImages[];
 };
 
 /**
@@ -41,20 +40,19 @@ export const fetchGetImagesByMainCarousel = async (): Promise<
 export const fetchGetImagesByStripBanners = async (): Promise<
   CarouselImages[]
 > => {
-  const queryString = 'strip_banners?is_active=eq.true&order=display_order.asc';
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${queryString}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-        Prefer: 'return=minimal',
-      },
-    }
-  );
-  const data: CarouselImages[] = await res.json();
+  const { data, error } = await browserClient
+    .from('strip_banners')
+    .select('*')
+    .eq('is_active', true)
+    .order('display_order', { ascending: true });
 
-  return data;
+  if (error) {
+    console.error(
+      '스트립 배너 이미지를 가져오는 중 오류가 발생했습니다:',
+      error
+    );
+    throw error;
+  }
+
+  return data as CarouselImages[];
 };
