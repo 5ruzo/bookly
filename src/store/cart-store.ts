@@ -108,14 +108,13 @@ const useCartStore = create<TypeCartStore>()(
         })),
       deleteBooks: (ids) =>
         set((state) => {
-          const {
-            newCartBooks,
-            // totalPrice,
-            newCheckedBooks,
-          } = deleteFromCart(state.checkedBooks, state.cartBooks, ids);
+          const { newCartBooks, newCheckedBooks } = deleteFromCart(
+            state.checkedBooks,
+            state.cartBooks,
+            ids
+          );
           return {
             cartBooks: newCartBooks,
-            // totalPrice,
             checkedBooks: newCheckedBooks,
           };
         }),
