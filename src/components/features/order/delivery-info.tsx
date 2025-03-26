@@ -50,7 +50,7 @@ const styles = {
 
 const getBookSummary = (books: TypeCartItem[]) => {
   const representativeBook = books[0].bookInfo.title;
-  return `${truncateWithEllipsis(representativeBook)} 외 ${books.length - 1}건`;
+  return `${truncateWithEllipsis(representativeBook)} ${books.length > 0 ? '' : `외 ${books.length - 1}건`}`;
 };
 export default function DeliveryInfo() {
   const [isFormFilled, setIsFormFilled] = useState(false);
