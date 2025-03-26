@@ -6,6 +6,7 @@ import { ButtonAreaProps } from '@/types/detail.type';
 import useCartStore from '@/store/cart-store';
 
 export default function ButtonArea({
+  userId,
   id,
   like,
   setLike,
@@ -22,6 +23,7 @@ export default function ButtonArea({
       <Button
         className='bg-primary hover:bg-primary text-white rounded-xl h-12 md:h-14 px-6 w-4/10 text-md md:text-mlg font-medium'
         onClick={() => {
+          if (!userId) return alert('로그인을 해주세요!');
           addToCart([
             {
               id: id,
@@ -39,7 +41,7 @@ export default function ButtonArea({
       >
         장바구니 담기
       </Button>
-      <LikeButton id={id} like={like} setLike={setLike} />
+      <LikeButton userId={userId} id={id} like={like} setLike={setLike} />
     </div>
   );
 }

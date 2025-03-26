@@ -11,3 +11,10 @@ export const isMoreThanThreeDaysAgo = (dateStr: string): boolean => {
   // targetDate가 3일 전 날짜보다 이전인지를 비교하여 boolean 반환
   return targetDate < threeDaysAgo;
 };
+
+export const truncateText = (text: string): string => {
+  if (text.length > 7) {
+    return text.slice(0, 7) + '...';
+  }
+  return text;
+};

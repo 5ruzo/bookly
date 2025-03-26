@@ -7,16 +7,21 @@ import {
   fetchDeleteLikeThisBook,
 } from '@/lib/api/detail.api';
 
-export default function LikeButton({ id, like, setLike }: LikeButtonProps) {
+export default function LikeButton({
+  userId,
+  id,
+  like,
+  setLike,
+}: LikeButtonProps) {
   const handleLike = (like: boolean) => {
+    if (!userId) return alert('로그인을 해주세요!');
+
     if (like) {
-      fetchDeleteLikeThisBook('644780c4-7283-417e-8c18-b1cb1b96a669', id);
-      alert('찜 해제!');
+      fetchDeleteLikeThisBook(userId, id).then(() => alert('찜 해제!'));
     }
 
     if (!like) {
-      fetchCreateLikeThisBook('644780c4-7283-417e-8c18-b1cb1b96a669', id);
-      alert('찜 해제!');
+      fetchCreateLikeThisBook(userId, id).then(() => alert('찜!'));
     }
 
     setLike(!like);

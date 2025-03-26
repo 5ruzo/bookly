@@ -1,10 +1,11 @@
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
-import { isMoreThanThreeDaysAgo } from '@/lib/utils/my-page.util';
+import { isMoreThanThreeDaysAgo, truncateText } from '@/lib/utils/my-page.util';
 import { OrderDetailCardProps } from '@/types/my-page.type';
 import Link from 'next/link';
 
 export default function OrderDetailCard({
   id,
+  book_id,
   image_url,
   title,
   author,
@@ -24,7 +25,7 @@ export default function OrderDetailCard({
         </div>
         <div className='flex flex-col'>
           <h3>
-            <Link href={`/detail/${id}`}>{title}</Link>
+            <Link href={`/detail/${book_id}`}>{truncateText(title)}</Link>
           </h3>
           <p>{author}</p>
           <p>{formatNumberWithCommas(Number(price))}원</p>
