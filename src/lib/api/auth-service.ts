@@ -1,4 +1,4 @@
-import browserClient from '../../utils/supabase/client';
+import browserClient from '../utils/supabase/client';
 
 export const authService = {
   signUp: async (email: string, password: string, phone: string) => {

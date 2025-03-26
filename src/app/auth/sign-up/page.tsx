@@ -7,7 +7,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { signupSchema } from '@/lib/utils/auth/schemas';
-import { authService } from '@/lib/api/auth/auth-service';
+import { authService } from '@/lib/api/auth-service';
 import { useAuthStore } from '@/store/auth/use-auth-store';
 
 const SignUp = () => {

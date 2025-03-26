@@ -4,7 +4,7 @@ import localFont from 'next/font/local';
 import Providers from '@/config/tq-provider';
 import Header from '@/components/layouts/header';
 import Footer from '@/components/layouts/footer';
-import { AuthProvider } from '@/config/auth/provider/AuthProvider';
+import { AuthProvider } from '@/config/auth-provider';
 
 export const metadata: Metadata = {
   title: 'Bookly',

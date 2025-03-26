@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { LinkItem } from '@/types/layout.type';
 import HeaderDropdownMenu from './header-dropdown-menu';
-import { authService } from '@/lib/api/auth/auth-service';
+import { authService } from '@/lib/api/auth-service';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth/use-auth-store';
 import { SearchBarComboBox } from '../features/search/search-bar-combo-box';
