@@ -4,6 +4,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import Fade from 'embla-carousel-fade';
@@ -11,7 +12,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { STRIP_BANNER_OPTIONS } from '@/constants/home.constant';
 import { useGetImagesByStripBanners } from '@/lib/queries/use-get-images-by-strip-banners';
-import { type CarouselApi } from '@/components/ui/carousel';
 import { useEffect, useState } from 'react';
 import { CarouselImages } from '@/types/home.type';
 
