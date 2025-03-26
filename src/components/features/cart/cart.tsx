@@ -61,6 +61,7 @@ export default function Cart() {
       <PriceSummary />
       <div className='w-full sm:w-[60%] mx-auto py-1 rounded-xl'>
         <Button
+          disabled={checkedBooks?.length === 0}
           className='font-semibold text-white-light w-full text-[0.9rem]'
           onClick={handleOnOrder}
         >
