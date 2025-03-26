@@ -9,15 +9,18 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/use-auth-store';
 import { SearchBarComboBox } from '../features/search/search-search-bar';
 import { Suspense } from 'react';
+import useCartStore from '@/store/cart-store';
 
 const Header = () => {
-  const { user, clearUser } = useAuthStore();
+  const clearUser = useAuthStore((state) => state.clearUser);
+  const user = useAuthStore((state) => state.user);
   const router = useRouter();
+  const cartBooksCount = useCartStore((state) => state.cartBooks.length);
 
   const navigationLinks: LinkItem[] = user
     ? [
         { text: '마이페이지', href: '/my-page/like-list' },
-        { text: '장바구니(0)', href: '/cart' },
+        { text: `장바구니(${cartBooksCount})`, href: '/cart' },
         {
           text: '로그아웃',
           onClick: async () => {
