@@ -1,5 +1,5 @@
 import { API_KEY, SUPABASE_URL } from '@/constants/detail.constans';
-import { TypeOrderedBook } from '@/types/order/order.type';
+import { TypeOrderedBook } from '@/types/order.type';
 
 export const createOrderList = async (payload: {
   userId: string;

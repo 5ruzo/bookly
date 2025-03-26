@@ -1,4 +1,4 @@
-import { TypeBookSummary } from '@/types/cart/cart.type';
+import { TypeBookSummary } from '@/types/cart.type';
 
 type BookSummaryProps = {
   book: TypeBookSummary;

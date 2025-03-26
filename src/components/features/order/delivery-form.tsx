@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useDeliveryFormHook } from '@/lib/hooks/order/delivery-form-hook';
-import { TypeAddressInfo, TypeOrderForm } from '@/types/order/order.type';
+import { TypeAddressInfo, TypeOrderForm } from '@/types/order.type';
 import { FieldValues, FormState, UseFormRegister } from 'react-hook-form';
 import FormField, { formStyles } from './form-field';
 

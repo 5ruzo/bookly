@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { useTossPayments } from '@/lib/hooks/order/toss-payments-hook';
-import { TypePaymentsInfo } from '@/types/order/order.type';
+import { TypePaymentsInfo } from '@/types/order.type';
 
 type TossPaymentsProps = {
   isFormFilled: boolean;

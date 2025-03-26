@@ -1,5 +1,5 @@
 'use client';
-import { TypePaymentsInfo } from '@/types/order/order.type';
+import { TypePaymentsInfo } from '@/types/order.type';
 import {
   ANONYMOUS,
   loadTossPayments,

@@ -21,8 +21,6 @@ export type TypeOrderedBook = {
 };
 export type TypePaymentsInfo = {
   name: TypeOrderForm['name'];
-  // userId: string;
-  // orderList: TypeOrderedBook[];
   items: string;
   amount: number;
 };

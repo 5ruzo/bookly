@@ -1,6 +1,6 @@
 import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 import * as CartUtils from '@/lib/utils/cart.utils';
-import { TypeCartItem } from '@/types/cart/cart.type';
+import { TypeCartItem } from '@/types/cart.type';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 const { INCREASE, DECREASE } = CONTROL_TYPE;

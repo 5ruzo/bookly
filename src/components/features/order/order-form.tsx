@@ -4,12 +4,12 @@ import { createOrderDetails, createOrderList } from '@/lib/api/order-api';
 import { truncateWithEllipsis } from '@/lib/utils/common.util';
 import useCartStore from '@/store/cart/cart-store';
 import { useAuthStore } from '@/store/use-auth-store';
-import { TypeCartItem } from '@/types/cart/cart.type';
+import { TypeCartItem } from '@/types/cart.type';
 import {
   TypeAddressInfo,
   TypeOrderForm,
   TypePaymentsInfo,
-} from '@/types/order/order.type';
+} from '@/types/order.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';

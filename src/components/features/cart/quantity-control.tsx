@@ -1,7 +1,7 @@
 import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 import { useQuantityControl } from '@/lib/hooks/use-quantity-control';
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
-import { TypeCartBooks } from '@/types/cart/cart.type';
+import { TypeCartBooks } from '@/types/cart.type';
 import { Minus, Plus } from 'lucide-react';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
 type TypeQuantityControlProps = {
