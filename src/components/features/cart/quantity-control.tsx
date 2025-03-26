@@ -22,7 +22,7 @@ export default function QuantityControl({
     handleBookQuantityByText,
     updateBookQuantityByText,
     handleUpdateBookQuantityByEnter,
-  } = useQuantityControl(id as string, quantity);
+  } = useQuantityControl(id, quantity);
   return (
     <>
       {price && <span className='mb-5'>{formatNumberWithCommas(price)}원</span>}
