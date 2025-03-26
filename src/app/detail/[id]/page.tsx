@@ -1,4 +1,4 @@
-import { fetchGetDetail } from '@/lib/api/detail.fetchGetDetail';
+import { fetchGetDetail } from '@/lib/api/detail.api';
 import ProductInfo from '@/components/features/detail/detail-product-info';
 import CardSectionLayout from '@/components/ui/card-section-layout';
 import RecommendedBooksCarousel from '@/components/ui/recommened-books-carousel';
@@ -34,7 +34,7 @@ export default async function page({ params }: { params: { id: string } }) {
               alt={data.title}
             />
           </div>
-          <ProductInfo data={data} price={data.price} />
+          <ProductInfo data={data} />
         </div>
         <hr className='my-6' />
         <CardSectionLayout title='이 주의 추천 도서' className='my-16'>
