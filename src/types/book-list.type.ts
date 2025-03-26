@@ -1,4 +1,4 @@
-type Book = {
+export type Book = {
   id: number;
   title: string;
   author: string;
@@ -12,7 +12,7 @@ type Book = {
   image_url: string;
 };
 
-type BookItem = Pick<
+export type BookItem = Pick<
   Book,
   'id' | 'title' | 'author' | 'rating' | 'price' | 'description' | 'image_url'
 >;

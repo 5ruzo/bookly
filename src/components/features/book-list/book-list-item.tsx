@@ -1,6 +1,7 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 import Link from 'next/link';
+import { BookItem } from '@/types/book-list.type';
 export default function BookListItem({
   id,
   title,
