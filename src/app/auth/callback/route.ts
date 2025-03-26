@@ -14,8 +14,7 @@ export async function GET(request: Request) {
 
     if (!error) {
       const isLocalEnv = process.env.NODE_ENV === 'development';
-      const vercelUrl =
-        process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bookly-leio.vercel.app/';
+      const vercelUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
       if (isLocalEnv) {
         return NextResponse.redirect(`${origin}${next}`);
