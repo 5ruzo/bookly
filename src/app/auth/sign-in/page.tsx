@@ -4,6 +4,7 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 import AuthCard from '@/components/features/auth/auth-card';
 import AuthErrorMessage from '@/components/features/auth/auth-error-message';
@@ -37,7 +38,11 @@ const SignIn = () => {
       await authService.signInWithKakao();
     } catch (err) {
       console.error('카카오 로그인 실패:', err);
-      alert('로그인에 실패했습니다.');
+      Swal.fire({
+        title: '다시 시도하세요!',
+        text: '로그인에 실패했습니다.',
+        icon: 'error',
+      });
     }
   };
 
@@ -54,7 +59,11 @@ const SignIn = () => {
       }
 
       if (data?.user) {
-        alert('로그인 성공!');
+        Swal.fire({
+          title: '환영합니다!',
+          text: '로그인 성공!',
+          icon: 'success',
+        });
         router.push('/');
       }
     } catch (err) {

@@ -5,6 +5,7 @@ import { useDeliveryFormHook } from '@/lib/hooks/order/delivery-form-hook';
 import { TypeAddressInfo, TypeOrderForm } from '@/types/order.type';
 import { FieldValues, FormState, UseFormRegister } from 'react-hook-form';
 import FormField, { formStyles } from './form-field';
+import Swal from 'sweetalert2';
 
 type DeliveryFormProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
@@ -24,7 +25,7 @@ export default function DeliveryForm({
       const addressInfo = await openAddressSearch();
       onChangeAddress(addressInfo);
     } catch (error) {
-      window.alert(error);
+      Swal.fire(`${error}`);
     }
   };
 

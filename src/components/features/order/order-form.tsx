@@ -17,6 +17,7 @@ import { z } from 'zod';
 import DeliveryForm from './delivery-form';
 import OrderInfo from './order-info';
 import { TossPayments } from './toss-payments';
+import Swal from 'sweetalert2';
 
 const defaultValues = {
   name: '',
@@ -94,7 +95,7 @@ export default function OrderForm() {
       });
       return postOrderList(orderId);
     } catch (error) {
-      window.alert(error);
+      Swal.fire(`${error}`);
     }
   };
 
@@ -106,7 +107,7 @@ export default function OrderForm() {
       });
       setIsFormFilled(true);
     } catch (error) {
-      window.alert(error);
+      Swal.fire(`${error}`);
     }
   };
 
