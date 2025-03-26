@@ -1,9 +1,15 @@
-export default function Loading() {
+import { Skeleton } from '@/components/ui/skeleton';
+
+export default function CommonLoading() {
   return (
-    <ul className='flex gap-16 flex-col items-center md:items-start'>
-      <li>
-        <div className='w-[918px] md:h-[406px] h-[500px] pl-1 bg-lightgray animate-pulse rounded'></div>
-      </li>
-    </ul>
+    <div className='flex items-center justify-center min-h-screen'>
+      <div className='flex items-center space-x-4'>
+        <Skeleton className='h-12 w-12 rounded-full' />
+        <div className='space-y-2'>
+          <Skeleton className='h-4 w-[250px]' />
+          <Skeleton className='h-4 w-[200px]' />
+        </div>
+      </div>
+    </div>
   );
 }
