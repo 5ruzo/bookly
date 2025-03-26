@@ -1,52 +1,42 @@
 import { Book } from '@/types/book-list.type';
+import browserClient from '../utils/supabase/client';
 
 export const fetchGetSearchedBookList = async (
   queryKey: (string | object)[]
-) => {
-  //검색어
-  const searchTerm = queryKey[0];
+): Promise<Book[]> => {
+  const searchTerm = queryKey[0] as string;
+  const genreFilter = queryKey[1] ? Object.values(queryKey[1]) : [];
 
-  //옵션(장르)이 포함되어 있으면 쿼리문에 장르추가
-  let genreQuery = '';
-  if (queryKey[1]) {
-    const genres = Object.values(queryKey[1]).join(',');
-    genreQuery = `&genre=in.(${genres})`;
+  let query = browserClient
+    .from('books')
+    .select('*')
+    .ilike('title', `%${searchTerm}%`);
+
+  if (genreFilter.length > 0) {
+    query = query.in('genre', genreFilter);
   }
 
-  const queryString = `books?title=like.%25${searchTerm}%25${genreQuery}`;
+  const { data, error } = await query;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${queryString}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-      },
-    }
-  );
+  if (error) {
+    console.error('도서를 검색하는 중 오류가 발생했습니다:', error);
+    throw error;
+  }
 
-  const data: Book[] = await res.json();
-
-  return data;
+  return data as Book[];
 };
 
-export const fetchGetRecommendedSearchKeywordList = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/recommended_searches?select=keyword`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-      },
-    }
-  );
+export const fetchGetRecommendedSearchKeywordList = async (): Promise<
+  string[]
+> => {
+  const { data, error } = await browserClient
+    .from('recommended_searches')
+    .select('keyword');
 
-  const data: { keyword: string }[] = await res.json();
-  const recommendList: string[] = data.map((obj) => obj.keyword);
+  if (error) {
+    console.error('추천 검색어를 가져오는 중 오류가 발생했습니다:', error);
+    throw error;
+  }
 
-  return recommendList;
+  return data?.map((obj) => obj.keyword) || [];
 };
