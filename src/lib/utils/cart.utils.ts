@@ -130,14 +130,17 @@ export const handleQuantity = (
  * @returns newCartBooks : 삭제 후 새로운 장바구니 리스트  / totalPrice : 전체 상품 금액
  */
 export const deleteFromCart = (
+  checkedBooks: TypeCartItem['id'][],
   cartBooks: TypeCartItem[],
   ids: TypeCartItem['id'][]
 ) => {
   const newCartBooks = cartBooks.filter(({ id }) => !ids.includes(id));
   const totalPrice = calculateTotalPrice(newCartBooks);
+  const newCheckedBooks = checkedBooks.filter((id) => !ids.includes(id));
   return {
     newCartBooks,
     totalPrice,
+    newCheckedBooks,
   };
 };
 
