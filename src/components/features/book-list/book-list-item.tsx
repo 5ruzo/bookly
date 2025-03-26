@@ -2,6 +2,10 @@ import React from 'react';
 import { Star } from 'lucide-react';
 import Link from 'next/link';
 import { BookItem } from '@/types/book-list.type';
+import {
+  formatNumberWithCommas,
+  normalizedRating,
+} from '@/lib/utils/common.util';
 export default function BookListItem({
   id,
   title,
@@ -11,8 +15,6 @@ export default function BookListItem({
   description,
   image_url,
 }: BookItem) {
-  price = new Intl.NumberFormat().format(+price);
-
   return (
     <li className='p-24 lg:px-0 border-b border-gray last:border-none'>
       <Link href={`/detail/${id}`}>
@@ -40,12 +42,14 @@ export default function BookListItem({
                       size='25'
                       className='text-yellow-400 fill-yellow-400 mt-[2px] mr-[2px]'
                     />
-                    {rating}
+                    {normalizedRating(rating)}
                   </span>
                 </dd>
 
                 <dt className='sr-only'>가격</dt>
-                <dd className='text-2xl lg:mt-[60px]'>{price}원</dd>
+                <dd className='text-2xl lg:mt-[60px]'>
+                  {formatNumberWithCommas(+price)}원
+                </dd>
               </div>
               <dt className='sr-only'>책 소개</dt>
               <dd className='lg:text-xl text-gray line-clamp-2 max-w-[566px]'>
