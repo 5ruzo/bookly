@@ -1,3 +1,4 @@
+import { User } from '@supabase/supabase-js';
 import { Dispatch, SetStateAction } from 'react';
 
 export type Book = {
@@ -39,4 +40,7 @@ export type ProductInfoProps = {
   data: Book;
 };
 
-export type LikeButtonProps = Pick<ButtonAreaProps, 'like' | 'setLike' | 'id'>;
+export type LikeButtonProps = Pick<
+  ButtonAreaProps,
+  'like' | 'setLike' | 'id'
+> & { user: User | null };

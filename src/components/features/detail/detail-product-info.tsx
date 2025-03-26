@@ -1,4 +1,5 @@
 'use client';
+
 import { ProductInfoProps } from '@/types/detail.type';
 import { Rating } from './detail-rating';
 import ButtonArea from './detail-button-area';
@@ -6,17 +7,17 @@ import { useEffect, useState } from 'react';
 import QuantityInput from './detail-quantity-input';
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
 import { fetchGetLikeThisBook } from '@/lib/api/detail.api';
+import { useAuthStore } from '@/store/use-auth-store';
 
 export default function ProductInfo({ data }: ProductInfoProps) {
+  const user = useAuthStore((state) => state.user);
+
   const [quantity, setQuantity] = useState(1);
   const [like, setLike] = useState(false);
 
   useEffect(() => {
     const userLikeThis = async () => {
-      const res = await fetchGetLikeThisBook(
-        '644780c4-7283-417e-8c18-b1cb1b96a669',
-        data.id
-      );
+      const res = await fetchGetLikeThisBook(user?.id, data.id);
       if (res?.book_id !== data.id) return;
       setLike(true);
     };
