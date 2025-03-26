@@ -2,12 +2,32 @@
 import { ProductInfoProps } from '@/types/detail.type';
 import { Rating } from './detail-rating';
 import ButtonArea from './detail-button-area';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuantityInput from './detail-quantity-input';
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
+import { fetchGetLikeThisBook } from '@/lib/api/detail.api';
+import useAuthStore from '@/store/useAuthStore';
 
-export default function ProductInfo({ data, price }: ProductInfoProps) {
+export default function ProductInfo({ data }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
+  const [like, setLike] = useState(false);
+  const user = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    const userLikeThis = async () => {
+      const res = await fetchGetLikeThisBook(
+        '644780c4-7283-417e-8c18-b1cb1b96a669',
+        data.id
+      );
+      if (res.book_id !== data.id) return;
+      setLike(true);
+    };
+
+    userLikeThis();
+
+    console.log('user', user);
+    console.log(like);
+  }, []);
 
   // 수령 예상일 계산을 위한 기본값
   const timestamp = Date.now();
@@ -20,7 +40,9 @@ export default function ProductInfo({ data, price }: ProductInfoProps) {
       <div className='flex md:gap-16 h-[300px] md:h-3/5 w-full place-content-between'>
         <div className='flex flex-col text-md md:text-lg content-around'>
           {infos.map((item) => (
-            <h2 className='h-1/5 content-center'>{item}</h2>
+            <h2 key={item} className='h-1/5 content-center'>
+              {item}
+            </h2>
           ))}
         </div>
         <div className='flex flex-col text-md md:text-mlg content-around'>
@@ -42,12 +64,18 @@ export default function ProductInfo({ data, price }: ProductInfoProps) {
           <QuantityInput
             value={quantity}
             onChange={setQuantity}
-            price={price}
+            price={data.price}
           />
         </div>
       </div>
       <div className='mt-4 md:mt-16'>
-        <ButtonArea title={data.title} price={data.price} quantity={quantity} />
+        <ButtonArea
+          like={like}
+          setLike={setLike}
+          title={data.title}
+          price={data.price}
+          quantity={quantity}
+        />
       </div>
     </div>
   );

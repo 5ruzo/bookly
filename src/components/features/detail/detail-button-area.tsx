@@ -5,6 +5,8 @@ import LikeButton from './button-area/detail-like-button';
 import { ButtonAreaProps } from '@/types/detail.type';
 
 export default function ButtonArea({
+  like,
+  setLike,
   title,
   price,
   quantity,
@@ -33,7 +35,7 @@ export default function ButtonArea({
           바로구매
         </Button>
 
-        <LikeButton />
+        <LikeButton like={like} setLike={setLike} />
       </div>
     </div>
   );

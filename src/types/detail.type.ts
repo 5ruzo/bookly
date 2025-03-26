@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export type Book = {
   id: number;
   title: string;
@@ -26,9 +28,12 @@ export type QuantityInputProps = {
 
 export type ButtonAreaProps = Pick<Book, 'title' | 'price'> & {
   quantity: number;
+  like: boolean;
+  setLike: Dispatch<SetStateAction<boolean>>;
 };
 
 export type ProductInfoProps = {
   data: Book;
-  price: string;
 };
+
+export type LikeButtonProps = Pick<ButtonAreaProps, 'like' | 'setLike'>;
