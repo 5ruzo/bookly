@@ -5,9 +5,11 @@ import {
   normalizedRating,
 } from '@/lib/utils/common.util';
 import useCartStore from '@/store/cart-store';
+import { useAuthStore } from '@/store/use-auth-store';
 import { CardForCarousel } from '@/types/common.type';
 import { ShoppingCart, Star } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function BookCard({
   id,
@@ -19,22 +21,31 @@ function BookCard({
   price,
 }: CardForCarousel) {
   const { addToCart } = useCartStore();
+  const { user } = useAuthStore();
+  const router = useRouter();
+
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    addToCart([
-      {
-        id,
-        quantity: 1,
-        price: Number(price),
-        bookInfo: {
-          image_url,
-          title,
-          author,
+    if (user) {
+      addToCart([
+        {
+          id,
+          quantity: 1,
+          price: Number(price),
+          bookInfo: {
+            image_url,
+            title,
+            author,
+          },
         },
-      },
-    ]);
-    window.alert('장바구니에 추가되었습니다.');
+      ]);
+      window.alert('장바구니에 추가되었습니다.');
+    } else {
+      const ok = window.confirm('로그인을 먼저 진행해 주세요.');
+      return ok ? router.replace('/auth/sign-in') : null;
+    }
   };
+
   return (
     <Link href={`/detail/${id}`}>
       <div className='border-[1px] border-lightgray rounded-md overflow-hidden pb-4'>
