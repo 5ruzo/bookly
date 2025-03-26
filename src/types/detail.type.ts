@@ -26,7 +26,10 @@ export type QuantityInputProps = {
   price: string;
 };
 
-export type ButtonAreaProps = Pick<Book, 'title' | 'price'> & {
+export type ButtonAreaProps = Pick<
+  Book,
+  'title' | 'price' | 'id' | 'author' | 'image_url'
+> & {
   quantity: number;
   like: boolean;
   setLike: Dispatch<SetStateAction<boolean>>;
@@ -36,4 +39,4 @@ export type ProductInfoProps = {
   data: Book;
 };
 
-export type LikeButtonProps = Pick<ButtonAreaProps, 'like' | 'setLike'>;
+export type LikeButtonProps = Pick<ButtonAreaProps, 'like' | 'setLike' | 'id'>;
