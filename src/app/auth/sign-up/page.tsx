@@ -16,7 +16,6 @@ import { authService } from '@/lib/api/auth-service';
 import { useAuthStore } from '@/store/use-auth-store';
 
 const SignUp = () => {
-  const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
 
   const { register, handleSubmit, formState } = useForm({
