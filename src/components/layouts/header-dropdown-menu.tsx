@@ -20,13 +20,20 @@ const HeaderDropdownMenu = ({ menuList }: HeaderMenuProps) => {
           {menuList.map((menu, index) => (
             <DropdownMenuItem
               key={index}
-              className='cursor-pointer text-md'
+              className='text-md p-0'
               onClick={menu.onClick}
             >
               {menu.href ? (
-                <Link href={menu.href}>{menu.text}</Link>
+                <Link
+                  href={menu.href}
+                  className='block w-full h-full px-2 py-1.5'
+                >
+                  {menu.text}
+                </Link>
               ) : (
-                <span>{menu.text}</span>
+                <span className='block w-full h-full px-2 py-1.5 cursor-pointer'>
+                  {menu.text}
+                </span>
               )}
             </DropdownMenuItem>
           ))}
