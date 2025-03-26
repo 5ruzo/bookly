@@ -1,19 +1,11 @@
 'use-client';
-import { DEFAULT_DELIVERY_FEE } from '@/constants/common.constant';
-import { formatNumberWithCommas } from '@/lib/utils/common.util';
+import {
+  formatNumberWithCommas,
+  getDeliveryFee,
+  getTotalPrice,
+} from '@/lib/utils/common.util';
 import useCartStore from '@/store/cart/cart-store';
 import { Equal, Plus } from 'lucide-react';
-
-const MIN_FREE_DELIVERY_PRICE = 30000;
-
-const getDeliveryFee = (itemPrice: number) => {
-  if (itemPrice >= MIN_FREE_DELIVERY_PRICE) return 0;
-  else return DEFAULT_DELIVERY_FEE;
-};
-
-const getTotalPrice = (itemPrice: number, deliveryFee: number): number => {
-  return itemPrice + deliveryFee;
-};
 
 export default function PriceSummary() {
   const { totalPrice } = useCartStore();

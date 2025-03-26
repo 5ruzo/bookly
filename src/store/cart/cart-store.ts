@@ -1,4 +1,4 @@
-import { CONTROL_TYPE } from '@/constants/quantity-control-constant';
+import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 import * as CartUtils from '@/lib/utils/cart.utils';
 import { TypeCartItem } from '@/types/cart/cart.type';
 import { create } from 'zustand';
@@ -11,11 +11,13 @@ const {
   handleQuantity,
   calculateTotalPrice,
   deleteFromCart,
+  getBooksToOrder,
 } = CartUtils;
 
 type TypeCartStore = {
   cartBooks: TypeCartItem[];
   totalPrice: number;
+  booksToOrder: TypeCartItem[];
   checkedBooks: TypeCartItem['id'][];
   addToCart: (books: TypeCartItem[]) => void;
   increaseQuantity: (id: TypeCartItem['id']) => void;
@@ -28,6 +30,7 @@ type TypeCartStore = {
   setCheckedBooks: (newCheckedBook: TypeCartItem['id']) => void;
   resetCheckedBooks: () => void;
   deleteBooks: (ids: TypeCartItem['id'][]) => void;
+  orderBooks: () => void;
 };
 
 //@TODO: 데이터 넘어오면 삭제 예정
@@ -73,6 +76,7 @@ const initialState = {
   cartBooks: MOCK_DATA,
   totalPrice: calculateTotalPrice(MOCK_DATA),
   checkedBooks: [],
+  booksToOrder: [],
 };
 
 const useCartStore = create<TypeCartStore>()(
@@ -140,6 +144,17 @@ const useCartStore = create<TypeCartStore>()(
           );
           return {
             cartBooks: newCartBooks,
+            totalPrice,
+          };
+        }),
+      orderBooks: () =>
+        set((state) => {
+          const { booksToOrder, totalPrice } = getBooksToOrder(
+            state.cartBooks,
+            state.checkedBooks
+          );
+          return {
+            booksToOrder,
             totalPrice,
           };
         }),

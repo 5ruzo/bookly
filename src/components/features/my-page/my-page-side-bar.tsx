@@ -10,7 +10,7 @@ export default function MyPageSideBar() {
       <h1 className='py-2 text-lg'>마이 페이지</h1>
       <nav className='flex flex-col bg-white-dark gap-y-1'>
         {myPageList.map((page) => (
-          <li id={page.url}>
+          <li key={page.id} id={page.url}>
             <Link href={page.url}>
               {page.id} {' >'}
             </Link>
