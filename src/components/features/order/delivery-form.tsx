@@ -40,7 +40,7 @@ export default function DeliveryForm({
 
       <FormField
         id='phoneNumber'
-        label='핸드폰 번호'
+        label='휴대폰 번호'
         register={register}
         formState={formState}
         placeholder='숫자만 입력해 주세요.(01012345678)'
