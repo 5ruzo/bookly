@@ -84,7 +84,7 @@ export default function DeliveryForm({
 
       <FormField
         id='zoneCode'
-        label='상세주소'
+        label='우편주소'
         register={register}
         formState={formState}
         placeholder='주소를 선택하면 우편번호가 자동으로 들어갑니다.'
