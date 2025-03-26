@@ -10,20 +10,20 @@ import { fetchGetLikeThisBook } from '@/lib/api/detail.api';
 import { useAuthStore } from '@/store/use-auth-store';
 
 export default function ProductInfo({ data }: ProductInfoProps) {
-  const user = useAuthStore((state) => state.user);
+  const userId = useAuthStore((state) => state.user?.id);
 
   const [quantity, setQuantity] = useState(1);
   const [like, setLike] = useState(false);
 
   useEffect(() => {
     const userLikeThis = async () => {
-      const res = await fetchGetLikeThisBook(user?.id, data.id);
+      const res = await fetchGetLikeThisBook(userId, data.id);
       if (res?.book_id !== data.id) return;
       setLike(true);
     };
 
     userLikeThis();
-  }, []);
+  }, [userId]);
 
   // 수령 예상일 계산을 위한 기본값
   const timestamp = Date.now();
@@ -66,6 +66,7 @@ export default function ProductInfo({ data }: ProductInfoProps) {
       </div>
       <div className='mt-4 md:mt-16'>
         <ButtonArea
+          userId={userId}
           like={like}
           setLike={setLike}
           id={data.id}

@@ -3,6 +3,21 @@ import ProductInfo from '@/components/features/detail/detail-product-info';
 import CardSectionLayout from '@/components/ui/card-section-layout';
 import RecommendedBooksCarousel from '@/components/ui/recommened-books-carousel';
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const data = await fetchGetDetail(params.id);
+
+  return {
+    title: `자세한 책 정보 - Bookly 상세 페이지`,
+    description: `Bookly에서 '${data.title}' 책 상세 정보를 확인하세요.`,
+
+    openGraph: {
+      title: `Bookly - '${data.title}'책의 상세 정보`,
+      description: `Bookly에서 관심 있는 책 정보를 확인하세요.`,
+      images: '/images/logo.png',
+    },
+  };
+}
+
 export default async function page({ params }: { params: { id: string } }) {
   const data = await fetchGetDetail(params.id);
 
@@ -10,7 +25,7 @@ export default async function page({ params }: { params: { id: string } }) {
   return (
     <div className='flex justify-center pt-10 md:pt-16 pb-14 md:pb-24'>
       <div className='w-4/6 max-w-[1000px] md:min-w-[800px]'>
-        <div className='mb-6 '>
+        <div className='mb-6'>
           <div className='md:flex items-center gap-4'>
             <h2 className='text-xl md:text-2xl font-bold break-keep'>
               {data.title}

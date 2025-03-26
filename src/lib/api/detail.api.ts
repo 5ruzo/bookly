@@ -1,20 +1,14 @@
-import { API_KEY, SUPABASE_URL } from '@/constants/detail.constant';
-import { Book } from '@/types/book-list.type';
-import { BookList, CheckLikeBook } from '@/types/detail.type';
+import { Book, CheckLikeBook } from '@/types/detail.type';
+import browserClient from '../utils/supabase/client';
 
 export const fetchGetDetail = async (bookId: string): Promise<Book> => {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/books?id=eq.${bookId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-      apikey: API_KEY || '',
-    },
-  });
+  const { data } = await browserClient
+    .from('books')
+    .select('*')
+    .eq('id', bookId)
+    .single();
 
-  const data: BookList = await res.json();
-
-  return data[0] as Book;
+  return data as Book;
 };
 
 export const fetchGetLikeThisBook = async (
@@ -22,21 +16,15 @@ export const fetchGetLikeThisBook = async (
   bookId: number
 ): Promise<CheckLikeBook | undefined> => {
   if (!userId) return;
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/likes?book_id=eq.${bookId}&user_id=eq.${userId}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_KEY}`,
-        apikey: API_KEY || '',
-      },
-    }
-  );
 
-  const data = await res.json();
+  const { data } = await browserClient
+    .from('likes')
+    .select('*')
+    .eq('book_id', bookId)
+    .eq('user_id', userId)
+    .maybeSingle();
 
-  return data[0] as CheckLikeBook;
+  return data as CheckLikeBook;
 };
 
 export const fetchDeleteLikeThisBook = async (
@@ -45,17 +33,15 @@ export const fetchDeleteLikeThisBook = async (
 ): Promise<void> => {
   if (!userId) return;
 
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/likes?book_id=eq.${bookId}&user_id=eq.${userId}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_KEY}`,
-        apikey: API_KEY || '',
-      },
-    }
-  );
+  const { error } = await browserClient
+    .from('likes')
+    .delete()
+    .eq('book_id', bookId)
+    .eq('user_id', userId);
+
+  if (error) {
+    throw new Error(`찜 해제 실패`);
+  }
 };
 
 export const fetchCreateLikeThisBook = async (
@@ -64,18 +50,18 @@ export const fetchCreateLikeThisBook = async (
 ): Promise<void> => {
   if (!userId) return;
 
-  const body = {
+  const payload = {
     user_id: userId,
     book_id: bookId,
   };
 
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/likes`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-      apikey: API_KEY || '',
-    },
-    body: JSON.stringify(body),
-  });
+  const { error } = await browserClient
+    .from('likes')
+    .insert(payload)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(`찜 실패`);
+  }
 };

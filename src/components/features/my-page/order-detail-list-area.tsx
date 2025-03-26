@@ -6,6 +6,8 @@ import { useAuthStore } from '@/store/use-auth-store';
 import type { OrderDetailInfo } from '@/types/my-page.type';
 import { useEffect, useState } from 'react';
 import OrderDetailCard from './order-detail-card';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function OrderDetailListArea() {
   const [orderList, setOrderList] = useState<OrderDetailInfo[]>([]);
@@ -18,16 +20,14 @@ export default function OrderDetailListArea() {
     const fetchData = async () => {
       try {
         if (!userId) {
-          throw new Error('로그인을 해주세요!');
+          throw new Error('login');
         }
 
         const data = await fetchGetOrderDetails(userId);
         setOrderList(data);
         setError(null);
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : '주문 내역 가져오기 실패!'
-        );
+        setError(err instanceof Error ? err.message : 'fail');
       } finally {
         setLoading(false);
       }
@@ -37,16 +37,30 @@ export default function OrderDetailListArea() {
   }, [userId]);
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <div className='text-center pb-6'>로딩 중...</div>;
+  }
+
+  if (error === 'login') {
+    return (
+      <div className='text-center pb-6'>
+        <Link href={'/auth/sign-in'}>
+          <Button>로그인으로 가기</Button>
+        </Link>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className='text-red-500'>{error}</div>;
+    return (
+      <div className='text-red-500 text-center pb-6'>
+        주문 목록 가져오기 실패
+      </div>
+    );
   }
 
   return (
     <>
-      {orderList ? (
+      {orderList.length !== 0 ? (
         <div className='flex flex-col pb-6'>
           {orderList.map((order) => (
             <div key={order.id}>
@@ -55,6 +69,7 @@ export default function OrderDetailListArea() {
                 <ul key={item.book_id}>
                   <OrderDetailCard
                     id={item.id}
+                    book_id={item.books.id}
                     image_url={item.books.image_url}
                     title={item.books.title}
                     author={item.books.author}

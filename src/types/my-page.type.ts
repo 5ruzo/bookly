@@ -30,6 +30,7 @@ type OrderedBookInfoArray = OrderedBookInfo[];
 
 export type OrderDetailCardProps = {
   id: number;
+  book_id: number;
   image_url: string;
   title: string;
   author: string;

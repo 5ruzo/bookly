@@ -11,7 +11,7 @@ export default function MyPageLayout({
 }>) {
   const user = useAuthStore((state) => state.user);
   return (
-    <div className='w-full'>
+    <div className='px-12 w-full min-h-[calc(100vh-24rem)]'>
       <SideLayout SidebarContent={() => <MyPageSideBar />}>
         {user ? (
           <div className='flex items-end'>
@@ -20,7 +20,7 @@ export default function MyPageLayout({
           </div>
         ) : (
           <div className='flex items-end'>
-            <h2 className='text-xl'>로그인을 해주세요.</h2>
+            <h2 className='text-xl'>로그인이 필요한 페이지입니다.</h2>
           </div>
         )}
 

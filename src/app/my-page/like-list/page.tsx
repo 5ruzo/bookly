@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react';
 
 export default async function LikeList() {
   return (
-    <div className='flex-1 min-w-[400px] max-w-[1000px]'>
+    <div className='flex-1 w-[calc(50vw)] min-w-[350px] max-w-[1000px]'>
       <div className='mb-6'>
         <h3 className='flex items-center text-lg font-medium'>
           <span className='mr-2'>

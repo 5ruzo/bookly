@@ -8,22 +8,22 @@ import {
 } from '@/lib/api/detail.api';
 
 export default function LikeButton({
-  user,
+  userId,
   id,
   like,
   setLike,
 }: LikeButtonProps) {
   const handleLike = (like: boolean) => {
-    if (!user) return alert('로그인을 해주세요!');
+    if (!userId) return alert('로그인을 해주세요!');
 
     if (like) {
-      fetchDeleteLikeThisBook(user.id, id);
-      alert('찜 해제!');
+      fetchDeleteLikeThisBook(userId, id).then(() => alert('찜 해제!'));
+      console.log(like);
     }
 
     if (!like) {
-      fetchCreateLikeThisBook(user.id, id);
-      alert('찜 해제!');
+      fetchCreateLikeThisBook(userId, id).then(() => alert('찜!'));
+      console.log(like);
     }
 
     setLike(!like);
