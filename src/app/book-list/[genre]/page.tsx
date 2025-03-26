@@ -13,7 +13,7 @@ export async function generateStaticParams() {
   // 장르 배열을 가져오는 함수
   const genreList = await fetchGetGenreList();
 
-  // URL 경로에 맞게 포맷팅 (예: '/' -> '-' 변환)
+  // URL 경로에 맞게 포맷팅 ( '/' -> '-')
   return genreList.map((genre) => ({
     genre: genre.replace(/\//g, '-'),
   }));
