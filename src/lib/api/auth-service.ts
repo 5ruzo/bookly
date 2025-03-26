@@ -67,7 +67,7 @@ export const authService = {
     const { data, error } = await browserClient.auth.resetPasswordForEmail(
       email,
       {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: `${window.location.origin}/auth/reset-password`,
       }
     );
 
