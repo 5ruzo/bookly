@@ -7,7 +7,7 @@ import {
   fetchDeleteLikeThisBook,
 } from '@/lib/api/detail.api';
 import Swal from 'sweetalert2';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function LikeButton({
   userId,
@@ -16,6 +16,7 @@ export default function LikeButton({
   setLike,
 }: LikeButtonProps) {
   const router = useRouter();
+
   const handleLike = (like: boolean) => {
     if (!userId) {
       return Swal.fire({
