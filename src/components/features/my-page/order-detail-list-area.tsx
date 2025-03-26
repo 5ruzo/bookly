@@ -58,7 +58,7 @@ export default function OrderDetailListArea() {
                 </ul>
               ))}
 
-              <div className='flex justify-between px-6'>
+              <div className='flex gap-1 px-6'>
                 <p>총액 :</p>
                 <p>{formatNumberWithCommas(order.total_price)}원</p>
               </div>

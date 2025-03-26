@@ -4,7 +4,7 @@ import RecommendedBooksCarousel from '@/components/ui/recommened-books-carousel'
 
 export default function NotFound() {
   return (
-    <section className='min-h-[calc(100vh-24rem)] pl-1 flex flex-col justify-start items-center'>
+    <section className='min-h-[calc(100vh-16rem)] pl-1 flex flex-col justify-start items-center'>
       <h2 className='text-2xl mt-4'>404 - 페이지를 찾을 수 없습니다.</h2>
       <p className='mt-4'>요청하신 페이지가 존재하지 않습니다.</p>
       <CardSectionLayout
