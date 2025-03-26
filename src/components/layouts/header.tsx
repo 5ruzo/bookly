@@ -4,26 +4,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { LinkItem } from '@/types/layout.type';
 import HeaderDropdownMenu from './header-dropdown-menu';
-import useAuthStore from '@/store/useAuthStore';
+import { authService } from '@/lib/api/auth-service';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/use-auth-store';
 import { SearchBarComboBox } from '../features/search/search-bar-combo-box';
 
 const Header = () => {
-  const { signOut, isAuthenticated } = useAuthStore();
+  const { user, clearUser } = useAuthStore();
+  const router = useRouter();
 
-  const navigationLinks: LinkItem[] = isAuthenticated
+  const navigationLinks: LinkItem[] = user
     ? [
-        { text: '마이페이지', href: '/mypage' },
+        { text: '마이페이지', href: '/my-page/like-list' },
         { text: '장바구니(0)', href: '/cart' },
         {
           text: '로그아웃',
-          onClick: () => {
-            signOut();
+          onClick: async () => {
+            await authService.signOut();
+            clearUser();
+            alert('로그아웃 성공!');
+            router.push('/');
           },
         },
       ]
     : [
-        { text: '로그인', href: '/sign-in' },
-        { text: '회원가입', href: '/sign-up' },
+        { text: '로그인', href: '/auth/sign-in' },
+        { text: '회원가입', href: '/auth/sign-up' },
       ];
 
   return (
