@@ -30,7 +30,7 @@ export default function ButtonArea({
                 author: `${author}`,
                 image_url: `${image_url}`,
               },
-              quantity: 1,
+              quantity,
               price: Number(price),
             },
           ]);
