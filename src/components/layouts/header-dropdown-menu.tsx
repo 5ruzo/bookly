@@ -31,7 +31,9 @@ const HeaderDropdownMenu = ({ menuList }: HeaderMenuProps) => {
                   {menu.text}
                 </Link>
               ) : (
-                <span>{menu.text}</span>
+                <span className='block w-full h-full px-2 py-1.5 cursor-pointer'>
+                  {menu.text}
+                </span>
               )}
             </DropdownMenuItem>
           ))}
