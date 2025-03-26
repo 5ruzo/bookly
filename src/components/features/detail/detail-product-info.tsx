@@ -17,7 +17,7 @@ export default function ProductInfo({ data }: ProductInfoProps) {
         '644780c4-7283-417e-8c18-b1cb1b96a669',
         data.id
       );
-      if (res.book_id !== data.id) return;
+      if (res?.book_id !== data.id) return;
       setLike(true);
     };
 
@@ -67,8 +67,11 @@ export default function ProductInfo({ data }: ProductInfoProps) {
         <ButtonArea
           like={like}
           setLike={setLike}
+          id={data.id}
           title={data.title}
           price={data.price}
+          author={data.author}
+          image_url={data.image_url}
           quantity={quantity}
         />
       </div>
