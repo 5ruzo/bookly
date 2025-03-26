@@ -7,7 +7,7 @@ import HeaderDropdownMenu from './header-dropdown-menu';
 import { authService } from '@/lib/api/auth-service';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/use-auth-store';
-import { SearchBarComboBox } from '../features/search/search-bar-combo-box';
+import { SearchBarComboBox } from '../features/search/search-search-bar';
 
 const Header = () => {
   const { user, clearUser } = useAuthStore();
