@@ -10,6 +10,7 @@ import { useAuthStore } from '@/store/use-auth-store';
 import { SearchBarComboBox } from '../features/search/search-search-bar';
 import { Suspense } from 'react';
 import useCartStore from '@/store/cart-store';
+import Swal from 'sweetalert2';
 
 const Header = () => {
   const clearUser = useAuthStore((state) => state.clearUser);
@@ -26,7 +27,11 @@ const Header = () => {
           onClick: async () => {
             await authService.signOut();
             clearUser();
-            alert('로그아웃 성공!');
+            Swal.fire({
+              title: '안녕히 가세요.',
+              text: '로그아웃에 성공하였습니다.',
+              icon: 'success',
+            });
             router.push('/');
           },
         },
