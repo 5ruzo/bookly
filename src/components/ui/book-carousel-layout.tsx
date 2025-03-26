@@ -8,15 +8,15 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { CardForCarousel } from '@/types/common.type';
+import { SLIDES_TO_ONE_SCROLL } from '@/constants/common.constant';
 import BookCard from './book-card';
 
 function BookCarouselLayout(props: { bookList: CardForCarousel[] }) {
   const carouselOptions = {
-    slidesToScroll: 2,
+    slidesToScroll: SLIDES_TO_ONE_SCROLL.SMALL,
     breakpoints: {
-      '(min-width: 640px)': { slidesToScroll: 3 },
-      '(min-width: 1024px)': { slidesToScroll: 3 },
-      '(min-width: 1280px)': { slidesToScroll: 4 },
+      '(min-width: 640px)': { slidesToScroll: SLIDES_TO_ONE_SCROLL.MEDIUM },
+      '(min-width: 768px)': { slidesToScroll: SLIDES_TO_ONE_SCROLL.LARGE },
     },
   };
 

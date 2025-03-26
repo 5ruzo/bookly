@@ -1,4 +1,4 @@
-import BookListBestSidebar from '@/components/features/book-list/book-list-sidebar';
+import SearchSidebar from '@/components/features/search/search-sidebar';
 import SideLayout from '@/components/layouts/side-layout';
 import { fetchGetGenreList } from '@/lib/api/book-list.api';
 
@@ -10,9 +10,7 @@ export default async function BooKListLayout({
   const genreList = await fetchGetGenreList();
 
   return (
-    <SideLayout
-      SidebarContent={() => <BookListBestSidebar genreList={genreList} />}
-    >
+    <SideLayout SidebarContent={() => <SearchSidebar genreList={genreList} />}>
       {children}
     </SideLayout>
   );
