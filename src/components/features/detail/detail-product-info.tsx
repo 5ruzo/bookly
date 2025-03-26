@@ -6,12 +6,10 @@ import { useEffect, useState } from 'react';
 import QuantityInput from './detail-quantity-input';
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
 import { fetchGetLikeThisBook } from '@/lib/api/detail.api';
-import useAuthStore from '@/store/useAuthStore';
 
 export default function ProductInfo({ data }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
   const [like, setLike] = useState(false);
-  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const userLikeThis = async () => {
@@ -24,9 +22,6 @@ export default function ProductInfo({ data }: ProductInfoProps) {
     };
 
     userLikeThis();
-
-    console.log('user', user);
-    console.log(like);
   }, []);
 
   // 수령 예상일 계산을 위한 기본값
