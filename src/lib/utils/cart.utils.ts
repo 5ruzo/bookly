@@ -141,11 +141,11 @@ export const deleteFromCart = (
   ids: TypeCartItem['id'][]
 ) => {
   const newCartBooks = cartBooks.filter(({ id }) => !ids.includes(id));
-  // const totalPrice = calculateTotalPrice(newCartBooks);
   const newCheckedBooks = checkedBooks.filter((id) => !ids.includes(id));
+  const totalPrice = calculateTotalPrice(newCartBooks, newCheckedBooks);
   return {
     newCartBooks,
-    // totalPrice,
+    totalPrice,
     newCheckedBooks,
   };
 };
