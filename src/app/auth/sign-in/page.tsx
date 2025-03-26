@@ -160,7 +160,7 @@ const SignIn = () => {
               {/* 카카오 로그인 버튼 */}
               <button
                 type='button'
-                className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl flex items-center justify-center gap-2'
+                className='bg-[url(https://storage.keepgrow.com/admin/campaign/20200611043456590.svg)] bg-no-repeat bg-[22px] w-full py-3 bg-[#fee500] text-black rounded-xl flex items-center justify-center gap-2'
                 onClick={handleKakaoLogin}
               >
                 카카오 로그인
