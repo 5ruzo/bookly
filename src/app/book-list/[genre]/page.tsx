@@ -48,7 +48,7 @@ export default async function BookListGenrePage({
   const bookList = await fetchGetBookListByGenre(genre);
 
   return (
-    <ul className='min-h-[calc(100vh-24rem)] flex flex-col gap-20'>
+    <ul className='min-h-[calc(100vh-24rem)] flex flex-col'>
       {bookList.map((book) => {
         return (
           <BookListItem
