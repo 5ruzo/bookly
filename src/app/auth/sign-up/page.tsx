@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,17 +22,16 @@ const SignUp = () => {
       confirmPassword: '',
       phone: '',
     },
-    resolver: zodResolver(signupSchema), // Zod로 입력 값 유효성 검사
+    resolver: zodResolver(signupSchema),
   });
 
-  // 회원가입 폼 제출 함수
   const onSubmit = async (values: FieldValues) => {
     try {
       const { data, error } = await authService.signUp(
         values.email,
         values.password,
         values.phone
-      ); // 회원가입 요청
+      );
 
       if (error) {
         console.error('회원가입 에러:', error);
@@ -50,29 +49,28 @@ const SignUp = () => {
   };
 
   return (
-    <div className='flex min-h-screen'>
-      <div className='flex flex-1 items-start justify-center p-6'>
-        <div className='w-full h-[700px] max-h-[700px] max-w-[1000px] rounded-xl bg-[var(--color-secondary)] flex overflow-hidden'>
-          {/* 이미지 영역 */}
-          <div className='w-[45%] relative flex items-center justify-center'>
-            <div className='relative w-full h-full max-w-full max-h-full'>
-              <Image
-                src='/images/sign-up-image.png'
-                alt='회원가입 이미지'
-                fill
-                priority
-                style={{ objectFit: 'contain' }}
-                sizes='(max-width: 768px) 100vw, 50vw'
-              />
-            </div>
+    <div className='flex min-h-screen items-start justify-center px-4 py-6'>
+      <div className='w-full max-w-4xl rounded-xl bg-[var(--color-secondary)] flex flex-col md:flex-row overflow-hidden shadow-lg'>
+        {/* 이미지 영역 - 모바일과 데스크톱에서 조건부 렌더링 */}
+        <div className='hidden md:block md:w-1/2 relative'>
+          <div className='relative w-full h-full min-h-[500px]'>
+            <Image
+              src='/images/sign-up-image.png'
+              alt='회원가입 이미지'
+              fill
+              priority
+              style={{ objectFit: 'contain' }}
+              sizes='(max-width: 768px) 100vw, 50vw'
+            />
           </div>
-
-          {/* 오른쪽 폼 */}
-          <div className='p-6 w-[55%]'>
-            <div className='flex flex-col justify-center w-[100%] h-full bg-[var(--color-white-light)] p-12 rounded-xl'>
+        </div>
+        {/* 폼 영역 */}
+        <div className='w-full md:w-[55%] p-6'>
+          <div className='flex flex-col justify-center w-full h-full bg-[var(--color-white-light)] p-6 md:p-12 rounded-xl'>
+            <div className='w-full max-w-md mx-auto'>
               <h2 className='text-2xl mb-6 text-left'>회원가입</h2>
 
-              <form className='space-y-0' onSubmit={handleSubmit(onSubmit)}>
+              <form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
                 {/* 이메일 입력 */}
                 <div>
                   <label className='block text-base'>
@@ -85,7 +83,6 @@ const SignUp = () => {
                       autoComplete='email'
                     />
                   </label>
-                  {/* 이메일 유효성 검사 오류 메시지 */}
                   <div className='block left-0 right-0 h-6 mt-1'>
                     {formState.errors.email && (
                       <span className='text-red-500'>
@@ -107,7 +104,6 @@ const SignUp = () => {
                       autoComplete='new-password'
                     />
                   </label>
-                  {/* 비밀번호 유효성 검사 오류 메시지 */}
                   <div className='block left-0 right-0 h-6 mt-1'>
                     {formState.errors.password && (
                       <span className='text-red-500'>
@@ -150,7 +146,6 @@ const SignUp = () => {
                       placeholder='010-1234-5678'
                     />
                   </label>
-                  {/* 휴대폰 번호 유효성 검사 오류 메시지 */}
                   <div className='block left-0 right-0 h-6 mt-1 mb-2'>
                     {formState.errors.phone && (
                       <p className='text-red-500'>
@@ -164,7 +159,7 @@ const SignUp = () => {
                 <button
                   disabled={!formState.isValid}
                   type='submit'
-                  className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl  transition mb-2'
+                  className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl hover:bg-gray-800 transition mb-2'
                 >
                   회원가입
                 </button>

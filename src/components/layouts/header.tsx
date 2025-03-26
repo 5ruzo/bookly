@@ -15,7 +15,7 @@ const Header = () => {
 
   const navigationLinks: LinkItem[] = user
     ? [
-        { text: '마이페이지', href: '/mypage' },
+        { text: '마이페이지', href: '/my-page/like-list' },
         { text: '장바구니(0)', href: '/cart' },
         {
           text: '로그아웃',
