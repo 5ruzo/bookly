@@ -17,7 +17,6 @@ import { authService } from '@/lib/api/auth-service';
 import { useAuthStore } from '@/store/use-auth-store';
 
 const SignIn = () => {
-  const setUser = useAuthStore((state) => state.setUser);
   const setError = useAuthStore((state) => state.setError);
   const error = useAuthStore((state) => state.error);
 

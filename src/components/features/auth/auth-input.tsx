@@ -21,7 +21,11 @@ const AuthInput: React.FC<AuthInputProps> = ({
         />
       </label>
       <div className='block left-0 right-0 h-6 mt-1'>
-        {error && <span className='text-red-500'>{error.message}</span>}
+        {error && (
+          <span className='text-red-500 text-md md:text-base'>
+            {error.message}
+          </span>
+        )}
       </div>
     </div>
   );
