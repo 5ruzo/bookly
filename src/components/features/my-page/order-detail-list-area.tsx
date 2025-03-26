@@ -1,46 +1,20 @@
 'use client';
 
-import { fetchGetOrderDetails } from '@/lib/api/my-page.api';
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
 import { useAuthStore } from '@/store/use-auth-store';
-import type { OrderDetailInfo } from '@/types/my-page.type';
-import { useEffect, useState } from 'react';
 import OrderDetailCard from './order-detail-card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useGetOrderDetailsQuery } from '@/lib/queries/use-get-order-details-query';
 
 export default function OrderDetailListArea() {
-  const [orderList, setOrderList] = useState<OrderDetailInfo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
   const userId = useAuthStore((state) => state.user?.id);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!userId) {
-          throw new Error('login');
-        }
+  const { data, isLoading, isError } = useGetOrderDetailsQuery(
+    userId as string
+  );
 
-        const data = await fetchGetOrderDetails(userId);
-        setOrderList(data);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'fail');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
-  if (loading) {
-    return <div className='text-center pb-6'>로딩 중...</div>;
-  }
-
-  if (error === 'login') {
+  if (!userId) {
     return (
       <div className='text-center pb-6'>
         <Link href={'/auth/sign-in'}>
@@ -50,7 +24,11 @@ export default function OrderDetailListArea() {
     );
   }
 
-  if (error) {
+  if (isLoading) {
+    return <div className='text-center pb-6'>로딩 중...</div>;
+  }
+
+  if (isError) {
     return (
       <div className='text-red-500 text-center pb-6'>
         주문 목록 가져오기 실패
@@ -60,9 +38,9 @@ export default function OrderDetailListArea() {
 
   return (
     <>
-      {orderList.length !== 0 ? (
+      {data?.length !== 0 ? (
         <div className='flex flex-col pb-6'>
-          {orderList.map((order) => (
+          {data?.map((order) => (
             <div key={order.id}>
               <h2>주문번호 {order.id}</h2>
               {order.order_details.map((item) => (

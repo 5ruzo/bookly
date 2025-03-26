@@ -18,12 +18,10 @@ export default function LikeButton({
 
     if (like) {
       fetchDeleteLikeThisBook(userId, id).then(() => alert('찜 해제!'));
-      console.log(like);
     }
 
     if (!like) {
       fetchCreateLikeThisBook(userId, id).then(() => alert('찜!'));
-      console.log(like);
     }
 
     setLike(!like);

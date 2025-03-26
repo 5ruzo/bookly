@@ -2,44 +2,20 @@
 
 import BookCard from '@/components/ui/book-card';
 import { Button } from '@/components/ui/button';
-import { fetchGetLikeList } from '@/lib/api/my-page.api';
+import { useGetLikeListQuery } from '@/lib/queries/use-get-like-list-query';
 import { useAuthStore } from '@/store/use-auth-store';
-import type { LikeList } from '@/types/my-page.type';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 export default function LikeListArea() {
-  const [likeList, setLikeList] = useState<LikeList[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
   const userId = useAuthStore((state) => state.user?.id);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!userId) {
-          throw new Error('login');
-        }
+  const { data, isLoading, isError } = useGetLikeListQuery(userId as string);
 
-        const data = await fetchGetLikeList(userId);
-        setLikeList(data);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'fail');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
-  if (loading) {
+  if (isLoading) {
     return <div className='text-center pb-6'>로딩 중...</div>;
   }
 
-  if (error === 'login') {
+  if (!userId) {
     return (
       <div className='text-center pb-6'>
         <Link href={'/auth/sign-in'}>
@@ -49,7 +25,7 @@ export default function LikeListArea() {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className='text-red-500 text-center pb-6'>찜 목록 가져오기 실패</div>
     );
@@ -57,9 +33,9 @@ export default function LikeListArea() {
 
   return (
     <>
-      {likeList.length !== 0 ? (
+      {data?.length !== 0 ? (
         <div className='grid gap-6 grid-cols-3'>
-          {likeList.map((book) => (
+          {data?.map((book) => (
             <BookCard
               key={book.book_id}
               id={book.book_id}
