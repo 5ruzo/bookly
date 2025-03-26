@@ -31,6 +31,7 @@ const Header = () => {
               title: '안녕히 가세요.',
               text: '로그아웃에 성공하였습니다.',
               icon: 'success',
+              confirmButtonColor: '#3085d6',
             });
             router.push('/');
           },

@@ -29,6 +29,7 @@ export default function LikeButton({
           title: '찜 해제!',
           text: '찜 목록에서 삭제 되었습니다.',
           icon: 'info',
+          confirmButtonColor: '#3085d6',
         })
       );
     }
@@ -39,6 +40,7 @@ export default function LikeButton({
           title: '찜!',
           text: '찜 목록에 추가 되었습니다.',
           icon: 'info',
+          confirmButtonColor: '#3085d6',
         })
       );
     }
