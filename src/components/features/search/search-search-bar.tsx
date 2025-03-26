@@ -40,7 +40,7 @@ export function SearchBarComboBox() {
 
   return (
     <div
-      className='relative z-50'
+      className='relative z-[51]'
       onFocus={() => {
         setIsSuggestionsView(true);
         setInputTextSearchBar('');
