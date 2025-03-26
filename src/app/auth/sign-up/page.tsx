@@ -53,6 +53,7 @@ const SignUp = () => {
           title: '환영합니다!',
           text: '회원가입 성공!',
           icon: 'success',
+          confirmButtonColor: '#3085d6',
         });
 
         router.push('/');

@@ -43,6 +43,7 @@ function BookCard({
       Swal.fire({
         text: `장바구니에 추가되었습니다.`,
         icon: 'success',
+        confirmButtonColor: '#3085d6',
       });
     } else {
       Swal.fire({
@@ -50,7 +51,7 @@ function BookCard({
         icon: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        cancelButtonColor: '#71717a',
         confirmButtonText: '확인',
         cancelButtonText: '취소',
       }).then((result) => {

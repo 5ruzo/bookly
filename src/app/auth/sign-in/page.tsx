@@ -63,6 +63,7 @@ const SignIn = () => {
           title: '환영합니다!',
           text: '로그인 성공!',
           icon: 'success',
+          confirmButtonColor: '#3085d6',
         });
         router.push('/');
       }

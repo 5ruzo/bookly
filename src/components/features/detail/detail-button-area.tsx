@@ -32,7 +32,7 @@ export default function ButtonArea({
               icon: 'info',
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
+              cancelButtonColor: '#71717a',
               confirmButtonText: '확인',
               cancelButtonText: '취소',
             }).then((result) => {
@@ -56,6 +56,7 @@ export default function ButtonArea({
             Swal.fire({
               text: `장바구니에 ${title} 을/를 ${quantity}개 담으시겠습니까?`,
               icon: 'question',
+              confirmButtonColor: '#3085d6',
             });
           }
         }}
