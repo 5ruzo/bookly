@@ -49,15 +49,13 @@ function StripBannersCarousel() {
     });
   }, [api]);
 
-  if (isError || isLoading) return null;
-
   const handleSelectSlide = (index: number) => {
     if (api) {
       api.scrollTo(index);
     }
   };
 
-  if (!stripBanners || isError) return null;
+  if (!stripBanners || isError || isLoading) return null;
 
   return (
     <div className='relative overflow-hidden'>
