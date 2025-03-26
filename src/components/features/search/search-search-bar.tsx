@@ -40,7 +40,7 @@ export function SearchBarComboBox() {
 
   return (
     <div
-      className='relative'
+      className='relative z-50'
       onFocus={() => {
         setIsSuggestionsView(true);
         setInputTextSearchBar('');
@@ -71,8 +71,8 @@ export function SearchBarComboBox() {
         </label>
       </form>
       {isSuggestionsView && (
-        <ul
-          className='absolute w-full bg-white border border-lightgray rounded-xl mt-1'
+        <div
+          className='absolute w-full bg-white border border-lightgray rounded-xl mt-1 flex flex-col'
           onMouseEnter={() => {
             isMouseOverSuggestionsView.current = false;
           }}
@@ -80,12 +80,12 @@ export function SearchBarComboBox() {
             isMouseOverSuggestionsView.current = true;
           }}
         >
-          <li className='py-3 pl-5 text-gray text-sm'>추천목록</li>
+          <div className='py-3 pl-5 text-gray text-sm'>추천목록</div>
           {suggestions?.map((suggestion) => (
             <button
               key={suggestion}
               type='button'
-              className={'pl-5 pb-3 cursor-pointer'}
+              className={'pl-5 pb-3 cursor-pointer w-full text-start'}
               onClick={(e) => {
                 setIsSuggestionsView(false);
                 setInputTextSearchBar(suggestion);
@@ -95,7 +95,7 @@ export function SearchBarComboBox() {
               {suggestion}
             </button>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
