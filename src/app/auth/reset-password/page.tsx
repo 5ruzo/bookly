@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { resetPasswordSchema } from '@/lib/utils/auth/schemas';
-import { supabase } from '@/lib/api/supabaseClient';
+import browserClient from '@/lib/utils/supabase/client';
 
 const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -64,7 +64,7 @@ const ResetPassword = () => {
       setIsLoading(true);
       setError(null);
 
-      const { error } = await supabase.auth.updateUser({
+      const { error } = await browserClient.auth.updateUser({
         password: values.password,
       });
 

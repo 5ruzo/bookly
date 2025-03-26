@@ -1,10 +1,9 @@
-import { supabase } from './supabaseClient';
-import { redirect } from 'next/navigation';
+import browserClient from '../../utils/supabase/client';
 
 export const authService = {
   signUp: async (email: string, password: string, phone: string) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await browserClient.auth.signUp({
         email,
         password,
         options: { data: { phone } },
@@ -21,7 +20,7 @@ export const authService = {
 
   signIn: async (email: string, password: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await browserClient.auth.signInWithPassword({
         email,
         password,
       });
@@ -36,7 +35,7 @@ export const authService = {
 
   signOut: async () => {
     try {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await browserClient.auth.signOut();
       localStorage.removeItem('rememberMe');
 
       if (error) throw error;
@@ -59,7 +58,7 @@ export const authService = {
         url = url.endsWith('/') ? url : `${url}/`;
         return url;
       };
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await browserClient.auth.signInWithOAuth({
         provider: 'kakao',
         options: {
           redirectTo: getURL(),
@@ -73,7 +72,7 @@ export const authService = {
 
   checkEmailExists: async (email: string) => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await browserClient
         .from('users')
         .select('email')
         .eq('email', email);
@@ -91,9 +90,12 @@ export const authService = {
 
   resetPassword: async (email: string) => {
     try {
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
-      });
+      const { data, error } = await browserClient.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo: `${window.location.origin}/reset-password`,
+        }
+      );
 
       if (error) throw error;
 

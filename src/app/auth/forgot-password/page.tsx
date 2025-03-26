@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { forgotPasswordSchema } from '@/lib/utils/auth/schemas';
-import { authService } from '@/lib/api/authService';
+import { authService } from '@/lib/api/auth/auth-service';
 
 const ForgotPassword = () => {
   // 비밀번호 재설정 요청 완료 여부를 확인하는 상태

@@ -1,7 +1,7 @@
 'use client';
 
-import { supabase } from '@/lib/api/supabaseClient';
-import { useAuthStore } from '@/store/useAuthStore';
+import browserClient from '@/lib/utils/supabase/client';
+import { useAuthStore } from '@/store/auth/use-auth-store';
 import { useEffect } from 'react';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -11,7 +11,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 인증 상태 변경 리스너 설정
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = browserClient.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         setUser(session.user);
       } else if (event === 'SIGNED_OUT') {

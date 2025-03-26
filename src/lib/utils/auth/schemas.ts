@@ -1,4 +1,4 @@
-import { authService } from '@/lib/api/authService';
+import { authService } from '@/lib/api/auth/auth-service';
 import { z } from 'zod';
 
 export const loginSchema = z.object({
