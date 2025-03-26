@@ -47,20 +47,20 @@ export const authService = {
   },
 
   signInWithKakao: async () => {
-    const url = process.env.NEXT_PUBLIC_VERCEL_URL
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
-      : 'http://localhost:3000/auth/callback';
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'kakao',
-      options: {
-        redirectTo: url,
-      },
-    });
-    if (data.url) {
-      redirect(data.url);
-    }
-
-    if (error) {
+    try {
+      const url = process.env.NEXT_PUBLIC_VERCEL_URL
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
+        : 'http://localhost:3000/auth/callback';
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'kakao',
+        options: {
+          redirectTo: url,
+        },
+      });
+      if (data.url) {
+        redirect(data.url);
+      }
+    } catch (error) {
       console.error('카카오 로그인 에러:', error);
       throw error;
     }
