@@ -20,7 +20,7 @@ export default function BookListItem({
           <img
             src={image_url}
             alt={`${title}의 표지 이미지`}
-            className='md:w-[280px] md:h-[406px] w-[60%] object-contain'
+            className='md:w-[280px] md:h-[406px] w-[60%] object-cover'
           />
           <div className='flex flex-col md:ml-[72px]'>
             <h5 className='text-lg md:text-2xl md:mt-[46px] line-clamp-1 max-w-[566px] mt-3'>
@@ -55,7 +55,9 @@ export default function BookListItem({
           </div>
         </div>
       </Link>
-      <div className='md:hidden bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-black via-gray to-lightgray shadow-sm mt-1'></div>
+      <div className='py-5'>
+        <div className='bottom-2 left-0 w-full h-[1px] bg-black'></div>
+      </div>
     </li>
   );
 }

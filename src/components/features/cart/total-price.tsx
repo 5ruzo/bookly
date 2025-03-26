@@ -1,5 +1,5 @@
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
-import { TypeCartItem } from '@/types/cart/cart.type';
+import { TypeCartItem } from '@/types/cart.type';
 
 type TypeTotalPrice = {
   quantity: number;

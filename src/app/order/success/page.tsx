@@ -28,10 +28,12 @@ export default function SuccessPage() {
     }
   }
 
-  window.history.pushState(null, window.location.href);
-  window.addEventListener('popstate', function () {
+  if (typeof window !== 'undefined') {
     window.history.pushState(null, window.location.href);
-  });
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, window.location.href);
+    });
+  }
 
   return (
     <div className='flex flex-col items-center py-10 w-[90vw] max-w-[1000px] mx-auto justify-center'>

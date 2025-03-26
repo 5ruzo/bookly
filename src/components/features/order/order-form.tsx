@@ -1,10 +1,15 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import { createOrderDetails, createOrderList } from '@/lib/api/order-api';
+import { truncateWithEllipsis } from '@/lib/utils/common.util';
+import useCartStore from '@/store/cart/cart-store';
+import { useAuthStore } from '@/store/use-auth-store';
+import { TypeCartItem } from '@/types/cart.type';
 import {
   TypeAddressInfo,
   TypeOrderForm,
   TypePaymentsInfo,
-} from '@/types/order/order.type';
+} from '@/types/order.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -12,9 +17,6 @@ import { z } from 'zod';
 import DeliveryForm from './delivery-form';
 import OrderInfo from './order-info';
 import { TossPayments } from './toss-payments';
-import useCartStore from '@/store/cart/cart-store';
-import { truncateWithEllipsis } from '@/lib/utils/common.util';
-import { TypeCartItem } from '@/types/cart/cart.type';
 
 const defaultValues = {
   name: '',
@@ -49,10 +51,12 @@ const styles = {
 };
 
 const getBookSummary = (books: TypeCartItem[]) => {
-  const representativeBook = books[0].bookInfo.title;
+  if (books.length === 0) return '';
+  const representativeBook = books[0]?.bookInfo.title;
   return `${truncateWithEllipsis(representativeBook)} ${books.length > 0 ? '' : `외 ${books.length - 1}건`}`;
 };
-export default function DeliveryInfo() {
+
+export default function OrderForm() {
   const [isFormFilled, setIsFormFilled] = useState(false);
   const [paymentsInfo, setPaymentsInfo] = useState<TypePaymentsInfo>({
     name: '',
@@ -60,6 +64,13 @@ export default function DeliveryInfo() {
     amount: 0,
   });
   const { totalPrice, booksToOrder } = useCartStore();
+  const { user } = useAuthStore();
+
+  const bookInfoForOrder = booksToOrder.map((book) => ({
+    bookId: book.id,
+    quantity: book.quantity,
+  }));
+
   const { register, handleSubmit, formState, setValue, trigger } =
     useForm<TypeOrderForm>({
       mode: 'onBlur',
@@ -75,14 +86,37 @@ export default function DeliveryInfo() {
     trigger('zoneCode');
   };
 
+  const requestOrder = async () => {
+    try {
+      const orderId = await createOrderList({
+        userId: user?.id ?? '',
+        totalPrice: totalPrice,
+      });
+      return postOrderList(orderId);
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
+  const postOrderList = async (orderId: number) => {
+    try {
+      await createOrderDetails({
+        orderedBooks: bookInfoForOrder,
+        orderId,
+      });
+      setIsFormFilled(true);
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
   const onSubmit = (values: FieldValues) => {
     setPaymentsInfo({
       name: values.name,
-      amount: totalPrice,
       items: getBookSummary(booksToOrder),
+      amount: totalPrice,
     });
-
-    setIsFormFilled(true);
+    requestOrder();
   };
 
   return (

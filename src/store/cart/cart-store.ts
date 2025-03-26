@@ -1,6 +1,6 @@
 import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 import * as CartUtils from '@/lib/utils/cart.utils';
-import { TypeCartItem } from '@/types/cart/cart.type';
+import { TypeCartItem } from '@/types/cart.type';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
@@ -36,7 +36,7 @@ type TypeCartStore = {
 //@TODO: 데이터 넘어오면 삭제 예정
 const MOCK_DATA = [
   {
-    id: '12345',
+    id: 1,
     bookInfo: {
       title:
         '지박소년 하나코 군 23 (트리플 특장판) - 홀로그램 양면 책갈피 + 아크릴 스탠딩 POP + 일러스트 양면 코스터',
@@ -48,7 +48,7 @@ const MOCK_DATA = [
     price: 6000,
   },
   {
-    id: crypto.randomUUID(),
+    id: 2,
     bookInfo: {
       title: '셜리 1',
       author: '샬럿 브론테 (지은이), 송은주 (옮긴이)',
@@ -59,7 +59,7 @@ const MOCK_DATA = [
     price: 20000,
   },
   {
-    id: crypto.randomUUID(),
+    id: 3,
     bookInfo: {
       title: '소년이 온다 - 2024 노벨문학상 수상작가',
       author: '한강 (지은이)',
