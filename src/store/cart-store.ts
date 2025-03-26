@@ -33,48 +33,9 @@ type TypeCartStore = {
   orderBooks: () => void;
 };
 
-//@TODO: 데이터 넘어오면 삭제 예정
-const MOCK_DATA = [
-  {
-    id: 1,
-    bookInfo: {
-      title:
-        '지박소년 하나코 군 23 (트리플 특장판) - 홀로그램 양면 책갈피 + 아크릴 스탠딩 POP + 일러스트 양면 코스터',
-      author: '아이다이로 (지은이), 장혜영 (옮긴이)',
-      image_url:
-        'https://image.aladin.co.kr/product/36071/90/cover500/k772037248_1.jpg',
-    },
-    quantity: 1,
-    price: 6000,
-  },
-  {
-    id: 2,
-    bookInfo: {
-      title: '셜리 1',
-      author: '샬럿 브론테 (지은이), 송은주 (옮긴이)',
-      image_url:
-        'https://image.aladin.co.kr/product/35722/43/cover500/k352036331_3.jpg',
-    },
-    quantity: 2,
-    price: 20000,
-  },
-  {
-    id: 3,
-    bookInfo: {
-      title: '소년이 온다 - 2024 노벨문학상 수상작가',
-      author: '한강 (지은이)',
-      image_url:
-        'https://image.aladin.co.kr/product/4086/97/cover500/8936434128_2.jpg',
-    },
-    quantity: 3,
-    price: 15000,
-  },
-];
-
-//@TODO: store로 보낼 때 이런 형태로 보내달라고 요청하기!
 const initialState = {
-  cartBooks: MOCK_DATA,
-  totalPrice: calculateTotalPrice(MOCK_DATA),
+  cartBooks: [],
+  totalPrice: calculateTotalPrice([], []),
   checkedBooks: [],
   booksToOrder: [],
 };
@@ -85,19 +46,16 @@ const useCartStore = create<TypeCartStore>()(
       ...initialState,
       addToCart: (addedBooks) =>
         set(({ cartBooks }) => {
-          const { newCartBooks, totalPrice } = addToCartBooks(
-            cartBooks,
-            addedBooks
-          );
+          const { newCartBooks } = addToCartBooks(cartBooks, addedBooks);
           return {
             cartBooks: newCartBooks,
-            totalPrice: totalPrice,
           };
         }),
       increaseQuantity: (id) =>
         set((state) => {
           const { newCartBooks, totalPrice } = handleQuantity(
             state.cartBooks,
+            state.checkedBooks,
             id,
             INCREASE
           );
@@ -107,17 +65,19 @@ const useCartStore = create<TypeCartStore>()(
         set((state) => {
           const { newCartBooks, totalPrice } = handleQuantity(
             state.cartBooks,
+            state.checkedBooks,
             id,
             DECREASE
           );
           return { cartBooks: newCartBooks, totalPrice };
         }),
       updateQuantity: (id, newQuantity) =>
-        set(({ cartBooks }) => {
+        set((state) => {
           const { newCartBooks, totalPrice } = updateQuantity(
-            cartBooks,
+            state.cartBooks,
             id,
-            newQuantity
+            newQuantity,
+            state.checkedBooks
           );
           return {
             cartBooks: newCartBooks,
@@ -125,25 +85,37 @@ const useCartStore = create<TypeCartStore>()(
           };
         }),
       checkAllBooks: (newCheckedBooks) =>
-        set(() => ({
+        set((state) => ({
           checkedBooks: newCheckedBooks,
+          totalPrice: calculateTotalPrice(state.cartBooks, newCheckedBooks),
         })),
       setCheckedBooks: (newCheckedBook) =>
-        set(({ checkedBooks }) => ({
-          checkedBooks: toggleCheckedBooks(checkedBooks, newCheckedBook),
-        })),
+        set((state) => {
+          const { newChecked, totalPrice } = toggleCheckedBooks(
+            state.cartBooks,
+            state.checkedBooks,
+            newCheckedBook
+          );
+          return {
+            checkedBooks: newChecked,
+            totalPrice,
+          };
+        }),
       resetCheckedBooks: () =>
-        set(() => ({
+        set((state) => ({
           checkedBooks: [],
+          totalPrice: calculateTotalPrice(state.cartBooks, []),
         })),
       deleteBooks: (ids) =>
         set((state) => {
-          const { newCartBooks, totalPrice } = deleteFromCart(
+          const { newCartBooks, newCheckedBooks, totalPrice } = deleteFromCart(
+            state.checkedBooks,
             state.cartBooks,
             ids
           );
           return {
             cartBooks: newCartBooks,
+            checkedBooks: newCheckedBooks,
             totalPrice,
           };
         }),

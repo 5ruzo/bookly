@@ -5,7 +5,8 @@ import { useAuthStore } from '@/store/use-auth-store';
 import { useEffect } from 'react';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { setUser, clearUser } = useAuthStore();
+  const setUser = useAuthStore((state) => state.setUser);
+  const clearUser = useAuthStore((state) => state.clearUser);
 
   useEffect(() => {
     // 인증 상태 변경 리스너 설정
@@ -16,6 +17,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session.user);
       } else if (event === 'SIGNED_OUT') {
         clearUser();
+        localStorage.removeItem('cart-list');
       }
     });
 

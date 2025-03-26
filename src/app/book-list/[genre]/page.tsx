@@ -4,6 +4,7 @@ import {
   fetchGetBookListByGenre,
   fetchGetGenreList,
 } from '@/lib/api/book-list.api';
+import { notFound } from 'next/navigation';
 import React from 'react';
 
 export const revalidate = BOOK_LIST_REVALIDATE_TIME;
@@ -25,6 +26,12 @@ export async function generateMetadata({
 }) {
   // URL 파라미터에서 장르 추출 및 포맷팅 복원
   const genre = decodeURIComponent(params.genre as string).replace(/-/g, '/');
+
+  // 장르목록에 없으면 notFound페이지로
+  const genreList = await fetchGetGenreList();
+  if (!genreList.includes(genre)) {
+    notFound();
+  }
 
   return {
     title: `'${genre}' 장르의 인기있는 책 목록 - Bookly에서 인기있는 책 찾아보기`,
@@ -48,7 +55,7 @@ export default async function BookListGenrePage({
   const bookList = await fetchGetBookListByGenre(genre);
 
   return (
-    <ul className='min-h-[calc(100vh-24rem)] flex flex-col gap-20'>
+    <ul className='min-h-[calc(100vh-24rem)] flex flex-col'>
       {bookList.map((book) => {
         return (
           <BookListItem

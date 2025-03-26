@@ -1,18 +1,22 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { useGetRecommendSearches } from '@/lib/queries/use-get-recommend-searches.query';
 
 export function SearchBarComboBox() {
   const router = useRouter();
+  const pathName = usePathname();
 
   //검색어 인풋창 관련 훅들
   const searchParams = useSearchParams();
   const searchTerm: string = searchParams.get('query') || '';
   const [inputTextSearchBar, setInputTextSearchBar] =
     useState<string>(searchTerm);
+  useEffect(() => {
+    if (pathName !== '/search') setInputTextSearchBar('');
+  }, [pathName]);
 
   //추천검색어창 관련훅들
   const [isSuggestionsView, setIsSuggestionsView] = useState<boolean>(false);
@@ -40,10 +44,9 @@ export function SearchBarComboBox() {
 
   return (
     <div
-      className='relative z-50'
+      className='relative z-[51]'
       onFocus={() => {
         setIsSuggestionsView(true);
-        setInputTextSearchBar('');
       }}
       onBlur={() => {
         if (isMouseOverSuggestionsView.current) setIsSuggestionsView(false);
