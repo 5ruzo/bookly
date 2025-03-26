@@ -25,9 +25,9 @@ export default function QuantityControl({
   return (
     <>
       {price && <span className='mb-5'>{formatNumberWithCommas(price)}원</span>}
-      <div className='border border-lightgray rounded'>
+      <div className='border border-lightgray rounded flex items-center'>
         <button
-          className='p-3'
+          className='p-2'
           onClick={() => handleBookQuantityByButton(DECREASE)}
         >
           <Minus size={10} />
@@ -41,7 +41,7 @@ export default function QuantityControl({
           className='outline-none w-[40px] text-center bg-white-light'
         />
         <button
-          className='p-3'
+          className='p-2'
           onClick={() => handleBookQuantityByButton(INCREASE)}
         >
           <Plus size={10} />

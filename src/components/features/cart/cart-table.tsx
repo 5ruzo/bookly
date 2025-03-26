@@ -14,7 +14,7 @@ export default function CartTable() {
         table:
           'w-full overflow-x-auto mb-24 sm:border-t sm:border-b sm:border-lightgray',
         bodyRow:
-          'flex flex-row flex-wrap border border-lightgray mb-2 h-auto sm:mb-0 sm:border-0 sm:items-center sm:h-36 sm:border-b',
+          'flex flex-row flex-wrap border border-lightgray last:!border mb-2 h-auto sm:mb-0 sm:border-0 sm:items-center sm:h-36 sm:border-b sm:last:!border-0',
         headRow: 'sr-only',
       }}
     />

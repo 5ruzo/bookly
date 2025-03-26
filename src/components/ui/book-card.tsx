@@ -2,6 +2,7 @@ import {
   formatNumberWithCommas,
   normalizedRating,
 } from '@/lib/utils/common.util';
+import useCartStore from '@/store/cart-store';
 import { CardForCarousel } from '@/types/common.type';
 import { ShoppingCart, Star } from 'lucide-react';
 import Link from 'next/link';
@@ -15,6 +16,23 @@ function BookCard({
   description,
   price,
 }: CardForCarousel) {
+  const { addToCart } = useCartStore();
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    addToCart([
+      {
+        id,
+        quantity: 1,
+        price: Number(price),
+        bookInfo: {
+          image_url,
+          title,
+          author,
+        },
+      },
+    ]);
+    window.alert('장바구니에 추가되었습니다.');
+  };
   return (
     <Link href={`/detail/${id}`}>
       <div className='border-[1px] border-lightgray rounded-md overflow-hidden pb-4'>
@@ -25,6 +43,7 @@ function BookCard({
             className='absolute object-cover object-top'
           />
         </div>
+
         <div className='flex flex-col gap-2 mt-2 px-4'>
           <span className='flex items-center text-md gap-1'>
             <Star className='w-5' fill='#FACC15' stroke='none' />
@@ -44,7 +63,11 @@ function BookCard({
           <span className='text-md font-semibold'>
             {formatNumberWithCommas(Number(price))}원
           </span>
-          <button className='flex justify-center gap-1 items-center mt-1 text-sm md:text-md bg-black text-white-dark py-1 rounded-md'>
+
+          <button
+            className='flex justify-center gap-1 items-center mt-1 text-sm md:text-md bg-black text-white-dark py-1 rounded-md'
+            onClick={handleAddToCart}
+          >
             <ShoppingCart fill='var(--color-white-dark)' className='w-4' />
             장바구니에 담기
           </button>

@@ -40,7 +40,7 @@ export default function Cart() {
     router.push('/order');
   };
 
-  if (cartBooks.length === 0) return <EmptyCart />;
+  if (cartBooks?.length === 0) return <EmptyCart />;
   return (
     <div className='mx-auto w-[80%] max-w-[1128px]'>
       <div className='flex items-center mb-3'>

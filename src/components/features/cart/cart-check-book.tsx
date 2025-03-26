@@ -9,10 +9,14 @@ type TypeCartCheckBookProps = {
 
 export default function CartCheckBook({ id }: TypeCartCheckBookProps) {
   const { checkedBooks, setCheckedBooks } = useCartStore();
+  const handleCheckedChange = () => {
+    setCheckedBooks(id);
+  };
+
   return (
     <Checkbox
       checked={checkedBooks.includes(id)}
-      onCheckedChange={() => setCheckedBooks(id)}
+      onCheckedChange={handleCheckedChange}
     />
   );
 }
