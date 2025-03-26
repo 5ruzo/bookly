@@ -14,9 +14,9 @@ export default function OrderDetailCard({
   quantity,
 }: OrderDetailCardProps) {
   return (
-    <div className='m-6 flex items-center justify-between'>
+    <div className='m-6 flex text-ss md:text-md items-center justify-between'>
       <div className='flex items-center gap-6'>
-        <div className='relative h-42 w-32 border'>
+        <div className='relative w-32 border'>
           <img
             className='h-full w-full object-cover'
             src={image_url}
