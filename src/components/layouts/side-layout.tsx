@@ -13,18 +13,24 @@ export default function SideLayout({
 }) {
   return (
     <main className='flex justify-center mt-[50px] gap-[71px]'>
-      <aside className='md:hidden fixed top-[100px] left-[50px] z-50 bg-black rounded-full p-4'>
-        <SideDropdownMenu>
-          <SidebarContent />
-        </SideDropdownMenu>
-      </aside>
+      <div className='max-w-[1200px] flex justify-between'>
+        {/* 작은사이즈일때 나타나는 사이드바 햄버거 */}
+        <aside className='md:hidden fixed top-[100px] left-0 z-50 bg-gray rounded-r-lg p-4'>
+          <SideDropdownMenu>
+            <SidebarContent />
+          </SideDropdownMenu>
+        </aside>
+        {/* 보통사이즈일때 나타나는 사이드바 */}
 
-      <aside className='hidden md:block h-full'>
-        <div className='w-[194px] border-t border-b border-solid px-[16px] py-[20px]'>
-          <SidebarContent />
-        </div>
-      </aside>
-      <section>{children}</section>
+        <aside className='hidden md:block'>
+          <div className='w-[194px]'>
+            <div className='fixed border-t border-b border-solid px-[16px] py-[20px]'>
+              <SidebarContent />
+            </div>
+          </div>
+        </aside>
+        <section className='w-auto md:w-2/3'>{children}</section>
+      </div>
     </main>
   );
 }
