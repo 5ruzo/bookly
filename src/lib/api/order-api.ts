@@ -1,4 +1,4 @@
-import { API_KEY, SUPABASE_URL } from '@/constants/detail.constans';
+import { SUPABASE_URL, SUPABSE_API_KEY } from '@/constants/common.constant';
 import { TypeOrderedBook } from '@/types/order.type';
 
 export const createOrderList = async (payload: {
@@ -10,8 +10,8 @@ export const createOrderList = async (payload: {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-      apikey: API_KEY || '',
+      Authorization: `Bearer ${SUPABSE_API_KEY}`,
+      apikey: SUPABSE_API_KEY || '',
       Prefer: 'return=representation',
     },
     body: JSON.stringify({ user_id: userId, total_price: totalPrice }),
@@ -37,8 +37,8 @@ export const createOrderDetails = async (orderedData: {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-      apikey: API_KEY || '',
+      Authorization: `Bearer ${SUPABSE_API_KEY}`,
+      apikey: SUPABSE_API_KEY || '',
     },
     body: JSON.stringify(orderDetails),
   });
