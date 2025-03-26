@@ -43,7 +43,7 @@ export const signupSchema = z
       .string()
       .min(1, { message: '휴대폰 번호를 입력해주세요.' })
       .regex(/^010-\d{4}-\d{4}$/, {
-        message: '올바른 형식의 휴대폰 번호를 입력해주세요. (010-1234-5678)',
+        message: '올바른 형식의 휴대폰 번호를 입력해주세요.',
       })
       .refine(
         async (phone) => {

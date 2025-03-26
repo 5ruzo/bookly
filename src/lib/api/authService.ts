@@ -60,13 +60,6 @@ export const authService = {
       redirect(data.url);
     }
 
-    await supabase.auth.signInWithOAuth({
-      provider: 'kakao',
-      options: {
-        redirectTo: `http://localhost:3000/auth/callback`,
-      },
-    });
-
     if (error) {
       console.error('카카오 로그인 에러:', error);
       throw error;
