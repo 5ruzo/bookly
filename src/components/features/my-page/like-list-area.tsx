@@ -34,7 +34,7 @@ export default function LikeListArea() {
   return (
     <>
       {data?.length !== 0 ? (
-        <div className='grid gap-6 grid-cols-3'>
+        <div className='grid gap-6 grid-cols-3 mb-16'>
           {data?.map((book) => (
             <BookCard
               key={book.book_id}
