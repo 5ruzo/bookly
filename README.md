@@ -123,6 +123,8 @@
 
 ## 🚀 트러블 슈팅
 - #### [[Home] Next.js 하이드레이션 오류 해결하기](https://velog.io/@jiyunk/Next.js-하이드레이션-오류-해결하기)
+- #### [[OrderList] 반환 타입 지정](https://velog.io/@rlarudals61/250326-%EB%B0%98%ED%99%98-%ED%83%80%EC%9E%85-%EC%A7%80%EC%A0%95)
+- #### [[Order] 유효성 검사를 통과했는데 에러는 왜 안 사라질까..?](https://dhye410.tistory.com/51)
 
 
 <br><br>
