@@ -133,13 +133,8 @@ export const deleteFromCart = (
   cartBooks: TypeCartItem[],
   ids: TypeCartItem['id'][]
 ) => {
-  const newCartBooks = cartBooks.filter(({ id }) => {
-    toggleCheckedBooks(ids, id);
-    return !ids.includes(id);
-  });
-
+  const newCartBooks = cartBooks.filter(({ id }) => !ids.includes(id));
   const totalPrice = calculateTotalPrice(newCartBooks);
-
   return {
     newCartBooks,
     totalPrice,
