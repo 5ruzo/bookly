@@ -15,6 +15,12 @@ const nextConfig = {
         port: '',
         search: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'xpvoaapizboteqfpiioa.supabase.co',
+        port: '',
+        search: '',
+      },
     ],
   },
 };

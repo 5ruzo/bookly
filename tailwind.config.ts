@@ -43,6 +43,7 @@ const config: Config = {
         '2xl': 'var(--text-2xl)',
         xl: 'var(--text-xl)',
         lg: 'var(--text-lg)',
+        mlg: 'var(--text-mlg)',
         md: 'var(--text-md)',
         sm: 'var(--text-sm)',
         ss: 'var(--text-ss)',
