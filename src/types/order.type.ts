@@ -16,7 +16,7 @@ export type TypeFormField = {
 export type TypeAddressInfo = Pick<TypeOrderForm, 'address' | 'zoneCode'>;
 
 export type TypeOrderedBook = {
-  bookId: string | number;
+  bookId: number;
   quantity: number;
 };
 export type TypePaymentsInfo = {
