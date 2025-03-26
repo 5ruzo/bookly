@@ -36,7 +36,7 @@ export default function SuccessPage() {
   }
 
   return (
-    <div className='flex flex-col items-center py-10 w-[90vw] max-w-[1000px] mx-auto justify-center'>
+    <div className='flex flex-col items-center py-10 w-[90vw] max-w-[1000px] min-h-[83vh] mx-auto justify-center'>
       {isConfirmed ? (
         <div className='flex flex-col items-center w-full max-w-[540px]'>
           <img
@@ -75,7 +75,7 @@ export default function SuccessPage() {
           <div>
             <Link
               className='bg-primary py-2 px-3 text-white-light rounded'
-              href='/booklist/best'
+              href='/book-list/best'
             >
               다른 책 보러가기
             </Link>
