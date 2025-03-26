@@ -78,6 +78,7 @@ export const useTossPayments = (
         failUrl: `${window.location.origin}/order/fail${window.location.search}`,
       });
     } catch (error) {
+      window.alert('결제 요청 중 오류가 발생했습니다');
       console.error('결제 요청 중 오류 발생=>', error);
     }
   };
