@@ -1,6 +1,6 @@
 import BookCard from '@/components/ui/book-card';
-import { fetchGetLikeList } from '@/lib/api/detail.api';
-import type { LikeList } from '@/types/detail.type';
+import { fetchGetLikeList } from '@/lib/api/my-page.api';
+import type { LikeList } from '@/types/my-page.type';
 import { ChevronRight } from 'lucide-react';
 
 // supabase 데이터 추가되면 불러오는 로직 추가
