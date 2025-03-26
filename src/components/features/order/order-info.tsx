@@ -23,7 +23,7 @@ export default function OrderInfo() {
     <dl className='w-full flex flex-col items-center'>
       <div className={styles.paymentsField}>
         <dt className={styles.title}>결제금액</dt>
-        <dd className={styles.desc}>{formatNumberWithCommas(totalPrice)}</dd>
+        <dd className={styles.desc}>{formatNumberWithCommas(totalPrice)}원</dd>
       </div>
       <span className={styles.icon}>
         <Plus className='w-full text-gray' />
