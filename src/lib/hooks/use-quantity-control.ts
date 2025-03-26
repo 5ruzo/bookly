@@ -1,7 +1,7 @@
 'use client';
 
 import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
 import { TypeCartBooks } from '@/types/cart.type';
 import { useEffect, useState } from 'react';
 const { INCREASE, DECREASE } = CONTROL_TYPE;

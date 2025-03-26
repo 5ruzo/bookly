@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CartTable from './cart-table';

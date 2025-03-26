@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { createOrderDetails, createOrderList } from '@/lib/api/order-api';
 import { truncateWithEllipsis } from '@/lib/utils/common.util';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
 import { useAuthStore } from '@/store/use-auth-store';
 import { TypeCartItem } from '@/types/cart.type';
 import {
