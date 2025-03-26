@@ -10,6 +10,7 @@ import { CardForCarousel } from '@/types/common.type';
 import { ShoppingCart, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 function BookCard({
   id,
@@ -39,10 +40,24 @@ function BookCard({
           },
         },
       ]);
-      window.alert('장바구니에 추가되었습니다.');
+      Swal.fire({
+        text: `장바구니에 추가되었습니다.`,
+        icon: 'success',
+      });
     } else {
-      const ok = window.confirm('로그인을 먼저 진행해 주세요.');
-      return ok ? router.replace('/auth/sign-in') : null;
+      Swal.fire({
+        text: '먼저 로그인을 해주세요.',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.replace('/auth/sign-in');
+        }
+      });
     }
   };
 
