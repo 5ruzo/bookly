@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
 import Link from 'next/link';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -45,7 +44,7 @@ const SignIn = () => {
       );
 
       if (error) {
-        setError(error);
+        setError(error.message);
         return;
       }
 

@@ -8,9 +8,7 @@ export const authService = {
       options: { data: { phone } },
     });
 
-    if (error) throw error;
-
-    return { data };
+    return { data, error };
   },
 
   signIn: async (email: string, password: string) => {
@@ -19,9 +17,7 @@ export const authService = {
       password,
     });
 
-    if (error) throw error;
-
-    return { data };
+    return { data, error };
   },
 
   signOut: async () => {
@@ -75,9 +71,7 @@ export const authService = {
       }
     );
 
-    if (error) throw error;
-
-    return { data };
+    return { data, error };
   },
 
   verifyPhone: async (phone: string) => {

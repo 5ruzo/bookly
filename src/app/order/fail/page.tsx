@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 
-export function FailPage() {
+export default function FailPage() {
   const searchParams = useSearchParams();
   const errorCode = searchParams.get('code');
   const errorMessage = searchParams.get('message');

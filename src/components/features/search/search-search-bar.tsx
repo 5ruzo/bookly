@@ -1,20 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { useGetRecommendSearches } from '@/lib/queries/use-get-recommend-searches.query';
 
 export function SearchBarComboBox() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
+  //검색어 인풋창 관련 훅들
+  const searchParams = useSearchParams();
   const searchTerm: string = searchParams.get('query') || '';
   const [inputTextSearchBar, setInputTextSearchBar] =
     useState<string>(searchTerm);
 
+  //추천검색어창 관련훅들
   const [isSuggestionsView, setIsSuggestionsView] = useState<boolean>(false);
-
+  const isMouseOverSuggestionsView = useRef(true);
   const { data: suggestions } = useGetRecommendSearches();
 
   //추천검색어를 누르거나 폼 입력했을 때 실행
@@ -38,16 +40,13 @@ export function SearchBarComboBox() {
 
   return (
     <div
-      className='relative'
-      tabIndex={0}
+      className='relative z-50'
       onFocus={() => {
-        console.log('ON focus');
         setIsSuggestionsView(true);
         setInputTextSearchBar('');
       }}
       onBlur={() => {
-        console.log('ON BLur');
-        setIsSuggestionsView(false);
+        if (isMouseOverSuggestionsView.current) setIsSuggestionsView(false);
         setInputTextSearchBar(searchTerm);
       }}
     >
@@ -72,23 +71,31 @@ export function SearchBarComboBox() {
         </label>
       </form>
       {isSuggestionsView && (
-        <ul className='absolute w-full bg-white border border-lightgray rounded-xl mt-1'>
-          <li className='py-3 pl-5 text-gray text-sm'>추천목록</li>
+        <div
+          className='absolute w-full bg-white border border-lightgray rounded-xl mt-1 flex flex-col'
+          onMouseEnter={() => {
+            isMouseOverSuggestionsView.current = false;
+          }}
+          onMouseLeave={() => {
+            isMouseOverSuggestionsView.current = true;
+          }}
+        >
+          <div className='py-3 pl-5 text-gray text-sm'>추천목록</div>
           {suggestions?.map((suggestion) => (
-            <li
+            <button
               key={suggestion}
-              className={'pl-5 pb-3 cursor-pointer'}
+              type='button'
+              className={'pl-5 pb-3 cursor-pointer w-full text-start'}
               onClick={(e) => {
-                e.stopPropagation();
                 setIsSuggestionsView(false);
                 setInputTextSearchBar(suggestion);
                 handleSearch(suggestion);
               }}
             >
               {suggestion}
-            </li>
+            </button>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
