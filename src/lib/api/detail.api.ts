@@ -1,4 +1,4 @@
-import { API_KEY, SUPABASE_URL } from '@/constants/detail.constans';
+import { API_KEY, SUPABASE_URL } from '@/constants/detail.constant';
 import { BookList } from '@/types/detail.type';
 
 export const fetchGetDetail = async (bookId: string) => {
