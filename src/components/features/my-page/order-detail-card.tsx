@@ -27,7 +27,7 @@ export default function OrderDetailCard({
           <h3>
             <Link href={`/detail/${book_id}`}>{truncateText(title)}</Link>
           </h3>
-          <p>{author}</p>
+          <p>{truncateText(author)}</p>
           <p>{formatNumberWithCommas(Number(price))}원</p>
         </div>
       </div>
@@ -40,7 +40,9 @@ export default function OrderDetailCard({
           )}
         </p>
         <p>{quantity}개</p>
-        <p>{formatNumberWithCommas(Number(price) * quantity)}원</p>
+        <p className='break-keep'>
+          {formatNumberWithCommas(Number(price) * quantity)}원
+        </p>
       </div>
     </div>
   );
