@@ -4,7 +4,6 @@ import { formatNumberWithCommas } from '@/lib/utils/common.util';
 import { TypeCartBooks } from '@/types/cart.type';
 import { Minus, Plus } from 'lucide-react';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
-
 type TypeQuantityControlProps = {
   id: TypeCartBooks['id'];
   price?: TypeCartBooks['price'];
@@ -22,7 +21,7 @@ export default function QuantityControl({
     handleBookQuantityByText,
     updateBookQuantityByText,
     handleUpdateBookQuantityByEnter,
-  } = useQuantityControl(id as string, quantity);
+  } = useQuantityControl(id, quantity);
   return (
     <>
       {price && <span className='mb-5'>{formatNumberWithCommas(price)}원</span>}
