@@ -10,7 +10,7 @@ export const authService = {
 
     if (error) throw error;
 
-    return { data, error };
+    return { data };
   },
 
   signIn: async (email: string, password: string) => {
@@ -21,7 +21,7 @@ export const authService = {
 
     if (error) throw error;
 
-    return { data, error };
+    return { data };
   },
 
   signOut: async () => {
@@ -44,7 +44,7 @@ export const authService = {
       return url;
     };
 
-    const { data, error } = await browserClient.auth.signInWithOAuth({
+    const { error } = await browserClient.auth.signInWithOAuth({
       provider: 'kakao',
       options: {
         redirectTo: getURL(),
@@ -77,7 +77,7 @@ export const authService = {
 
     if (error) throw error;
 
-    return { data, error };
+    return { data };
   },
 
   verifyPhone: async (phone: string) => {
