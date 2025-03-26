@@ -16,43 +16,45 @@ export default function BookListItem({
   image_url,
 }: BookItem) {
   return (
-    <li className='p-24 lg:px-0 border-b border-gray last:border-none'>
+    <li className='p-10 lg:px-0 border-b border-gray last:border-none'>
       <Link href={`/detail/${id}`}>
-        <div className='w-auto flex lg:gap-16 lg:flex-row flex-col items-center lg:items-start'>
+        <div className='w-auto flex lg:gap-16 lg:flex-row flex-col lg:items-start h-full'>
           <img
             src={image_url}
             alt={`${title}의 표지 이미지`}
-            className='lg:w-[280px] lg:h-[406px] max-w-[280px] max-h-[406px] w-[60%] object-contain'
+            className='lg:w-[140px] w-[110px] object-contain'
           />
-          <div className='flex flex-col lg:ml-[72px]'>
-            <h5 className='text-lg lg:text-2xl lg:mt-[46px] line-clamp-1 max-w-[566px] mt-3'>
+          <div className='flex flex-col justify-center h-[200px]'>
+            <h5 className='text-md lg:text-mlg lg:mt-0 line-clamp-1 max-w-[566px] mt-3'>
               {title}
             </h5>
             <dl>
               <dt className='sr-only'>저자</dt>
-              <dd className='text-lg lg:text-lg text-gray mt-[6px]'>
+              <dd className='text-md lg:text-md text-gray mt-[6px]'>
                 {author}
               </dd>
 
               <div className='flex justify-between lg:flex-col'>
                 <dt className='sr-only'>평점</dt>
-                <dd className='text-lg mt-[6px]'>
-                  <span className='flex'>
+                <dd className='text-md mt-[6px]'>
+                  <span className='flex items-center'>
                     <Star
-                      size='25'
+                      size='16'
                       className='text-yellow-400 fill-yellow-400 mt-[2px] mr-[2px]'
                     />
-                    {normalizedRating(rating)}
+                    <span className='text-gray pt-[3px]'>
+                      {normalizedRating(rating)}
+                    </span>
                   </span>
                 </dd>
 
                 <dt className='sr-only'>가격</dt>
-                <dd className='text-2xl lg:mt-[60px]'>
+                <dd className='text-md lg:mt-[10px] mt-[2px]'>
                   {formatNumberWithCommas(+price)}원
                 </dd>
               </div>
               <dt className='sr-only'>책 소개</dt>
-              <dd className='lg:text-xl text-gray line-clamp-2 max-w-[566px]'>
+              <dd className='lg:text-md text-sm text-gray line-clamp-2 max-w-[566px] mt-[10px]'>
                 {description}
               </dd>
             </dl>

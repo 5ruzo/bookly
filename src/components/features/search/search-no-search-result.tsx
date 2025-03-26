@@ -4,7 +4,7 @@ import RecommendedBooksCarousel from '@/components/ui/recommened-books-carousel'
 
 export default function SearchNoSearchResult() {
   return (
-    <section className='w-[1000px] min-h-[calc(100vh-24rem)] pl-1 flex flex-col justify-start items-center'>
+    <div className='min-h-[calc(100vh-24rem)] pl-1 flex flex-col justify-start items-center'>
       <h2 className='text-2xl mt-4'>검색결과가 없습니다.</h2>
       <CardSectionLayout
         title='베스트셀러'
@@ -19,6 +19,6 @@ export default function SearchNoSearchResult() {
       >
         <RecommendedBooksCarousel />
       </CardSectionLayout>
-    </section>
+    </div>
   );
 }
