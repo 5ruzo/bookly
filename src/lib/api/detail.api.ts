@@ -1,7 +1,8 @@
 import { API_KEY, SUPABASE_URL } from '@/constants/detail.constant';
-import { BookList } from '@/types/detail.type';
+import { Book } from '@/types/book-list.type';
+import { BookList, CheckLikeBook } from '@/types/detail.type';
 
-export const fetchGetDetail = async (bookId: string) => {
+export const fetchGetDetail = async (bookId: string): Promise<Book> => {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/books?id=eq.${bookId}`, {
     method: 'GET',
     headers: {
@@ -13,13 +14,13 @@ export const fetchGetDetail = async (bookId: string) => {
 
   const data: BookList = await res.json();
 
-  return data[0];
+  return data[0] as Book;
 };
 
 export const fetchGetLikeThisBook = async (
   userId: string | undefined,
   bookId: number
-) => {
+): Promise<CheckLikeBook | undefined> => {
   if (!userId) return;
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/likes?book_id=eq.${bookId}&user_id=eq.${userId}`,
@@ -35,13 +36,13 @@ export const fetchGetLikeThisBook = async (
 
   const data = await res.json();
 
-  return data[0];
+  return data[0] as CheckLikeBook;
 };
 
 export const fetchDeleteLikeThisBook = async (
   userId: string | undefined,
   bookId: number
-) => {
+): Promise<void> => {
   if (!userId) return;
 
   const res = await fetch(
@@ -60,7 +61,7 @@ export const fetchDeleteLikeThisBook = async (
 export const fetchCreateLikeThisBook = async (
   userId: string | undefined,
   bookId: number
-) => {
+): Promise<void> => {
   if (!userId) return;
 
   const body = {
