@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import './global-style.css';
 import localFont from 'next/font/local';
-import Wrapper from '@/components/layouts/auth-guard';
+import Providers from '@/config/tq-provider';
+import { AuthProvider } from '@/config/auth-provider';
+import Header from '@/components/layouts/header';
+import Footer from '@/components/layouts/footer';
 
 export const metadata: Metadata = {
   title: 'Bookly',
@@ -23,7 +26,13 @@ export default function RootLayout({
   return (
     <html lang='ko_kr'>
       <body className={`${pretendard.variable} font-pretendard antialiased`}>
-        <Wrapper>{children}</Wrapper>
+        <Providers>
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
+        </Providers>
+        <Footer />
       </body>
     </html>
   );
