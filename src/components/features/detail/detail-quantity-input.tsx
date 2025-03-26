@@ -54,7 +54,7 @@ export default function QuantityInput({
             onBlur={handleBlur}
             className='px-3 w-full py-1 text-md focus:outline-none'
           />
-          <div className='opacity-0 md:opacity-100 flex flex-col border-l border-gray'>
+          <div className='opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto flex flex-col border-l border-gray'>
             <button
               type='button'
               onClick={handleIncrement}

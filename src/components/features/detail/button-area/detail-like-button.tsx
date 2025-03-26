@@ -7,6 +7,7 @@ import {
   fetchDeleteLikeThisBook,
 } from '@/lib/api/detail.api';
 import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 export default function LikeButton({
   userId,
@@ -14,12 +15,22 @@ export default function LikeButton({
   like,
   setLike,
 }: LikeButtonProps) {
+  const router = useRouter();
+
   const handleLike = (like: boolean) => {
     if (!userId) {
       return Swal.fire({
-        title: '로그인을 해주세요!',
-        text: '로그인이 필요한 서비스입니다.',
-        icon: 'error',
+        text: '먼저 로그인을 해주세요.',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#71717a',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.replace('/auth/sign-in');
+        }
       });
     }
 
