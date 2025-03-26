@@ -25,9 +25,9 @@ export default function BookListItem({
             className='lg:w-[140px] w-[110px] object-contain'
           />
           <div className='flex flex-col justify-center h-[200px]'>
-            <h5 className='text-md lg:text-mlg lg:mt-0 line-clamp-1 max-w-[566px] mt-3'>
+            <h2 className='text-md lg:text-mlg lg:mt-0 line-clamp-1 max-w-[566px]'>
               {title}
-            </h5>
+            </h2>
             <dl>
               <dt className='sr-only'>저자</dt>
               <dd className='text-md lg:text-md max-w-[566px] text-gray mt-[6px]'>

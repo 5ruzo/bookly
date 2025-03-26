@@ -13,7 +13,7 @@ const SideDropdownMenu = ({ children }: { children: React.ReactNode }) => {
         <DropdownMenuTrigger>
           <AlignJustify color='var(--color-lightgray)' strokeWidth={2.5} />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='bg-white border-gray mr-4'>
+        <DropdownMenuContent className='bg-white border-gray mr-4 ml-2 mt-5 px-2'>
           {children}
         </DropdownMenuContent>
       </DropdownMenu>

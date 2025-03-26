@@ -44,7 +44,7 @@ export function SearchBarComboBox() {
 
   return (
     <div
-      className='relative z-[51]'
+      className='relative z-30'
       onFocus={() => {
         setIsSuggestionsView(true);
       }}
