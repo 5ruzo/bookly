@@ -18,7 +18,7 @@ function BookCard({
   return (
     <Link href={`/detail/${id}`}>
       <div className='border-[1px] border-lightgray rounded-md overflow-hidden pb-4'>
-        <div className='relative w-full aspect-square overflow-hidden'>
+        <div className='relative w-full max-w-1/3 aspect-square overflow-hidden'>
           <img
             src={image_url}
             alt={title}
