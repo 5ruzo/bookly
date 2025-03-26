@@ -52,7 +52,7 @@ const getBookSummary = (books: TypeCartItem[]) => {
   const representativeBook = books[0].bookInfo.title;
   return `${truncateWithEllipsis(representativeBook)} ${books.length > 0 ? '' : `외 ${books.length - 1}건`}`;
 };
-export default function DeliveryInfo() {
+export default function OrderForm() {
   const [isFormFilled, setIsFormFilled] = useState(false);
   const [paymentsInfo, setPaymentsInfo] = useState<TypePaymentsInfo>({
     name: '',
