@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { loginSchema } from '@/lib/utils/auth/schemas';
 import { authService } from '@/lib/api/auth-service';
-import { useAuthStore } from '@/store/auth/use-auth-store';
+import { useAuthStore } from '@/store/use-auth-store';
 
 const SignIn = () => {
   const { setUser, setError, error } = useAuthStore();

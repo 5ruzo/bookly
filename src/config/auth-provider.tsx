@@ -1,7 +1,7 @@
 'use client';
 
 import browserClient from '@/lib/utils/supabase/client';
-import { useAuthStore } from '@/store/auth/use-auth-store';
+import { useAuthStore } from '@/store/use-auth-store';
 import { useEffect } from 'react';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
