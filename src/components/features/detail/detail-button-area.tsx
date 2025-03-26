@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import LikeButton from './button-area/detail-like-button';
 import { ButtonAreaProps } from '@/types/detail.type';
 import useCartStore from '@/store/cart-store';
+import { useRouter } from 'next/navigation';
 
 export default function ButtonArea({
   userId,
@@ -17,13 +18,17 @@ export default function ButtonArea({
   quantity,
 }: ButtonAreaProps) {
   const addToCart = useCartStore((state) => state.addToCart);
+  const router = useRouter();
 
   return (
     <div className='flex flex-wrap gap-4 place-content-between justify-start md:gap-10'>
       <Button
         className='bg-primary hover:bg-primary text-white rounded-xl h-12 md:h-14 px-6 w-4/10 text-md md:text-mlg font-medium'
         onClick={() => {
-          if (!userId) return alert('로그인을 해주세요!');
+          if (!userId) {
+            const isOk = confirm('로그인을 해주세요.');
+            return isOk ? router.replace('/auth/sign-in') : null;
+          }
           addToCart([
             {
               id: id,
