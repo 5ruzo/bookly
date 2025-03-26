@@ -12,7 +12,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const isLogin = useAuthStore((state) => state.isLogin);
   const pathname = usePathname();
-  const protectedPaths = ['/my-page', '/order', '/cart'];
+  const protectedPaths = ['/order', '/cart'];
   const isPathProtected = protectedPaths.some((path) =>
     pathname.includes(path)
   );
