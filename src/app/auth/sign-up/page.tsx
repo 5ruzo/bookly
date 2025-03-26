@@ -44,7 +44,6 @@ const SignUp = () => {
       }
 
       if (data?.user) {
-        setUser(data.user);
         alert('회원가입 성공!');
         router.push('/');
       }

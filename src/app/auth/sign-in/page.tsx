@@ -54,7 +54,6 @@ const SignIn = () => {
       }
 
       if (data?.user) {
-        setUser(data.user);
         alert('로그인 성공!');
         router.push('/');
       }
