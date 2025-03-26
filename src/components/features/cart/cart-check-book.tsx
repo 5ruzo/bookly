@@ -1,6 +1,6 @@
 'use-client';
 import { Checkbox } from '@/components/ui/checkbox';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
 import { TypeCartBooks } from '@/types/cart.type';
 
 type TypeCartCheckBookProps = {
