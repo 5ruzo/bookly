@@ -8,6 +8,7 @@ import { authService } from '@/lib/api/auth-service';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/use-auth-store';
 import { SearchBarComboBox } from '../features/search/search-search-bar';
+import { Suspense } from 'react';
 
 const Header = () => {
   const { user, clearUser } = useAuthStore();
@@ -48,7 +49,13 @@ const Header = () => {
           </Link>
         </h1>
         <div className='flex-1 md:flex-none md:w-[40%]'>
-          <SearchBarComboBox />
+          <Suspense
+            fallback={
+              <div className='block bg-lightgray h-14 rounded-2xl w-full pl-12 md:pl-16 outline-none border-1 border-lightgray'></div>
+            }
+          >
+            <SearchBarComboBox />
+          </Suspense>
         </div>
         <HeaderDropdownMenu menuList={navigationLinks} />
       </div>
