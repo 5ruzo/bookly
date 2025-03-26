@@ -125,6 +125,8 @@
 - #### [[Home] Next.js 하이드레이션 오류 해결하기](https://velog.io/@jiyunk/Next.js-하이드레이션-오류-해결하기)
 - #### [[OrderList] 반환 타입 지정](https://velog.io/@rlarudals61/250326-%EB%B0%98%ED%99%98-%ED%83%80%EC%9E%85-%EC%A7%80%EC%A0%95)
 - #### [[Order] 유효성 검사를 통과했는데 에러는 왜 안 사라질까..?](https://dhye410.tistory.com/51)
+- #### [[SignIn] 소셜 로그인 리다이렉트](https://yyy3489.tistory.com/entry/%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-%EC%86%8C%EC%85%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EB%A6%AC%EB%8B%A4%EC%9D%B4%EB%A0%89%ED%8A%B8)
+- #### [[Build] 넥스트 빌드 useSearchParams 빌드에러](https://velog.io/@taejin7088/%EB%84%A5%EC%8A%A4%ED%8A%B8-%EB%B9%8C%EB%93%9C-useSearchParams-%EB%B9%8C%EB%93%9C%EC%97%90%EB%9F%AC)
 
 
 <br><br>
