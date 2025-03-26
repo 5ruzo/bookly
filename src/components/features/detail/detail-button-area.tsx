@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import LikeButton from './button-area/detail-like-button';
 import { ButtonAreaProps } from '@/types/detail.type';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
 
 export default function ButtonArea({
   id,
@@ -24,7 +24,7 @@ export default function ButtonArea({
         onClick={() => {
           addToCart([
             {
-              id: `${id}`,
+              id: id,
               bookInfo: {
                 title: `${title}`,
                 author: `${author}`,

@@ -1,22 +1,26 @@
 'use client';
 
 import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
+import { TypeCartBooks } from '@/types/cart.type';
 import { useEffect, useState } from 'react';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
 
-export const useQuantityControl = (id: string, storeQuantity: number) => {
+export const useQuantityControl = (
+  id: TypeCartBooks['id'],
+  itemQuantity: TypeCartBooks['quantity']
+) => {
   const { updateQuantity, increaseQuantity, decreaseQuantity } = useCartStore();
-  const [quantity, setQuantity] = useState(storeQuantity);
+  const [quantity, setQuantity] = useState(itemQuantity);
 
-  useEffect(() => setQuantity(storeQuantity), [storeQuantity]);
+  useEffect(() => setQuantity(itemQuantity), [itemQuantity]);
 
   const handleBookQuantityByButton = (
     handleType: typeof INCREASE | typeof DECREASE
   ): void => {
     if (handleType === INCREASE) {
       increaseQuantity(id);
-    } else if (storeQuantity > 1) {
+    } else if (itemQuantity > 1) {
       decreaseQuantity(id);
     }
   };
