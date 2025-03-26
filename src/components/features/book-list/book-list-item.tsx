@@ -30,7 +30,7 @@ export default function BookListItem({
             </h5>
             <dl>
               <dt className='sr-only'>저자</dt>
-              <dd className='text-md lg:text-md text-gray mt-[6px]'>
+              <dd className='text-md lg:text-md max-w-[566px] text-gray mt-[6px]'>
                 {author}
               </dd>
 

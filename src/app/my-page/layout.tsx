@@ -11,7 +11,7 @@ export default function MyPageLayout({
 }>) {
   const user = useAuthStore((state) => state.user);
   return (
-    <div className='px-12 w-full min-h-[calc(100vh-24rem)]'>
+    <div className='px-12 w-full min-h-[calc(100vh-16rem)]'>
       <SideLayout SidebarContent={() => <MyPageSideBar />}>
         {user ? (
           <div className='flex items-end'>
