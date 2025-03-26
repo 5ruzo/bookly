@@ -1,5 +1,5 @@
 import { TypeCartItem } from '@/types/cart/cart.type';
-import { CONTROL_TYPE } from '@/constants/quantity-control-constant';
+import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
 
 //***** cart-store에서 사용하는 actions를 정의해둔 곳 *******//
@@ -124,7 +124,7 @@ export const handleQuantity = (
 };
 
 /**
- *
+ * 장바구니 리스트에서 특정 상품을 삭제하는 함수
  * @param cartBooks - 기존 장바구니 리스트
  * @param ids - 삭제할 장바구니 id
  * @returns newCartBooks : 삭제 후 새로운 장바구니 리스트  / totalPrice : 전체 상품 금액
@@ -137,6 +137,25 @@ export const deleteFromCart = (
   const totalPrice = calculateTotalPrice(newCartBooks);
   return {
     newCartBooks,
+    totalPrice,
+  };
+};
+
+/**
+ * 주문할 상품을 걸러내는 함수
+ * @param cartBooks - 현재 상품 리스트
+ * @param ids - 주문할 상품 아이디
+ * @returns - booksToOrder : 구매할 상품 리스트 / totalPrice : 전체 상품 금액
+ */
+export const getBooksToOrder = (
+  cartBooks: TypeCartItem[],
+  ids: TypeCartItem['id'][]
+) => {
+  const idSet = new Set(ids);
+  const booksToOrder = cartBooks.filter((book) => idSet.has(book.id));
+  const totalPrice = calculateTotalPrice(booksToOrder);
+  return {
+    booksToOrder,
     totalPrice,
   };
 };

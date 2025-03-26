@@ -2,10 +2,11 @@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import useCartStore from '@/store/cart/cart-store';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CartTable from './cart-table/cart-table';
 import EmptyCart from './empty-cart';
+import { TypeCartItem } from '@/types/cart/cart.type';
 import PriceSummary from './price-summary';
 
 export default function Cart() {
@@ -15,9 +16,10 @@ export default function Cart() {
     checkAllBooks,
     resetCheckedBooks,
     deleteBooks,
+    orderBooks,
   } = useCartStore();
+  const router = useRouter();
   const [isAllChecked, setIsAllChecked] = useState(false);
-
   useEffect(() => {
     if (checkedBooks.length === cartBooks.length) setIsAllChecked(true);
     else setIsAllChecked(false);
@@ -32,6 +34,11 @@ export default function Cart() {
 
   const handleDelete = () => {
     deleteBooks(checkedBooks);
+  };
+
+  const handleOnOrder = () => {
+    orderBooks();
+    router.push('/order');
   };
 
   if (cartBooks.length === 0) return <EmptyCart />;
@@ -53,12 +60,14 @@ export default function Cart() {
       </div>
       <CartTable />
       <PriceSummary />
-      <Link
-        href='/order'
-        className='block w-full sm:w-[60%] mx-auto py-3 font-semibold bg-primary text-white-light text-center rounded-xl'
-      >
-        주문하기
-      </Link>
+      <div className='w-full sm:w-[60%] mx-auto py-1 rounded-xl'>
+        <Button
+          className='font-semibold text-white-light w-full text-[0.9rem]'
+          onClick={handleOnOrder}
+        >
+          주문하기
+        </Button>
+      </div>
     </div>
   );
 }
