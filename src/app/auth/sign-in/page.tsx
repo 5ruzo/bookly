@@ -11,7 +11,7 @@ import AuthInput from '@/components/features/auth/auth-input';
 import AuthLink from '@/components/features/auth/auth-link';
 import AuthButton from '@/components/features/auth/auth-button';
 
-import { loginSchema } from '@/lib/utils/auth/schemas';
+import { loginSchema } from '@/lib/utils/auth.util';
 import { authService } from '@/lib/api/auth-service';
 import { useAuthStore } from '@/store/use-auth-store';
 

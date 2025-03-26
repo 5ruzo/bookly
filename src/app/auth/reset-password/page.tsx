@@ -11,7 +11,7 @@ import AuthInput from '@/components/features/auth/auth-input';
 import AuthLink from '@/components/features/auth/auth-link';
 import AuthButton from '@/components/features/auth/auth-button';
 
-import { resetPasswordSchema } from '@/lib/utils/auth/schemas';
+import { resetPasswordSchema } from '@/lib/utils/auth.util';
 import browserClient from '@/lib/utils/supabase/client';
 
 const ResetPassword = () => {

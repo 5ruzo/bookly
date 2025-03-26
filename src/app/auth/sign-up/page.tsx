@@ -10,7 +10,7 @@ import AuthInput from '@/components/features/auth/auth-input';
 import AuthButton from '@/components/features/auth/auth-button';
 import AuthLink from '@/components/features/auth/auth-link';
 
-import { signupSchema } from '@/lib/utils/auth/schemas';
+import { signupSchema } from '@/lib/utils/auth.util';
 import { authService } from '@/lib/api/auth-service';
 import { useAuthStore } from '@/store/use-auth-store';
 
