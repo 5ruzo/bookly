@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import LikeButton from './button-area/detail-like-button';
 import { ButtonAreaProps } from '@/types/detail.type';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
 import { useAuthStore } from '@/store/use-auth-store';
 
 export default function ButtonArea({
@@ -27,7 +27,7 @@ export default function ButtonArea({
           if (!user) return alert('로그인을 해주세요!');
           addToCart([
             {
-              id: `${id}`,
+              id: id,
               bookInfo: {
                 title: `${title}`,
                 author: `${author}`,

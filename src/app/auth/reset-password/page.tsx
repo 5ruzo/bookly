@@ -1,11 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { resetPasswordSchema } from '@/lib/utils/auth/schemas';
+import { useRouter } from 'next/navigation';
+
+import AuthCard from '@/components/features/auth/auth-card';
+import AuthErrorMessage from '@/components/features/auth/auth-error-message';
+import AuthInput from '@/components/features/auth/auth-input';
+import AuthLink from '@/components/features/auth/auth-link';
+import AuthButton from '@/components/features/auth/auth-button';
+
+import { resetPasswordSchema } from '@/lib/utils/auth.util';
 import browserClient from '@/lib/utils/supabase/client';
 
 const ResetPassword = () => {
@@ -24,9 +30,7 @@ const ResetPassword = () => {
     resolver: zodResolver(resetPasswordSchema),
   });
 
-  // 컴포넌트 마운트 시 해시 프래그먼트 및 오류 처리
   useEffect(() => {
-    // 해시 프래그먼트에서 오류 파싱
     const parseHashFragment = () => {
       if (typeof window !== 'undefined') {
         const hash = window.location.hash.substring(1);
@@ -58,7 +62,6 @@ const ResetPassword = () => {
     parseHashFragment();
   }, []);
 
-  // 비밀번호 재설정 폼 제출 핸들러
   const onSubmit = async (values: FieldValues) => {
     try {
       setIsLoading(true);
@@ -83,98 +86,59 @@ const ResetPassword = () => {
     }
   };
 
-  return (
-    <div className='flex min-h-screen'>
-      <div className='flex flex-1 items-center justify-center p-6'>
-        <div className='w-full max-w-md p-8 bg-white rounded-xl shadow-md'>
-          <h2 className='text-2xl font-semibold mb-6 text-center'>
-            비밀번호 재설정
-          </h2>
-
-          {error && (
-            <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>
-              {error}
-            </div>
-          )}
-
-          {isSubmitted ? (
-            <div className='text-center'>
-              <div className='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4'>
-                비밀번호가 성공적으로 재설정되었습니다. 로그인 페이지로
-                이동합니다.
-              </div>
-              <Link
-                href='/auth/sign-in'
-                className='text-blue-600 hover:underline'
-              >
-                로그인 페이지로 이동
-              </Link>
-            </div>
-          ) : (
-            <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
-              <div>
-                <label className='block text-base font-medium mb-2'>
-                  새 비밀번호
-                  <input
-                    type='password'
-                    {...register('password')}
-                    className='w-full px-4 py-3 border rounded-xl bg-gray-50 mt-1'
-                    placeholder='새로운 비밀번호를 입력하세요'
-                    autoComplete='new-password'
-                    disabled={!!error}
-                  />
-                </label>
-                <div className='mt-2 text-red-500'>
-                  {formState.errors.password && (
-                    <span>{formState.errors.password.message as string}</span>
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <label className='block text-base font-medium mb-2'>
-                  비밀번호 확인
-                  <input
-                    type='password'
-                    {...register('confirmPassword')}
-                    className='w-full px-4 py-3 border rounded-xl bg-gray-50 mt-1'
-                    placeholder='비밀번호를 다시 입력하세요'
-                    autoComplete='new-password'
-                    disabled={!!error}
-                  />
-                </label>
-                <div className='mt-2 text-red-500'>
-                  {formState.errors.confirmPassword && (
-                    <span>
-                      {formState.errors.confirmPassword.message as string}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <button
-                type='submit'
-                disabled={!formState.isValid || isLoading || !!error}
-                className='w-full py-3 bg-[var(--color-primary)] text-white rounded-xl hover:bg-gray-800 transition'
-              >
-                {isLoading ? '처리 중...' : '비밀번호 변경하기'}
-              </button>
-
-              {error && (
-                <div className='text-center mt-4'>
-                  <Link
-                    href='/forgot-password'
-                    className='text-blue-600 hover:underline'
-                  >
-                    비밀번호 재설정 링크 다시 받기
-                  </Link>
-                </div>
-              )}
-            </form>
-          )}
+  if (isSubmitted) {
+    return (
+      <AuthCard>
+        <div className='text-center'>
+          <div className='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4'>
+            비밀번호가 성공적으로 재설정되었습니다. 로그인 페이지로 이동합니다.
+          </div>
+          <AuthLink href='/auth/sign-in'>로그인 페이지로 이동</AuthLink>
         </div>
-      </div>
-    </div>
+      </AuthCard>
+    );
+  }
+
+  return (
+    <AuthCard>
+      <h2 className='text-2xl mb-6 text-left'>비밀번호 재설정</h2>
+
+      {error && <AuthErrorMessage message={error} />}
+
+      <form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
+        <AuthInput
+          label='새 비밀번호'
+          type='password'
+          register={register('password')}
+          error={formState.errors.password}
+          placeholder='새로운 비밀번호를 입력하세요'
+          autoComplete='new-password'
+          disabled={!!error}
+        />
+
+        <AuthInput
+          label='비밀번호 확인'
+          type='password'
+          register={register('confirmPassword')}
+          error={formState.errors.confirmPassword}
+          placeholder='비밀번호를 다시 입력하세요'
+          autoComplete='new-password'
+          disabled={!!error}
+        />
+
+        <AuthButton disabled={!formState.isValid || isLoading || !!error}>
+          {isLoading ? '처리 중...' : '비밀번호 변경하기'}
+        </AuthButton>
+
+        {error && (
+          <div className='text-center mt-4'>
+            <AuthLink href='/auth/forgot-password'>
+              비밀번호 재설정 링크 다시 받기
+            </AuthLink>
+          </div>
+        )}
+      </form>
+    </AuthCard>
   );
 };
 

@@ -1,6 +1,6 @@
 'use client';
 import DataTable from '@/components/ui/data-table';
-import useCartStore from '@/store/cart/cart-store';
+import useCartStore from '@/store/cart-store';
 import { cartTableColumns } from './cart-table.columns';
 
 export default function CartTable() {
