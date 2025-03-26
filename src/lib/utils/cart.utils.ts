@@ -9,8 +9,14 @@ const { INCREASE, DECREASE } = CONTROL_TYPE;
  * @param cartBooks - 장바구니에 담겨있는 책들
  * @returns 장바구니에 담겨있는 책들의 전체 금액
  */
-export const calculateTotalPrice = (cartBooks: TypeCartItem[]): number => {
-  return cartBooks.reduce((acc, book) => acc + book.price * book.quantity, 0);
+export const calculateTotalPrice = (
+  cartBooks: TypeCartItem[],
+  checkedBooks: TypeCartItem['id'][]
+): number => {
+  const totalPrice = cartBooks
+    .filter((book) => checkedBooks.includes(book.id))
+    .reduce((total, book) => total + book.price * book.quantity, 0);
+  return totalPrice;
 };
 
 /**
@@ -19,7 +25,7 @@ export const calculateTotalPrice = (cartBooks: TypeCartItem[]): number => {
  * @param originCartBooks - 기존에 장바구니에 추가되어있던 책
  * @param addedBooks - 장바구니에 새롭게 추가하려는 책
  * @returns  newCartBooks : 새로운 장바구니 리스트  / totalPrice : 전체 상품 금액
- * @example addToCart({
+ * @example addToCart([{
  *  id:'stringId',
  *  quantity : 2,
  *  price : 1000,
@@ -28,7 +34,7 @@ export const calculateTotalPrice = (cartBooks: TypeCartItem[]): number => {
  *  author : '저자',
  *  image_url: 'image.png'
  *  }
- * })
+ * }])
  */
 export const addToCartBooks = (
   originCartBooks: TypeCartItem[],
@@ -47,11 +53,8 @@ export const addToCartBooks = (
     }
   });
 
-  const totalPrice = calculateTotalPrice(newCartBooks);
-
   return {
     newCartBooks,
-    totalPrice,
   };
 };
 
@@ -65,12 +68,13 @@ export const addToCartBooks = (
 export const updateQuantity = (
   cartBooks: TypeCartItem[],
   id: TypeCartItem['id'],
-  newQuantity: TypeCartItem['quantity']
+  newQuantity: TypeCartItem['quantity'],
+  checkedBooks: TypeCartItem['id'][]
 ) => {
   const newCartBooks = cartBooks.map((book) =>
     book.id === id ? { ...book, quantity: newQuantity } : book
   );
-  const totalPrice = calculateTotalPrice(newCartBooks);
+  const totalPrice = calculateTotalPrice(newCartBooks, checkedBooks);
 
   return {
     newCartBooks,
@@ -85,13 +89,16 @@ export const updateQuantity = (
  * @returns 체크박스가 적용된 책들
  */
 export const toggleCheckedBooks = (
+  cartBooks: TypeCartItem[],
   checkedBooks: TypeCartItem['id'][],
   newCheckedBook: TypeCartItem['id']
-): TypeCartItem['id'][] => {
+) => {
   const checkedSet = new Set(checkedBooks);
   if (checkedSet.has(newCheckedBook)) checkedSet.delete(newCheckedBook);
   else checkedSet.add(newCheckedBook);
-  return Array.from(checkedSet);
+  const newChecked = Array.from(checkedSet);
+  const totalPrice = calculateTotalPrice(cartBooks, newChecked);
+  return { newChecked, totalPrice };
 };
 
 /**
@@ -103,6 +110,7 @@ export const toggleCheckedBooks = (
  */
 export const handleQuantity = (
   books: TypeCartItem[],
+  checkedBooks: TypeCartItem['id'][],
   id: TypeCartItem['id'],
   type: typeof INCREASE | typeof DECREASE
 ) => {
@@ -114,9 +122,7 @@ export const handleQuantity = (
       };
     } else return book;
   });
-
-  const totalPrice = calculateTotalPrice(newCartBooks);
-
+  const totalPrice = calculateTotalPrice(newCartBooks, checkedBooks);
   return {
     newCartBooks,
     totalPrice,
@@ -135,11 +141,11 @@ export const deleteFromCart = (
   ids: TypeCartItem['id'][]
 ) => {
   const newCartBooks = cartBooks.filter(({ id }) => !ids.includes(id));
-  const totalPrice = calculateTotalPrice(newCartBooks);
+  // const totalPrice = calculateTotalPrice(newCartBooks);
   const newCheckedBooks = checkedBooks.filter((id) => !ids.includes(id));
   return {
     newCartBooks,
-    totalPrice,
+    // totalPrice,
     newCheckedBooks,
   };
 };
@@ -156,7 +162,7 @@ export const getBooksToOrder = (
 ) => {
   const idSet = new Set(ids);
   const booksToOrder = cartBooks.filter((book) => idSet.has(book.id));
-  const totalPrice = calculateTotalPrice(booksToOrder);
+  const totalPrice = calculateTotalPrice(booksToOrder, ids);
   return {
     booksToOrder,
     totalPrice,
