@@ -4,9 +4,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import useCartStore from '@/store/cart/cart-store';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import CartTable from './cart-table/cart-table';
+import CartTable from './cart-table';
 import EmptyCart from './empty-cart';
-import { TypeCartItem } from '@/types/cart/cart.type';
 import PriceSummary from './price-summary';
 
 export default function Cart() {

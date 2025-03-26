@@ -1,4 +1,4 @@
-import { TypeCartItem } from '@/types/cart/cart.type';
+import { TypeCartItem } from '@/types/cart.type';
 import { ColumnDef } from '@tanstack/react-table';
 import BookSummary from './book-summary';
 import CartCheckBook from './cart-check-book';
