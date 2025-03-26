@@ -18,7 +18,7 @@ function BookCard({
 }: CardForCarousel) {
   const { addToCart } = useCartStore();
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+    e.preventDefault();
     addToCart([
       {
         id,
