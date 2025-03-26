@@ -6,6 +6,7 @@ import {
   TossPaymentsWidgets,
 } from '@tosspayments/tosspayments-sdk';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 const CLIENT_KEY = process.env.NEXT_PUBLIC_TOSS_CLIENT_TEST_KEY as string;
 
@@ -78,7 +79,11 @@ export const useTossPayments = (
         failUrl: `${window.location.origin}/order/fail${window.location.search}`,
       });
     } catch (error) {
-      window.alert('결제 요청 중 오류가 발생했습니다');
+      Swal.fire({
+        title: '결제 실패!',
+        text: '결제 요청 중 오류가 발생했습니다',
+        icon: 'error',
+      });
       console.error('결제 요청 중 오류 발생=>', error);
     }
   };

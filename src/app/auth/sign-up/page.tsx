@@ -4,6 +4,7 @@ import React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 import AuthCard from '@/components/features/auth/auth-card';
 import AuthInput from '@/components/features/auth/auth-input';
@@ -39,12 +40,21 @@ const SignUp = () => {
 
       if (error) {
         console.error('회원가입 에러:', error);
-        alert('회원가입 실패!');
+        Swal.fire({
+          title: '다시 시도하세요!',
+          text: '회원가입에 실패했습니다.',
+          icon: 'error',
+        });
         return;
       }
 
       if (data?.user) {
-        alert('회원가입 성공!');
+        Swal.fire({
+          title: '환영합니다!',
+          text: '회원가입 성공!',
+          icon: 'success',
+        });
+
         router.push('/');
       }
     } catch (err) {
