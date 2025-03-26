@@ -24,7 +24,7 @@ export default function ButtonArea({
         onClick={() => {
           addToCart([
             {
-              id: `${id}`,
+              id: id,
               bookInfo: {
                 title: `${title}`,
                 author: `${author}`,
