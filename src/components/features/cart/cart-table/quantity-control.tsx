@@ -1,4 +1,4 @@
-import { CONTROL_TYPE } from '@/constants/quantity-control-constant';
+import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 import { useQuantityControl } from '@/lib/hooks/use-quantity-control';
 import { formatNumberWithCommas } from '@/lib/utils/common.util';
 import { Minus, Plus } from 'lucide-react';

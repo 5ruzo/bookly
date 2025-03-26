@@ -56,4 +56,4 @@ export default async function OrderDetails() {
       )}
     </div>
   );
-}
+
