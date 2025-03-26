@@ -37,3 +37,44 @@ export const fetchGetLikeThisBook = async (
 
   return data[0];
 };
+
+export const fetchDeleteLikeThisBook = async (
+  userId: string | undefined,
+  bookId: number
+) => {
+  if (!userId) return;
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/likes?book_id=eq.${bookId}&user_id=eq.${userId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${API_KEY}`,
+        apikey: API_KEY || '',
+      },
+    }
+  );
+};
+
+export const fetchCreateLikeThisBook = async (
+  userId: string | undefined,
+  bookId: number
+) => {
+  if (!userId) return;
+
+  const body = {
+    user_id: userId,
+    book_id: bookId,
+  };
+
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/likes`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${API_KEY}`,
+      apikey: API_KEY || '',
+    },
+    body: JSON.stringify(body),
+  });
+};
