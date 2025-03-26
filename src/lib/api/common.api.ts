@@ -69,6 +69,5 @@ export const fetchGetBooksByRecommend = async (): Promise<
   const filterdData: RecommendedBooks[] = data.map(
     (item: InitialData) => item.books
   );
-  console.log('filterdData =====>', filterdData);
   return filterdData;
 };
