@@ -7,9 +7,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from '@/components/ui/carousel';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { CarouselApi } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { MAIN_CAROUSEL_OPTIONS } from '@/constants/home.constant';
 import { MainCarouselProps } from '@/types/home.type';
