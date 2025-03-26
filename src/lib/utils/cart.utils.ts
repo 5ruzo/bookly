@@ -1,4 +1,4 @@
-import { TypeCartItem } from '@/types/cart/cart.type';
+import { TypeCartItem } from '@/types/cart.type';
 import { CONTROL_TYPE } from '@/constants/quantity-control.constant';
 const { INCREASE, DECREASE } = CONTROL_TYPE;
 

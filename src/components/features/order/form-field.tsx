@@ -1,4 +1,4 @@
-import { TypeFormField, TypeOrderForm } from '@/types/order/order.type';
+import { TypeFormField, TypeOrderForm } from '@/types/order.type';
 import { FormState, UseFormRegister } from 'react-hook-form';
 
 export const formStyles = {

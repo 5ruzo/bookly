@@ -1,5 +1,5 @@
 export type TypeCartBooks = {
-  id: string;
+  id: string | number;
   quantity: number;
   price: number;
   image_url: string;

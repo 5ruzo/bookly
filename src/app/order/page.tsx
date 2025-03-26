@@ -1,4 +1,4 @@
-import DeliveryInfo from '@/components/features/order/delivery-info';
+import OrderForm from '@/components/features/order/order-form';
 
 export default function OrderPage() {
   return (
@@ -6,7 +6,7 @@ export default function OrderPage() {
       <h2 className='font-bold text-xl sm:text-2xl text-center mb-8 sm:mb-16'>
         주문/결제
       </h2>
-      <DeliveryInfo />
+      <OrderForm />
     </section>
   );
 }

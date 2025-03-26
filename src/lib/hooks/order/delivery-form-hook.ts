@@ -1,4 +1,4 @@
-import { TypeAddressInfo } from '@/types/order/order.type';
+import { TypeAddressInfo } from '@/types/order.type';
 import { useEffect } from 'react';
 
 export const useDeliveryFormHook = () => {

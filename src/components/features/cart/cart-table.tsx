@@ -1,5 +1,5 @@
 'use client';
-import DataTable from '@/components/features/common/data-table';
+import DataTable from '@/components/ui/data-table';
 import useCartStore from '@/store/cart/cart-store';
 import { cartTableColumns } from './cart-table.columns';
 
