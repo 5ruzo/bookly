@@ -10,7 +10,7 @@ import React from 'react';
 export const revalidate = BOOK_LIST_REVALIDATE_TIME;
 
 export async function generateStaticParams() {
-  // 장르 배열을 가져오는 함수 (API 호출이나 데이터 소스에서)
+  // 장르 배열을 가져오는 함수
   const genreList = await fetchGetGenreList();
 
   // URL 경로에 맞게 포맷팅 (예: '/' -> '-' 변환)
