@@ -9,18 +9,6 @@ import EmptyCart from './empty-cart';
 import { TypeCartItem } from '@/types/cart/cart.type';
 import PriceSummary from './price-summary';
 
-const MOCK_DATA: TypeCartItem[] = new Array(3).fill({
-  id: crypto.randomUUID(),
-  bookInfo: {
-    title: '어쩌고저쩌고책',
-    author: '누군가',
-    image_url:
-      'https://image.aladin.co.kr/product/36042/18/cover500/k062037848_1.jpg',
-  },
-  quantity: 2,
-  price: 5000,
-});
-
 export default function Cart() {
   const {
     cartBooks,
