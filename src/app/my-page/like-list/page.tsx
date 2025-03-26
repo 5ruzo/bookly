@@ -56,6 +56,7 @@ export default function LikeList() {
       <div className='grid gap-6 grid-cols-3'>
         {dummyData.map((book) => (
           <BookCard
+            key={book.id}
             id={book.id}
             image_url={book.image_url}
             title={book.title}
