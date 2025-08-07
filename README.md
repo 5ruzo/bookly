@@ -85,7 +85,7 @@
       </td> 
       <td width="250px" align="center">
         로그인/회원가입 및
-        <br>인증/인가 구현
+        <br>인증/인가 및 가상 결제 구현
       </td>      
     </tr>
   </tbody>
